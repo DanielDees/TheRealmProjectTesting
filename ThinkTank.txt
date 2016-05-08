@@ -1,0 +1,13 @@
+This file is to be used as a thinktank where you 
+can throw down pseudo code or write down random 
+thoughts to think through problems more easily.
+
+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|
+
+
+lootbag should have 8 slots already.
+
+iterate through slots find first empty item, assign item to it.
+
+
+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|
