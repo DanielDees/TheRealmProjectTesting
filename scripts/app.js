@@ -238,11 +238,12 @@ function player () {
             //Move/Swap item to loot bag inventory slot
             if (hitboxIntersectCheck(this.inventory[j].item, lootBagList[this.isViewingLoot[0]].inventory[k])) {
 
-            	console.log(
-            		"Itm: " + this.inventory[j].item.itemName
-            		 + "\n" + 
-            		"Bag: " + lootBagList[this.isViewingLoot[0]].inventory[k].item.itemName
-            	);
+            	console.log("Swapped Items?");
+              /* console.log(
+                "Itm: " + this.inventory[j].item.itemName
+                 + "\n" + 
+                "Bag: " + lootBagList[this.isViewingLoot[0]].inventory[k].item.itemName
+              ); */
             	
               swapItems(this.inventory[j], lootBagList[this.isViewingLoot[0]].inventory[k]);
               break;
