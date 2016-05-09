@@ -226,10 +226,6 @@ function player () {
   }
   this.dropItemFromSlot = function(j) {
 
-  this.dropItemFromSlot = function(j) {
-
-  this.dropItemFromSlot = function(j) {
-
     //Drop into existing loot bag.
     if (this.isViewingLoot[0] != -1) {
 
