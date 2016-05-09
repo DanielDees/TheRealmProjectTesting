@@ -226,40 +226,35 @@ function player () {
   }
   this.dropItemFromSlot = function(j) {
 
-      //Drop into existing loot bag.
-      if (this.isViewingLoot[0] != -1) {
+  this.dropItemFromSlot = function(j) {
 
-      	//Item moving/swapping with loot bag
-        for (var k = 0; k < lootBagList[this.isViewingLoot[0]].inventory.length; k++) {
+    //Drop into existing loot bag.
+    if (this.isViewingLoot[0] != -1) {
 
-          //If mouse was released over slot k
-          if (mouseIsTouching(lootBagList[this.isViewingLoot[0]].inventory[k]) && this.mouseOccupied) {
+      //Item moving/swapping with loot bag
+      for (var k = 0; k < 8; k++) {
 
-            //Move/Swap item to loot bag inventory slot
-            if (hitboxIntersectCheck(this.inventory[j].item, lootBagList[this.isViewingLoot[0]].inventory[k])) {
+        //If mouse was released over slot k
+        if (mouseIsTouching(lootBagList[this.isViewingLoot[0]].inventory[k]) && this.mouseOccupied) {
 
-            	console.log("Swapped Items?");
-              /* console.log(
-                "Itm: " + this.inventory[j].item.itemName
-                 + "\n" + 
-                "Bag: " + lootBagList[this.isViewingLoot[0]].inventory[k].item.itemName
-              ); */
-            	
-              swapItems(this.inventory[j], lootBagList[this.isViewingLoot[0]].inventory[k]);
-              break;
-            }
+          //Move/Swap item to loot bag inventory slot
+          if (hitboxIntersectCheck(this.inventory[j].item, lootBagList[this.isViewingLoot[0]].inventory[k])) {
+
+            swapItems(this.inventory[j], lootBagList[this.isViewingLoot[0]].inventory[k]);
+            break;
           }
         }
       }
-      //Create new loot bag and drop.
-      else if (this.isViewingLoot[0] == -1) {
+    }
+    //Create new loot bag and drop.
+    else if (this.isViewingLoot[0] == -1) {
 
-        lootBagList.push(new lootBag(this.X, this.Y, lootBagPics[0]));
-        lootBagList[lootBagList.length - 1].addToInventory(this.inventory[j].item);
-      }
+      lootBagList.push(new lootBag(this.X, this.Y, lootBagPics[0]));
+      lootBagList[lootBagList.length - 1].addToInventory(this.inventory[j].item);
 
       //Clear item from it's original slot.
       this.inventory[j].item = null;
+    }
   }
   //Leveling up
   this.levelUP = function() {
