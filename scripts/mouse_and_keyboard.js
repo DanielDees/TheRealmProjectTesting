@@ -57,13 +57,24 @@ function mousePos (e) {
 
   if (!mie) {
 
+    //Old Mouse
     mouseX = e.pageX + FRAME_OF_REFERENCE[0];
     mouseY = e.pageY + FRAME_OF_REFERENCE[1];
+
+    //New mouse
+    mouse.X = e.pageX + FRAME_OF_REFERENCE[0];
+    mouse.Y = e.pageY + FRAME_OF_REFERENCE[1];
   } else {
 
     e = event || window.event;
+
+    //Old Mouse
     mouseX = e.clientX + document.body.scrollLeft + FRAME_OF_REFERENCE[0];
     mouseY = e.clientY + document.body.scrollTop + FRAME_OF_REFERENCE[1];
+
+    //New Mouse
+    mouse.X = e.clientX + document.body.scrollLeft + FRAME_OF_REFERENCE[0];
+    mouse.Y = e.clientY + document.body.scrollTop + FRAME_OF_REFERENCE[1];
   };
 
   if (e.shiftKey) { keys.SHIFT = true; } else { keys.SHIFT = false; };

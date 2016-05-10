@@ -1008,9 +1008,11 @@ function drawDebugInfo(absX, absY) {
     //["Y", playerList[0].Y.toFixed(0)],
     ["Slot", whichSlot],
     //["ScreenType", screenType], 
-    //["FRAME_OF_REFERENCE", FRAME_OF_REFERENCE[0].toFixed(0) + "x | " + FRAME_OF_REFERENCE[1].toFixed(0) + "y"], 
-    //["mouseX", mouseX.toFixed(0)], 
-    //["mouseY", mouseY.toFixed(0)]
+    //["FRAME_OF_REFERENCE", FRAME_OF_REFERENCE[0].toFixed(0) + "x | " + FRAME_OF_REFERENCE[1].toFixed(0) + "y"],
+    ["mouse.clicked", mouse.clicked],
+    ["mouse.item", mouse.item],
+    ["mouse.X", mouse.X.toFixed(0)],
+    ["mouse.Y", mouse.Y.toFixed(0)]
   ];
 
   for (var i = 0; i < info.length; i++) {
