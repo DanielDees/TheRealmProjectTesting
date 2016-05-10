@@ -7,10 +7,13 @@ var chatLog = [];
 
 function activateChat () {
 
+  //Outline for text box while user is typing
   ctx.shadowColor = "#000";
   ctx.strokeStyle = "#000";
   ctx.lineWidth = 1;
   ctx.strokeRect(5 + FRAME_OF_REFERENCE[0], canvas.height - 26 + FRAME_OF_REFERENCE[1], canvas.width - 210, 20);
+
+  //Text displayed while user is typing
   ctx.fillStyle = "#FFF";
   ctx.shadowBlur = 10;
   ctx.fillText(str, 10 + FRAME_OF_REFERENCE[0], canvas.height - 10 + FRAME_OF_REFERENCE[1]);
@@ -27,10 +30,11 @@ function submitChat (personSpeaking) {
   
   if (str.length > 0) {
 
-    //String, Y, age of text, user who submitted
+    //Text, Ypos, age of text, user who submitted
     chatLog.push([" " + str, 16, 0, personSpeaking]);
 
-    for (var i = 0; i < chatLog.length; i++) { chatLog[i][1] = chatLog[i][1] + 20; };
+    //Increase Ypos of text on left of screen.
+    for (var i = 0; i < chatLog.length; i++) { chatLog[i][1] += 20; };
   };
 
   str = "";
@@ -72,18 +76,23 @@ function displayChat () {
     };
   };
 
-  //Text at bottom of screen
+  //Text on left of screen
   ctx.fillStyle = "#FFF";
   ctx.shadowBlur = 10;
   for (var j = 0; j < chatLog.length; j++) {
   
+    //Display text on left of screen
     ctx.fillText(chatLog[i][3] + ": " + chatLog[i][0], 10 + FRAME_OF_REFERENCE[0], canvas.height - chatLog[i][1] + FRAME_OF_REFERENCE[1]);
+
+    //Increase age of text
     chatLog[i][2]++;
 
+    //Delete text if more than 800 age
     if (chatLog[i][2] > 800) { chatLog.splice(i, 1); i--; };
-    i++;
 
+    i++;
   };
+
   ctx.shadowBlur = 0;
 }
 function checkDevCommands () {
