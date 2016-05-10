@@ -32,6 +32,20 @@ var keys = {
 };
 
 //MOUSE AND KEYBOARD =============
+
+function mouse () {
+
+  //Mouse Location
+  this.X = 0;
+  this.Y = 0;
+
+  //Replacement for Item.beingHeld
+  this.item = null;
+
+  //Replacement for mouseOccupied.
+  this.clicked = false;
+
+}
 function mousePos (e) {
 
   if (!mie) {
