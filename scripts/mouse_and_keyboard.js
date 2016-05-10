@@ -4,8 +4,16 @@ var mie = (navigator.appName == "Microsoft Internet Explorer")?true:false;
 //END CHECK BROWSER TYPE ========
 
 document.onmousemove = mousePos;
-document.onmousedown = function () { mouseClicked = true; };
-document.onmouseup = function () { mouseClicked = false };
+document.onmousedown = function () { 
+
+  mouseClicked = true; 
+  mouse.clicked = true;
+};
+document.onmouseup = function () { 
+
+  mouseClicked = false;
+  mouse.clicked = false;
+};
 document.onkeypress = keyClick;
 document.onkeydown = getKeyDown;
 document.onkeyup = keyClear;
@@ -32,6 +40,19 @@ var keys = {
 };
 
 //MOUSE AND KEYBOARD =============
+
+var mouse = {
+
+  //Mouse Location
+  X: 0,
+  Y: 0,
+
+  //Replacement for Item.beingHeld
+  item: null,
+
+  //Replacement for mouseOccupied.
+  clicked: false
+}
 function mousePos (e) {
 
   if (!mie) {
