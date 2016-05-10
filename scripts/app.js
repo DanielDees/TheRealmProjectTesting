@@ -53,6 +53,20 @@ var screenType = {
 */
 var screenType = "MAIN_MENU";
 
+//The mouse on screen.
+function mouse () {
+
+  //Mouse Location
+  this.X = 0;
+  this.Y = 0;
+
+  //Replacement for Item.beingHeld
+  this.item = null;
+
+  //Replacement for mouseOccupied.
+  this.clicked = false;
+
+}
 //GAME OBJECTS ===================
 function player () {
    
