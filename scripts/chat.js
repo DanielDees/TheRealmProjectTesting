@@ -32,14 +32,13 @@ function submitChat (personSpeaking) {
     //Increase Ypos of text on left of screen.
     for (var i = 0; i < chatLog.length; i++) { chatLog[i][1] += 20; };
   };
-  
+
   str = "";
 }
 function displayChat () {
 
   ctx.shadowColor = "#000";
   ctx.strokeStyle = "#000";
-  var i = 0;
 
   //Text above player
   if (chatLog.length > 0) {
@@ -74,7 +73,7 @@ function displayChat () {
   //Text on left of screen
   ctx.fillStyle = "#FFF";
   ctx.shadowBlur = 10;
-  for (var j = 0; j < chatLog.length; j++) {
+  for (var i = 0; i < chatLog.length; i++) {
   
     //Display text on left of screen
     ctx.fillText(chatLog[i][3] + ": " + chatLog[i][0], 10 + FRAME_OF_REFERENCE[0], canvas.height - chatLog[i][1] + FRAME_OF_REFERENCE[1]);
@@ -83,9 +82,7 @@ function displayChat () {
     chatLog[i][2]++;
 
     //Delete text if more than 800 age
-    if (chatLog[i][2] > 800) { chatLog.splice(i, 1); i--; };
-
-    i++;
+    if (chatLog[i][2] > 800) { chatLog.splice(i, 1); };
   };
 
   ctx.shadowBlur = 0;
