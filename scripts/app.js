@@ -313,7 +313,8 @@ function player () {
     if (keys.A) { this.X -= this.speedFormula; }
     if (keys.S) { this.Y += this.speedFormula; }
     if (keys.D) { this.X += this.speedFormula; }
-  } 
+  }
+  //Draw Player
   this.draw = function() { 
 
     //Image of player
@@ -566,6 +567,12 @@ function loot (imageGiven, nameGiven, effectTextGiven, descriptionGiven) {
       playerList[0].minWeaponDamage = 30;
     }
   }
+
+  //Draw Item
+  this.draw = function() {
+
+    ctx.drawImage(this.typeOfItem, this.X, this.Y, this.width, this.height);
+  }
 }
 function lootBag (defaultX, defaultY, imageGiven) {
 
@@ -601,35 +608,35 @@ function lootBag (defaultX, defaultY, imageGiven) {
   }
   this.addToInventory = function(item) {
 
-  	//Create Inventory
-  	this.createInventory();
+    //Create Inventory
+    this.createInventory();
 
-  	for (var i = 0; i < this.inventory.length; i++) {
+    for (var i = 0; i < this.inventory.length; i++) {
 
-  		//If slot is empty, put item in it.
-  		if (!this.inventory[i].item) { 
+      //If slot is empty, put item in it.
+      if (!this.inventory[i].item) { 
 
-  			this.inventory[i].item = item; 
-  			break;
-  		}
-  	}
+        this.inventory[i].item = item; 
+        break;
+      }
+    }
   }
- 	this.checkIfEmpty = function() {
+  this.checkIfEmpty = function() {
 
-		for (var i = 0; i < this.inventory.length; i++) {
+    for (var i = 0; i < this.inventory.length; i++) {
 
-  		if (this.inventory[i].item) { return false;	}
-  	}
+      if (this.inventory[i].item) { return false; }
+    }
 
-  	//Delete self if empty
-  	lootBagList.splice(lootBagList.indexOf(this), 1);
- 	}
+    //Delete self if empty
+    lootBagList.splice(lootBagList.indexOf(this), 1);
+  }
   this.drawInventory = function() {
 
-  	//Create Inventory
-  	this.createInventory();
+    //Create Inventory
+    this.createInventory();
 
-  	for (var j = 0; j < this.inventory.length; j++) {
+    for (var j = 0; j < this.inventory.length; j++) {
 
       if (this.inventory[j].item) {
 
@@ -667,7 +674,7 @@ function lootBag (defaultX, defaultY, imageGiven) {
               }
             }
           }
-        	//Item move/swap to player inventory
+          //Item move/swap to player inventory
           for (var k = 0; k < playerList[0].inventory.length; k++) {
 
             //If mouse was released over slot k
@@ -697,19 +704,19 @@ function lootBag (defaultX, defaultY, imageGiven) {
         }
       }
     }
-	  //Draw slots on first pass, items on second.
-	  for (var i = 0; i < 2; i++) {
-	    for (var col = 0; col < 8; col++) {
+    //Draw slots on first pass, items on second.
+    for (var i = 0; i < 2; i++) {
+      for (var col = 0; col < 8; col++) {
 
-    		this.inventory[col].draw(i);
+        this.inventory[col].draw(i);
 
-	      //Draw Item Description
-	      if (!mouseClicked && this.inventory[col].item) { 
+        //Draw Item Description
+        if (!mouseClicked && this.inventory[col].item) { 
 
-	        drawItemDescription(this.inventory[col].item); 
-	      }
-	    }
-  	}
+          drawItemDescription(this.inventory[col].item); 
+        }
+      }
+    }
   }
   this.draw = function() {
 
@@ -768,7 +775,7 @@ function inventorySlot (defaultX, defaultY, col, row, itemGiven) {
     else if (this.item) {
 
       //Draw inventory slot's item
-      ctx.drawImage(this.item.typeOfItem, this.item.X, this.item.Y, this.item.width, this.item.height);
+      this.item.draw();
     }
   }
   this.giveItem = function() {
@@ -804,7 +811,7 @@ function portal (defaultX, defaultY, nameGiven, destinationGiven, spriteGiven) {
   }
   this.drawButton = function () {
 
-  	//View Portal if touching it and not viewing another portal.
+    //View Portal if touching it and not viewing another portal.
     if (hitboxIntersectCheck(this, playerList[0]) && (playerList[0].isViewingLoot[1] == -1 || playerList[0].isViewingLoot[1] == this.ID)) {
  
         placeButtonHere(this.name, canvas.width - 180 + FRAME_OF_REFERENCE[0], canvas.height - 50 + FRAME_OF_REFERENCE[1], this.destination, "20px Arial", "#696969");
@@ -994,21 +1001,21 @@ function drawDebugInfo(absX, absY) {
 
   //Comment/uncomment to hide/show
   var info = [
-  	["Portals", portalList.length], 
-  	["LootBags", lootBagList.length], 
-  	["ViewingLoot", playerList[0].isViewingLoot], 
-  	//["X", playerList[0].X.toFixed(0)], 
-  	//["Y", playerList[0].Y.toFixed(0)],
-  	["Slot", whichSlot],
-  	//["ScreenType", screenType], 
-  	//["FRAME_OF_REFERENCE", FRAME_OF_REFERENCE[0].toFixed(0) + "x | " + FRAME_OF_REFERENCE[1].toFixed(0) + "y"], 
-  	//["mouseX", mouseX.toFixed(0)], 
-  	//["mouseY", mouseY.toFixed(0)]
+    ["Portals", portalList.length], 
+    ["LootBags", lootBagList.length], 
+    ["ViewingLoot", playerList[0].isViewingLoot], 
+    //["X", playerList[0].X.toFixed(0)], 
+    //["Y", playerList[0].Y.toFixed(0)],
+    ["Slot", whichSlot],
+    //["ScreenType", screenType], 
+    //["FRAME_OF_REFERENCE", FRAME_OF_REFERENCE[0].toFixed(0) + "x | " + FRAME_OF_REFERENCE[1].toFixed(0) + "y"], 
+    //["mouseX", mouseX.toFixed(0)], 
+    //["mouseY", mouseY.toFixed(0)]
   ];
 
   for (var i = 0; i < info.length; i++) {
-  	
-  	ctx.fillText(info[i][0] + ": " + info[i][1], 20 + absX, 30 + (20 * i) + absY);
+    
+    ctx.fillText(info[i][0] + ": " + info[i][1], 20 + absX, 30 + (20 * i) + absY);
   }
 }
 function drawExpBar(absX, absY, rightOfScreen) {
@@ -1473,8 +1480,8 @@ function drawGameScreen () {
 
   if (isEqualTo(screenType, "MAIN_MENU", "INSTRUCTIONS", "DEATH_SCREEN", "OPTIONS")) { 
 
-  	backgroundScrollingScene(); 
-  	checkFrameOfReference(0, 0);
+    backgroundScrollingScene(); 
+    checkFrameOfReference(0, 0);
   }
   if (screenType == "MAIN_MENU") { drawMainMenuScreen(); }
   if (screenType == "INSTRUCTIONS") { drawInstructionsScreen(); }
@@ -1484,16 +1491,16 @@ function drawGameScreen () {
 }
 function drawMainMenuScreen () {
 
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = 'rgba(30, 30, 30, 0.7)';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-	ctx.fillStyle = "#696969";
-	ctx.fillRect(0, 400, canvas.width, 90);
+  ctx.fillStyle = "#696969";
+  ctx.fillRect(0, 400, canvas.width, 90);
 
   //Main Menu Buttons
-	placeButtonHere("Play", 340, 423, "CLASS_SELECTION", "35px Palatino", "#696969");
+  placeButtonHere("Play", 340, 423, "CLASS_SELECTION", "35px Palatino", "#696969");
   placeButtonHere("Instructions", 445, 430, "INSTRUCTIONS", "25px Palatino", "#696969");
-	placeButtonHere("Options", 220, 430, "OPTIONS", "25px Palatino", "#696969");
+  placeButtonHere("Options", 220, 430, "OPTIONS", "25px Palatino", "#696969");
 
   ctx.font = "40px Palatino";
   ctx.fillStyle = "#CC0000";
@@ -1511,9 +1518,9 @@ function drawOptionsScreen () {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = 'rgba(30, 30, 30, 0.7)';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
-	ctx.fillStyle = "#696969";
-	ctx.fillRect(233, 130, 310, 300);
-	
+  ctx.fillStyle = "#696969";
+  ctx.fillRect(233, 130, 310, 300);
+  
   ctx.font = "30px Palatino";
   ctx.fillStyle = "#DDD";
   ctx.fillText("OPTIONS", (canvas.width / 3) + 55, 200);
@@ -1536,8 +1543,8 @@ function drawInstructionsScreen () {
   ctx.fillStyle = 'rgba(30, 30, 30, 0.7)';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-	ctx.fillStyle = "#696969";
-	ctx.fillRect( 233, 130, 310, 300);
+  ctx.fillStyle = "#696969";
+  ctx.fillRect( 233, 130, 310, 300);
 
   ctx.font = "30px Palatino";
   ctx.fillStyle = "#DDD";
