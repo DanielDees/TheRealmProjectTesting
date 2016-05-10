@@ -747,8 +747,8 @@ function inventorySlot (defaultX, defaultY, col, row, itemGiven) {
     //If item in slot is being held by mouse
     if (this.item && this.item.beingHeld) {
 
-      this.item.X = mouse.X - (this.width / 2);
-      this.item.Y = mouse.Y - (this.height / 2);
+      this.item.X = mouse.X - (this.item.width / 2);
+      this.item.Y = mouse.Y - (this.item.height / 2);
       playerList[0].mouseOccupied = true;
 
     } else if (this.item) {
@@ -1481,6 +1481,9 @@ function drawGameScreen () {
     drawPlayerInventory();
     if (playerList[0].isViewingLoot[1] == -1) { displayItemDrops(); }
     if (playerList[0].isViewingLoot[0] == -1) { drawPortalEntryButton(); }
+
+    //Render items being held by mouse
+    mouse.drawItem();
   }
 
   if (isEqualTo(screenType, "MAIN_MENU", "INSTRUCTIONS", "DEATH_SCREEN", "OPTIONS")) { 
