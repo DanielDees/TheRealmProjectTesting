@@ -94,10 +94,10 @@ function checkDevCommands () {
     if (str.search("/spawnRate") == 0) { 
 
       str = str.slice(11, str.length);
+
       generateEnemies = setInterval(function() { if (screenType == "GAME_SCREEN" && (enemies_remaining_in_realm - enemyList.length) > 0) { spawnEnemy(); } } , parseInt(str));
 
       console.log("Spawning enemies every: " + (parseInt(str) / 1000) + " seconds.");
-      return;
     }
     else if (str.search("/godMode") == 0) { playerList[0].MAX_HP = 9999999; playerList[0].HP = 9999999; }
     else if (str.search("/levelUp") == 0) { playerList[0].levelUP(); playerList[0].EXP = 0; }
@@ -106,8 +106,6 @@ function checkDevCommands () {
       str = str.slice(7, str.length);
 
       for (var i = playerList[0].level; i < parseInt(str); i++) { playerList[0].levelUP(); };
-
-      playerList[0].EXP = 1;
     }
     else if (str.search("/kill all") == 0) { enemyList = []; }
     else if (str.search("/reset xy") == 0) { 
@@ -128,13 +126,18 @@ function checkDevCommands () {
     else if (str.search("/renderRange") == 0) {
 
       str = str.slice(13, str.length);
-      if (!parseInt(str)) { console.log("Current renderRange: " + (renderRange / tileSize)) + " tiles"; }
-      else { renderRange = parseInt(str) * tileSize; };
+      console.log("Current renderRange: " + (renderRange / tileSize)) + " tiles";
+
+      if (parseInt(str)) { renderRange = parseInt(str) * tileSize; };
     }
     else {
 
       str = "Command not found!";
+      return;
     }
+
+    //Clear chat
+    str = "";
   };
 }
 //-----------------------------
