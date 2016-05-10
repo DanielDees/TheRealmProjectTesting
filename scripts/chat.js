@@ -21,10 +21,6 @@ function activateChat () {
 }
 function submitChat (personSpeaking) {
 
-  ctx.shadowColor = "#000";
-  ctx.shadowBlur = 10;
-  ctx.fillStyle = "#FFF";
-
   //In-game Dev-Tools
   checkDevCommands();
   
@@ -36,9 +32,8 @@ function submitChat (personSpeaking) {
     //Increase Ypos of text on left of screen.
     for (var i = 0; i < chatLog.length; i++) { chatLog[i][1] += 20; };
   };
-
+  
   str = "";
-  ctx.shadowBlur = 0;
 }
 function displayChat () {
 
