@@ -54,10 +54,12 @@ function keyClear (e) {
   //Movement
   if (isEqualTo(keyButton, "W", "A", "S", "D")) { keys[keyButton] = false; };
 
-  if (keyButton == "W") { playerList[0].Image = playerList[0].ImageArray[2][0]; };
-  if (keyButton == "A") { playerList[0].Image = playerList[0].ImageArray[1][0]; };
-  if (keyButton == "S") { playerList[0].Image = playerList[0].ImageArray[3][0]; };
-  if (keyButton == "D") { playerList[0].Image = playerList[0].ImageArray[0][0]; };
+  if (!keys.ENTER) {
+    if (keyButton == "W") { playerList[0].Image = playerList[0].ImageArray[2][0]; };
+    if (keyButton == "A") { playerList[0].Image = playerList[0].ImageArray[1][0]; };
+    if (keyButton == "S") { playerList[0].Image = playerList[0].ImageArray[3][0]; };
+    if (keyButton == "D") { playerList[0].Image = playerList[0].ImageArray[0][0]; };
+  }
 
   if (keyButton == " ") { keys.B = false; };
   if (e.shiftKey) { keys.SHIFT = false; };
