@@ -38,8 +38,19 @@ var mouse = {
   //Replacement for Item.beingHeld
   item: null,
 
-  //Replacement for mouseOccupied.
-  clicked: false
+  //Replacement for mouseOccupied
+  clicked: false,
+
+  //Draw Item being held
+  drawItem: function() {
+
+    //Update item location
+    this.item.X = mouse.X - (this.item.width / 2);
+    this.item.Y = mouse.Y - (this.item.height / 2);
+
+    //Render
+    this.item.draw();
+  }
 }
 function mousePos (e) {
 
