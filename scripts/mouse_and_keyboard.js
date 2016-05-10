@@ -17,7 +17,6 @@ var mouseClicked = false;
 var mouseX = 0;
 var mouseY = 0;
 var keyButton = "";
-var backupKeyButton = "NOT DELETE";
 
 //Keyboard keys used in game
 var keys = {
@@ -48,7 +47,7 @@ function mousePos (e) {
 
   if (e.shiftKey) { keys.SHIFT = true; } else { keys.SHIFT = false; };
 }
-function keyClear (e) { 
+function keyClear (e) {
 
   keyButton = getKeyPressed(e);
 
@@ -68,10 +67,8 @@ function getKeyPressed (e) {
   return String.fromCharCode(e.which || e.keyCode).toUpperCase();
 }
 function getKeyDown (e) {
-
-  if (e) { 
-    if (e.keyCode == 8) { backupKeyButton = "DELETE"; }
-    else { backupKeyButton = "NOT DELETE"; };
+  if (e) {
+    if (e.keyCode == 8) { keyClick(e); }
   };
 }
 function keyClick (e) {
@@ -92,18 +89,18 @@ function keyClick (e) {
   };
 
   //Chat bar
-  if ((e.which == 13 || e.keyCode == 13 || keyButton == "/") && !keys.ENTER) { keys.ENTER = true; } 
+  if ((e.which == 13 || e.keyCode == 13 || keyButton == "/") && !keys.ENTER) { keys.ENTER = true; }
     else if ((e.which == 13 || e.keyCode == 13) && keys.ENTER) { keys.ENTER = false; submitChat(playerList[0].userName); };
 
-  if (!(e.which == 13 || e.keyCode == 13) && keys.ENTER && str.length < 50) { 
+  if (!(e.which == 13 || e.keyCode == 13) && keys.ENTER && str.length < 50) {
     if (!keys.SHIFT) { str += keyButton.toLowerCase(); }
       else if (keys.SHIFT) { str += keyButton.toUpperCase(); };
 
     //Delete key
-    if ((e.which == 8 || e.keyCode == 8 || backupKeyButton == "DELETE") && str.length > 0) { 
+    if ((e.which == 8 || e.keyCode == 8) && str.length > 0) {
 
       keyButton = "DELETE";
-      str = str.slice(0, str.length - 2); 
+      str = str.slice(0, str.length - 2);
     };
   };
 
