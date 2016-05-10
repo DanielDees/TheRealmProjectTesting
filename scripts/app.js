@@ -654,6 +654,9 @@ function lootBag (defaultX, defaultY, imageGiven) {
         if (mouse.clicked && mouseIsTouching(this.inventory[j].item) && !playerList[0].mouseOccupied) {
           
           this.inventory[j].item.beingHeld = true;
+
+          //Give mouse the item.
+          mouse.item = this.inventory[j].item;
         }
         //Hold item while mouse is held
         else if (mouse.clicked && this.inventory[j].item.beingHeld && playerList[0].mouseOccupied) {
