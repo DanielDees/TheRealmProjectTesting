@@ -108,7 +108,6 @@ function player () {
   this.MAX_SPECIAL_COOLDOWN = 20;
   //isViewingLoot used to only see one loot bag at a time.
   this.isViewingLoot = [-1, -1];
-  this.mouseOccupied = false;
   //Inventory
   this.inventory = [];
   this.inventoryInitialized = false;
@@ -128,13 +127,13 @@ function player () {
       if (this.inventory[j].item) {
 
         //Give Item if Shift Clicking
-        if (mouse.clicked && keys.SHIFT && mouseIsTouching(this.inventory[j]) && !this.mouseOccupied) {
+        if (mouse.clicked && keys.SHIFT && mouseIsTouching(this.inventory[j]) && !mouse.item) {
 
           this.inventory[j].giveItem();
           break;
         }
         //Select item if clicking it and not holding anything else
-        if (mouse.clicked && mouseIsTouching(this.inventory[j].item) && !this.mouseOccupied) {
+        if (mouse.clicked && mouseIsTouching(this.inventory[j].item) && !mouse.item) {
           
           this.inventory[j].item.beingHeld = true;
 
@@ -142,7 +141,7 @@ function player () {
           mouse.item = this.inventory[j].item;
         }
         //Hold item while mouse is held
-        else if (mouse.clicked && this.inventory[j].item.beingHeld && this.mouseOccupied) {
+        else if (mouse.clicked && this.inventory[j].item.beingHeld && mouse.item) {
 
           //Prevent else statement...
         }
@@ -153,7 +152,7 @@ function player () {
           for (var k = 0; k < this.inventory.length; k++) {
 
             //If mouse was released over slot k
-            if (mouseIsTouching(this.inventory[k]) && this.mouseOccupied) {
+            if (mouseIsTouching(this.inventory[k]) && mouse.item) {
 
               //Move/Swap item to new inventory slot
               if (hitboxIntersectCheck(this.inventory[j].item, this.inventory[k])) {
@@ -178,7 +177,7 @@ function player () {
             //I have no idea how this if statement block interacts with the rest of the program, but it makes things work.
             if (this.inventory[j].item.beingHeld) { 
 
-              this.mouseOccupied = false;
+              mouse.item = null;
               this.inventory[j].item.beingHeld = false;
             }
           }
@@ -236,7 +235,7 @@ function player () {
       for (var k = 0; k < 8; k++) {
 
         //If mouse was released over slot k
-        if (mouseIsTouching(lootBagList[this.isViewingLoot[0]].inventory[k]) && this.mouseOccupied) {
+        if (mouseIsTouching(lootBagList[this.isViewingLoot[0]].inventory[k]) && mouse.item) {
 
           //Move/Swap item to loot bag inventory slot
           if (hitboxIntersectCheck(this.inventory[j].item, lootBagList[this.isViewingLoot[0]].inventory[k])) {
@@ -245,15 +244,26 @@ function player () {
             break;
           }
         }
+        //If not dropping item into specific slot
+        else {
+
+          //Drop into loot bag being viewed
+          lootBagList[this.isViewingLoot[0]].addToInventory(this.inventory[j].item);
+
+          //Clear item from it's original slot
+          this.inventory[j].item = null;
+
+          break;
+        }
       }
     }
-    //Create new loot bag and drop.
+    //Create new loot bag and drop
     else if (this.isViewingLoot[0] == -1) {
 
       lootBagList.push(new lootBag(this.X, this.Y, lootBagPics[0]));
       lootBagList[lootBagList.length - 1].addToInventory(this.inventory[j].item);
 
-      //Clear item from it's original slot.
+      //Clear item from it's original slot
       this.inventory[j].item = null;
     }
   }
@@ -644,14 +654,14 @@ function lootBag (defaultX, defaultY, imageGiven) {
       if (this.inventory[j].item) {
 
         //Give Item if Shift Clicking
-        if (mouse.clicked && keys.SHIFT && mouseIsTouching(this.inventory[j]) && !playerList[0].mouseOccupied) {
+        if (mouse.clicked && keys.SHIFT && mouseIsTouching(this.inventory[j]) && !mouse.item) {
 
           this.inventory[j].giveItem();
           this.checkIfEmpty();
           break;
         }
         //Select item if clicking it and not holding anything else
-        if (mouse.clicked && mouseIsTouching(this.inventory[j].item) && !playerList[0].mouseOccupied) {
+        if (mouse.clicked && mouseIsTouching(this.inventory[j].item) && !mouse.item) {
           
           this.inventory[j].item.beingHeld = true;
 
@@ -659,7 +669,7 @@ function lootBag (defaultX, defaultY, imageGiven) {
           mouse.item = this.inventory[j].item;
         }
         //Hold item while mouse is held
-        else if (mouse.clicked && this.inventory[j].item.beingHeld && playerList[0].mouseOccupied) {
+        else if (mouse.clicked && this.inventory[j].item.beingHeld && mouse.item) {
 
           //Prevent else statement...
         }
@@ -670,7 +680,7 @@ function lootBag (defaultX, defaultY, imageGiven) {
           for (var k = 0; k < this.inventory.length; k++) {
 
             //If mouse was released over slot k
-            if (mouseIsTouching(this.inventory[k]) && playerList[0].mouseOccupied) {
+            if (mouseIsTouching(this.inventory[k]) && mouse.item) {
 
               //Move/Swap item to new inventory slot
               if (hitboxIntersectCheck(this.inventory[j].item, this.inventory[k])) {
@@ -684,7 +694,7 @@ function lootBag (defaultX, defaultY, imageGiven) {
           for (var k = 0; k < playerList[0].inventory.length; k++) {
 
             //If mouse was released over slot k
-            if (mouseIsTouching(playerList[0].inventory[k]) && playerList[0].mouseOccupied) {
+            if (mouseIsTouching(playerList[0].inventory[k]) && mouse.item) {
 
               //Move/Swap item to new inventory slot
               if (hitboxIntersectCheck(this.inventory[j].item, playerList[0].inventory[k])) {
@@ -703,7 +713,7 @@ function lootBag (defaultX, defaultY, imageGiven) {
             //I have no idea how this if statement block interacts with the rest of the program, but it makes things work.
             if (this.inventory[j].item.beingHeld) { 
 
-              playerList[0].mouseOccupied = false;
+              mouse.item = null;
               this.inventory[j].item.beingHeld = false;
             }
           }
@@ -752,7 +762,6 @@ function inventorySlot (defaultX, defaultY, col, row, itemGiven) {
 
       this.item.X = mouse.X - (this.item.width / 2);
       this.item.Y = mouse.Y - (this.item.height / 2);
-      playerList[0].mouseOccupied = true;
 
     } else if (this.item) {
 
@@ -1451,7 +1460,7 @@ function drawGameScreen () {
     movePlayer();
     moveEnemy();
 
-    if ((mouse.clicked || keys.T) && playerList[0].weaponCooldown <= 0 && !playerList[0].mouseOccupied) { newBullet(); }
+    if ((mouse.clicked || keys.T) && playerList[0].weaponCooldown <= 0 && !mouse.item) { newBullet(); }
     if (keys.B && playerList[0].MP >= playerList[0].special_MP_cost && playerList[0].specialCooldown <= 0) { spellBomb(); }
 
     movePlayerBullet();
