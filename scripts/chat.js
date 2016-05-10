@@ -45,17 +45,30 @@ function displayChat () {
   //Text above player
   if (chatLog.length > 0) {
 
-    var textWidth = ctx.measureText(chatLog[chatLog.length - 1][0]).width + 5;
+    //Max text bubble width;
+    var maxBubbleWidth = 80;
+
+    //Text box dimensions.
+    var textBoxWidth = ctx.measureText(chatLog[chatLog.length - 1][0]).width + 5;
+    var textBoxHeight = 20;
 
     if (chatLog[chatLog.length - 1][2] <= 200 ) {
 
+      //Textbox/Text location
+      var textBoxX = playerList[0].X + (playerList[0].width / 2) - (textBoxWidth / 2);
+      var textBoxY = playerList[0].Y - 30;
+
+      //White background for text
       ctx.fillStyle = "#DDDDDD";
-      ctx.fillRect(playerList[0].X + (playerList[0].width / 2) - (textWidth / 2), playerList[0].Y - 30, textWidth, 20);
+      ctx.fillRect(textBoxX, textBoxY, textBoxWidth, textBoxHeight);
+
+      //Outline for text background
       ctx.fillStyle = "black";
       ctx.lineWidth = 0.7;
-      ctx.strokeRect(playerList[0].X + (playerList[0].width / 2) - (textWidth / 2), playerList[0].Y - 30, textWidth, 20);
-      ctx.fillText(chatLog[chatLog.length - 1][0], playerList[0].X + (playerList[0].width / 2) - (textWidth / 2), playerList[0].Y - 14);
+      ctx.strokeRect(textBoxX, textBoxY, textBoxWidth, textBoxHeight);
 
+      //Text displayed
+      ctx.fillText(chatLog[chatLog.length - 1][0], textBoxX, playerList[0].Y - 14);
     };
   };
 

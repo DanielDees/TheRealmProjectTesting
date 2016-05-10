@@ -28,7 +28,6 @@ var keys = {
 };
 
 //MOUSE AND KEYBOARD =============
-
 var mouse = {
 
   //Mouse Location
@@ -58,6 +57,7 @@ var mouse = {
     }
   }
 }
+
 function mousePos (e) {
 
   if (!mie) {
