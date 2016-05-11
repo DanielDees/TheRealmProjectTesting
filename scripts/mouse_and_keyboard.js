@@ -4,26 +4,14 @@ var mie = (navigator.appName == "Microsoft Internet Explorer")?true:false;
 //END CHECK BROWSER TYPE ========
 
 document.onmousemove = mousePos;
-document.onmousedown = function () { 
-
-  mouseClicked = true; 
-  mouse.clicked = true;
-};
-document.onmouseup = function () { 
-
-  mouseClicked = false;
-  mouse.clicked = false;
-};
+document.onmousedown = function () { mouse.clicked = true; };
+document.onmouseup = function () { mouse.clicked = false; };
 document.onkeypress = keyClick;
 document.onkeydown = getKeyDown;
 document.onkeyup = keyClear;
 
 //For chat
 var str = "";
-
-var mouseClicked = false;
-var mouseX = 0;
-var mouseY = 0;
 var keyButton = "";
 
 //Keyboard keys used in game
@@ -50,20 +38,32 @@ var mouse = {
   //Replacement for Item.beingHeld
   item: null,
 
-  //Replacement for mouseOccupied.
-  clicked: false
+  //Replacement for mouseOccupied
+  clicked: false,
+
+  //Draw Item being held
+  drawItem: function() {
+
+    //Update item location
+    this.item.X = mouse.X - (this.item.width / 2);
+    this.item.Y = mouse.Y - (this.item.height / 2);
+
+    //Render
+    this.item.draw();
+  }
 }
 function mousePos (e) {
 
   if (!mie) {
 
-    mouseX = e.pageX + FRAME_OF_REFERENCE[0];
-    mouseY = e.pageY + FRAME_OF_REFERENCE[1];
+    mouse.X = e.pageX + FRAME_OF_REFERENCE[0];
+    mouse.Y = e.pageY + FRAME_OF_REFERENCE[1];
   } else {
 
     e = event || window.event;
-    mouseX = e.clientX + document.body.scrollLeft + FRAME_OF_REFERENCE[0];
-    mouseY = e.clientY + document.body.scrollTop + FRAME_OF_REFERENCE[1];
+
+    mouse.X = e.clientX + document.body.scrollLeft + FRAME_OF_REFERENCE[0];
+    mouse.Y = e.clientY + document.body.scrollTop + FRAME_OF_REFERENCE[1];
   };
 
   if (e.shiftKey) { keys.SHIFT = true; } else { keys.SHIFT = false; };

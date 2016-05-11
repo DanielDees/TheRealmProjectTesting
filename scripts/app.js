@@ -128,18 +128,21 @@ function player () {
       if (this.inventory[j].item) {
 
         //Give Item if Shift Clicking
-        if (mouseClicked && keys.SHIFT && mouseIsTouching(this.inventory[j]) && !this.mouseOccupied) {
+        if (mouse.clicked && keys.SHIFT && mouseIsTouching(this.inventory[j]) && !this.mouseOccupied) {
 
           this.inventory[j].giveItem();
           break;
         }
         //Select item if clicking it and not holding anything else
-        if (mouseClicked && mouseIsTouching(this.inventory[j].item) && !this.mouseOccupied) {
+        if (mouse.clicked && mouseIsTouching(this.inventory[j].item) && !this.mouseOccupied) {
           
           this.inventory[j].item.beingHeld = true;
+
+          //Give mouse the item.
+          mouse.item = this.inventory[j].item;
         }
         //Hold item while mouse is held
-        else if (mouseClicked && this.inventory[j].item.beingHeld && this.mouseOccupied) {
+        else if (mouse.clicked && this.inventory[j].item.beingHeld && this.mouseOccupied) {
 
           //Prevent else statement...
         }
@@ -197,7 +200,7 @@ function player () {
         else { this.equipInv[col].draw(i); }
 
         //Draw Item Description
-        if (!mouseClicked && this.equipInv[col].item) {
+        if (!mouse.clicked && this.equipInv[col].item) {
 
           drawItemDescription(this.equipInv[col].item); 
         }
@@ -217,7 +220,7 @@ function player () {
         else { this.inventory[col].draw(i); }
 
         //Draw Item Description
-        if (!mouseClicked && this.inventory[col].item) { 
+        if (!mouse.clicked && this.inventory[col].item) { 
 
           drawItemDescription(this.inventory[col].item); 
         }
@@ -341,8 +344,8 @@ function player () {
 function playerBullet (defaultXspeed, defaultYspeed, defaultHeight, defaultWidth, angleSend, mouseXSent, mouseYSent, imageGiven) {
 
   //Calculates angle of attack
-  var deltaY = playerList[0].Y + (playerList[0].height / 2) - mouseY;
-  var deltaX = playerList[0].X + (playerList[0].width / 2) - mouseX;
+  var deltaY = playerList[0].Y + (playerList[0].height / 2) - mouse.Y;
+  var deltaX = playerList[0].X + (playerList[0].width / 2) - mouse.X;
   this.angle = angleSend * (Math.PI / 180) || Math.atan2(-deltaY, -deltaX);
 
   this.damage = (playerList[0].damage / 10) * playerList[0].damageVariance();
@@ -641,19 +644,19 @@ function lootBag (defaultX, defaultY, imageGiven) {
       if (this.inventory[j].item) {
 
         //Give Item if Shift Clicking
-        if (mouseClicked && keys.SHIFT && mouseIsTouching(this.inventory[j]) && !playerList[0].mouseOccupied) {
+        if (mouse.clicked && keys.SHIFT && mouseIsTouching(this.inventory[j]) && !playerList[0].mouseOccupied) {
 
           this.inventory[j].giveItem();
           this.checkIfEmpty();
           break;
         }
         //Select item if clicking it and not holding anything else
-        if (mouseClicked && mouseIsTouching(this.inventory[j].item) && !playerList[0].mouseOccupied) {
+        if (mouse.clicked && mouseIsTouching(this.inventory[j].item) && !playerList[0].mouseOccupied) {
           
           this.inventory[j].item.beingHeld = true;
         }
         //Hold item while mouse is held
-        else if (mouseClicked && this.inventory[j].item.beingHeld && playerList[0].mouseOccupied) {
+        else if (mouse.clicked && this.inventory[j].item.beingHeld && playerList[0].mouseOccupied) {
 
           //Prevent else statement...
         }
@@ -711,7 +714,7 @@ function lootBag (defaultX, defaultY, imageGiven) {
         this.inventory[col].draw(i);
 
         //Draw Item Description
-        if (!mouseClicked && this.inventory[col].item) { 
+        if (!mouse.clicked && this.inventory[col].item) { 
 
           drawItemDescription(this.inventory[col].item); 
         }
@@ -744,8 +747,8 @@ function inventorySlot (defaultX, defaultY, col, row, itemGiven) {
     //If item in slot is being held by mouse
     if (this.item && this.item.beingHeld) {
 
-      this.item.X = mouseX - (this.width / 2);
-      this.item.Y = mouseY - (this.height / 2);
+      this.item.X = mouse.X - (this.width / 2);
+      this.item.Y = mouse.Y - (this.height / 2);
       playerList[0].mouseOccupied = true;
 
     } else if (this.item) {
@@ -785,7 +788,7 @@ function inventorySlot (defaultX, defaultY, col, row, itemGiven) {
 
       this.item.giveItem(); 
       this.item = null;
-      mouseClicked = false;
+      mouse.clicked = false;
     }
   }
 }
@@ -903,13 +906,13 @@ function movement_Pattern_Chase (thing) {
 //PLAYER BULLETS =================
 function spellBomb () {
 
-  for (var i = 0; i < 21; i++) { newBullet(i * 18, mouseX, mouseY); }
+  for (var i = 0; i < 21; i++) { newBullet(i * 18, mouse.X, mouse.Y); }
 
   playerList[0].MP -= playerList[0].special_MP_cost;
   playerList[0].specialCooldown = playerList[0].MAX_SPECIAL_COOLDOWN;
 } 
 function newBullet (angleSend, mouseXSent, mouseYSent) { 
-  //Xspeed, Yspeed, width, height, anglesend, mouseXsent, mouseYsent, Image
+  //Xspeed, Yspeed, width, height, anglesend, mouse.Xsent, mouse.Ysent, Image
   bulletList.push(new playerBullet(10, 10, 26, 26, angleSend, mouseXSent, mouseYSent, playerList[0].bulletImage));
 
   playerList[0].weaponCooldown = playerList[0].MAX_WEAPON_COOLDOWN();
@@ -1008,9 +1011,11 @@ function drawDebugInfo(absX, absY) {
     //["Y", playerList[0].Y.toFixed(0)],
     ["Slot", whichSlot],
     //["ScreenType", screenType], 
-    //["FRAME_OF_REFERENCE", FRAME_OF_REFERENCE[0].toFixed(0) + "x | " + FRAME_OF_REFERENCE[1].toFixed(0) + "y"], 
-    //["mouseX", mouseX.toFixed(0)], 
-    //["mouseY", mouseY.toFixed(0)]
+    //["FRAME_OF_REFERENCE", FRAME_OF_REFERENCE[0].toFixed(0) + "x | " + FRAME_OF_REFERENCE[1].toFixed(0) + "y"],
+    ["mouse.clicked", mouse.clicked],
+    ["mouse.item", mouse.item],
+    ["mouse.X", mouse.X.toFixed(0)],
+    ["mouse.Y", mouse.Y.toFixed(0)]
   ];
 
   for (var i = 0; i < info.length; i++) {
@@ -1038,7 +1043,7 @@ function drawExpBar(absX, absY, rightOfScreen) {
   }
 
   //Display Level Text
-  if (mouseX > rightOfScreen - 190 && mouseX < rightOfScreen - 36 && mouseY > 242 + FRAME_OF_REFERENCE[1] && mouseY < 262 + FRAME_OF_REFERENCE[1]) {
+  if (mouse.X > rightOfScreen - 190 && mouse.X < rightOfScreen - 36 && mouse.Y > 242 + FRAME_OF_REFERENCE[1] && mouse.Y < 262 + FRAME_OF_REFERENCE[1]) {
 
     ctx.fillStyle = "white";
 
@@ -1062,7 +1067,7 @@ function drawHpBar (absX, absY, rightOfScreen) {
   ctx.fillRect(canvas.width - 190 + absX, 260 + absY, playerList[0].HP * (150 / playerList[0].MAX_HP), 18);
 
   //Display HP Text
-  if (mouseX > rightOfScreen - 190 && mouseX < rightOfScreen - 36 && mouseY > 262 + FRAME_OF_REFERENCE[1] && mouseY < 282 + FRAME_OF_REFERENCE[1]) {
+  if (mouse.X > rightOfScreen - 190 && mouse.X < rightOfScreen - 36 && mouse.Y > 262 + FRAME_OF_REFERENCE[1] && mouse.Y < 282 + FRAME_OF_REFERENCE[1]) {
 
     ctx.fillStyle = "white";
     ctx.fillText(playerList[0].HP.toFixed(0) + " / " + playerList[0].MAX_HP, canvas.width - 150 + absX, 276 + absY);
@@ -1077,7 +1082,7 @@ function drawManaBar (absX, absY, rightOfScreen) {
   ctx.fillRect(canvas.width - 190 + absX, 280 + absY, playerList[0].MP * (150 / playerList[0].MAX_MP), 18);
 
   //Display Mana Text
-  if (mouseX > rightOfScreen - 190 && mouseX < rightOfScreen - 36 && mouseY > 282 + FRAME_OF_REFERENCE[1] && mouseY < 302 + FRAME_OF_REFERENCE[1]) {
+  if (mouse.X > rightOfScreen - 190 && mouse.X < rightOfScreen - 36 && mouse.Y > 282 + FRAME_OF_REFERENCE[1] && mouse.Y < 302 + FRAME_OF_REFERENCE[1]) {
 
     ctx.fillStyle = "white";
     ctx.fillText(playerList[0].MP.toFixed(0) + " / " + playerList[0].MAX_MP, canvas.width - 150 + absX, 296 + absY);
@@ -1303,7 +1308,7 @@ function mouseIsTouching (item) {
 
   //If error, ensure items have this.height / this.width.
   try {
-    if (mouseY < item.bottom() && mouseY > item.top() && mouseX > item.left() && mouseX < item.right()) {
+    if (mouse.Y < item.bottom() && mouse.Y > item.top() && mouse.X > item.left() && mouse.X < item.right()) {
 
       return true;
     }
@@ -1318,17 +1323,17 @@ function drawItemDescription (myThingy) {
 
     //Box
     ctx.fillStyle = "#AAA";
-    ctx.fillRect(mouseX, mouseY, -200, -280);
+    ctx.fillRect(mouse.X, mouse.Y, -200, -280);
     ctx.strokeStyle = "#444";
     ctx.lineWidth = 3;
-    ctx.strokeRect(mouseX, mouseY, -200, -280);
+    ctx.strokeRect(mouse.X, mouse.Y, -200, -280);
 
     //Text
     ctx.fillStyle = "#111";
-    ctx.fillText(myThingy.itemName, mouseX - 190, mouseY - 260);
+    ctx.fillText(myThingy.itemName, mouse.X - 190, mouse.Y - 260);
     ctx.font = "14px Palatino";
-    ctx.fillText(myThingy.itemEffectText, mouseX - 190, mouseY - 230);
-    ctx.fillText(myThingy.itemDescription, mouseX - 190, mouseY - 200);
+    ctx.fillText(myThingy.itemEffectText, mouse.X - 190, mouse.Y - 230);
+    ctx.fillText(myThingy.itemDescription, mouse.X - 190, mouse.Y - 200);
   }
 }
 function isEqualTo () {
@@ -1362,12 +1367,12 @@ function placeButtonHere (text, X, Y, screenTypeGiven, font, buttonColor, functi
   //ctx.strokeRect(X, Y, width, height);
 
   //If mouse is over button
-  if (mouseX > X && mouseX < X + width && mouseY > Y && mouseY < Y + height) {
+  if (mouse.X > X && mouse.X < X + width && mouse.Y > Y && mouse.Y < Y + height) {
     
     //Hover color
     ctx.fillStyle = "#EBE1A0";
 
-    if (mouseClicked) {
+    if (mouse.clicked) {
 
       //For debug
       console.log("Positon: " + playerList[0].X + "x | " + playerList[0].Y + "y" + "\nGame Screen: " + screenType);
@@ -1376,7 +1381,7 @@ function placeButtonHere (text, X, Y, screenTypeGiven, font, buttonColor, functi
       if (functionToPerform) { functionToPerform(); }
 
       screenType = screenTypeGiven;
-      mouseClicked = false;
+      mouse.clicked = false;
     }
   }
   
@@ -1405,8 +1410,8 @@ function checkFrameOfReference(Xgiven, Ygiven) {
 
     ctx.translate(x, y);
 
-    mouseX -= x;
-    mouseY -= y;
+    mouse.X -= x;
+    mouse.Y -= y;
 
     FRAME_OF_REFERENCE[0] = Xgiven;
     FRAME_OF_REFERENCE[1] = Ygiven;
@@ -1443,7 +1448,7 @@ function drawGameScreen () {
     movePlayer();
     moveEnemy();
 
-    if ((mouseClicked || keys.T) && playerList[0].weaponCooldown <= 0 && !playerList[0].mouseOccupied) { newBullet(); }
+    if ((mouse.clicked || keys.T) && playerList[0].weaponCooldown <= 0 && !playerList[0].mouseOccupied) { newBullet(); }
     if (keys.B && playerList[0].MP >= playerList[0].special_MP_cost && playerList[0].specialCooldown <= 0) { spellBomb(); }
 
     movePlayerBullet();
@@ -1604,11 +1609,11 @@ function drawClassSelectionScreen () {
   ctx.shadowBlur = 0;
 
   for (var i = 0; i < classSelectionPics.length; i++) {
-    if (mouseX > 260 + (i * 90) && mouseX < 260 + (i * 90) + 64 && mouseY > canvas.height / 2 && mouseY < (canvas.height / 2) + 64) {
+    if (mouse.X > 260 + (i * 90) && mouse.X < 260 + (i * 90) + 64 && mouse.Y > canvas.height / 2 && mouse.Y < (canvas.height / 2) + 64) {
 
       ctx.shadowColor = "white";
 
-      if (mouseClicked) { 
+      if (mouse.clicked) { 
 
         playerList[0].Image = classSelectionPics[i];
 
