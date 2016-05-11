@@ -124,7 +124,7 @@ function keyClick (e) {
   if ((e.which == 13 || e.keyCode == 13 || keyButton == "/") && !keys.ENTER) { keys.ENTER = true; }
     else if ((e.which == 13 || e.keyCode == 13) && keys.ENTER) { keys.ENTER = false; submitChat(playerList[0].userName); };
 
-  if (!(e.which == 13 || e.keyCode == 13) && keys.ENTER && str.length < 50) {
+  if (!(e.which == 13 || e.keyCode == 13) && keys.ENTER && str.length < 300) {
 
     //Capitalize letters if needed
     if (!keys.SHIFT) { str += keyButton.toLowerCase(); }
