@@ -59,11 +59,11 @@ function displayChat () {
       ctx.fillRect(textBoxX, textBoxY, textBoxWidth, textBoxHeight);
 
       //Outline for text background
-      ctx.fillStyle = "black";
       ctx.lineWidth = 0.7;
       ctx.strokeRect(textBoxX, textBoxY, textBoxWidth, textBoxHeight);
 
       //Text displayed
+      ctx.fillStyle = "black";
       ctx.fillText(chatLog[chatLog.length - 1][0], textBoxX, playerList[0].Y - 14);
     };
   };
