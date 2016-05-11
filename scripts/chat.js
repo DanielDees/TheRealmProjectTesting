@@ -90,10 +90,10 @@ function displayChat () {
     //Text displayed
     ctx.fillStyle = "black";
     for (var i = 0; i < listTextToShow.length; i++) {
+
       var currentText = listTextToShow[i];
       ctx.fillText(currentText, textBoxX, playerList[0].Y + 6 - textBoxHeight + lineHeight * i);
     }
-
   }
 
   //Text on left of screen
@@ -169,32 +169,37 @@ function checkDevCommands () {
 
 function getWrapedText(text, maxWidth) {
 
-  var arr = new Array();
+  var arr = [];
+  var currentLine = '';
 
-  var current = '';
-
+  //Loop through text passed
   for (var i = 0; i < text.length; i++) {
-    var lineTest = current + text.charAt(i) + '';
+
+    var lineTest = currentLine + text.charAt(i) + '';
     var lineWidth = ctx.measureText(lineTest).width;
 
+    //Once text in line is >= max line width
     if (lineWidth > maxWidth - 5) {
-      if (text.charAt(i) !== " ")
-        current += "-"
-      arr.push(current);
-      current = " " + text.charAt(i);
+
+      //Add - if a word is being broken
+      if (text.charAt(i) !== " ") { currentLine += "-" ; }
+
+      //Push line to array
+      arr.push(currentLine);
+
+      //Start new line
+      currentLine = " " + text.charAt(i);
     }
     else {
-      current = lineTest;
+
+      currentLine = lineTest;
     }
   }
 
-  arr.push(current);
+  arr.push(currentLine);
 
   return arr;
-
 }
-
-
 
 //-----------------------------
 //End file
