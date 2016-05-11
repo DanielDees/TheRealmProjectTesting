@@ -270,7 +270,7 @@ function player () {
       this.drawInventorySlots(i);
     }
   }
-  this.dropItemFromSlot = function(j) {
+  this.dropItemFromSlot = function(i) {
 
     //Drop into existing loot bag.
     if (this.isViewingLoot[0] != -1) {
@@ -281,23 +281,23 @@ function player () {
         //Move/Swap item to loot bag inventory slot
         if (mouseIsTouching(lootBagList[this.isViewingLoot[0]].inventory[k]) && mouse.item) {
 
-          swapItems(this.inventory[j], lootBagList[this.isViewingLoot[0]].inventory[k]);
+          swapItems(this.inventory[i], lootBagList[this.isViewingLoot[0]].inventory[k]);
           break;
         }
         //If not dropping item into specific slot
         else if (mouse.X < canvas.width - 190 + FRAME_OF_REFERENCE[0]) {
 
           //Drop into loot bag being viewed
-          lootBagList[this.isViewingLoot[0]].addToInventory(this.inventory[j].item);
+          lootBagList[this.isViewingLoot[0]].addToInventory(this.inventory[i].item);
 
           //Clear item from it's original slot
-          this.inventory[j].item = null;
+          this.inventory[i].item = null;
           break;
         }
         //If not dropped into inventory slot, return to original slot
         else {
 
-          this.inventory[j].item.beingHeld = false;
+          this.inventory[i].item.beingHeld = false;
         }
       }
     }
@@ -305,10 +305,10 @@ function player () {
     else if (this.isViewingLoot[0] == -1) {
 
       lootBagList.push(new lootBag(this.X, this.Y, lootBagPics[0]));
-      lootBagList[lootBagList.length - 1].addToInventory(this.inventory[j].item);
+      lootBagList[lootBagList.length - 1].addToInventory(this.inventory[i].item);
 
       //Clear item from it's original slot
-      this.inventory[j].item = null;
+      this.inventory[i].item = null;
     }
   }
   //Leveling up
@@ -1433,20 +1433,23 @@ function drawDebugInfo(absX, absY) {
   //FOR BUG TESTING
   ctx.fillStyle = "red";
 
+  var mouseItem;
+  if (mouse.item) { mouseItem = mouse.item.itemName; }
+
   //Comment/uncomment to hide/show
   var info = [
-    ["Portals", portalList.length], 
-    ["LootBags", lootBagList.length], 
-    ["ViewingLoot", playerList[0].isViewingLoot], 
+    //["Portals", portalList.length], 
+    //["LootBags", lootBagList.length], 
+    //["ViewingLoot", playerList[0].isViewingLoot], 
     //["X", playerList[0].X.toFixed(0)], 
     //["Y", playerList[0].Y.toFixed(0)],
     ["Slot", whichSlot],
     //["ScreenType", screenType], 
     //["FRAME_OF_REFERENCE", FRAME_OF_REFERENCE[0].toFixed(0) + "x | " + FRAME_OF_REFERENCE[1].toFixed(0) + "y"],
-    ["mouse.clicked", mouse.clicked],
-    ["mouse.item", mouse.item],
-    ["mouse.X", mouse.X.toFixed(0)],
-    ["mouse.Y", mouse.Y.toFixed(0)]
+    //["mouse.clicked", mouse.clicked],
+    //["mouse.item", mouseItem],
+    //["mouse.X", mouse.X.toFixed(0)],
+    //["mouse.Y", mouse.Y.toFixed(0)]
   ];
 
   for (var i = 0; i < info.length; i++) {
