@@ -31,7 +31,7 @@ function submitChat (personSpeaking) {
     //Keeps a maximum of 10 logs
     if (strHistory.length > 10) {
 
-      strHistory = strHistory.slice(0, 10); 
+      strHistory = strHistory.slice(0, 10);
     }
 
     //In-game Dev-Tools
@@ -58,30 +58,42 @@ function displayChat () {
   if (chatLog.length > 0) {
 
     //Max text bubble width;
-    var maxBubbleWidth = 80;
+    var maxBubbleWidth = 150;
+
+    var currentMessage = chatLog[chatLog.length - 1];
 
     //Text box dimensions.
-    var textBoxWidth = ctx.measureText(chatLog[chatLog.length - 1][0]).width + 5;
-    var textBoxHeight = 20;
+    var textBoxWidth = ctx.measureText(currentMessage[0]).width + 5;
+    if (textBoxWidth > maxBubbleWidth)
+      textBoxWidth = maxBubbleWidth;
 
-    if (chatLog[chatLog.length - 1][2] <= 200 ) {
+    //this return an array of each lines to print, is used here because the number of lines is needed
+    //before displaying the text
+    var listTextToShow = getWrapedText(currentMessage[0], maxBubbleWidth);
+    var numberOfLines = listTextToShow.length;
 
-      //Textbox/Text location
-      var textBoxX = playerList[0].X + (playerList[0].width / 2) - (textBoxWidth / 2);
-      var textBoxY = playerList[0].Y - 30;
+    var lineHeight = 20;
+    var textBoxHeight = lineHeight * numberOfLines;
 
-      //White background for text
-      ctx.fillStyle = "#DDDDDD";
-      ctx.fillRect(textBoxX, textBoxY, textBoxWidth, textBoxHeight);
+    //Textbox/Text location
+    var textBoxX = playerList[0].X + (playerList[0].width / 2) - (textBoxWidth / 2);
+    var textBoxY = playerList[0].Y - 10 - textBoxHeight;
 
-      //Outline for text background
-      ctx.lineWidth = 0.7;
-      ctx.strokeRect(textBoxX, textBoxY, textBoxWidth, textBoxHeight);
+    //White background for text
+    ctx.fillStyle = "#DDDDDD";
+    ctx.fillRect(textBoxX, textBoxY, textBoxWidth, textBoxHeight);
 
-      //Text displayed
-      ctx.fillStyle = "black";
-      ctx.fillText(chatLog[chatLog.length - 1][0], textBoxX, playerList[0].Y - 14);
+    //Outline for text background
+    ctx.lineWidth = 0.7;
+    ctx.strokeRect(textBoxX, textBoxY, textBoxWidth, textBoxHeight);
+
+    //Text displayed
+    ctx.fillStyle = "black";
+    for (var i = 0; i < listTextToShow.length; i++) {
+      var currentText = listTextToShow[i];
+      ctx.fillText(currentText, textBoxX, playerList[0].Y + 6 - textBoxHeight + lineHeight * i);
     }
+
   }
 
   //Text on left of screen
@@ -154,6 +166,36 @@ function checkDevCommands () {
     str = "";
   }
 }
+
+function getWrapedText(text, maxWidth) {
+
+  var arr = new Array();
+
+  var current = '';
+
+  for (var i = 0; i < text.length; i++) {
+    var lineTest = current + text.charAt(i) + '';
+    var lineWidth = ctx.measureText(lineTest).width;
+
+    if (lineWidth > maxWidth - 5) {
+      if (text.charAt(i) !== " ")
+        current += "-"
+      arr.push(current);
+      current = " " + text.charAt(i);
+    }
+    else {
+      current = lineTest;
+    }
+  }
+
+  arr.push(current);
+
+  return arr;
+
+}
+
+
+
 //-----------------------------
 //End file
 //-----------------------------
