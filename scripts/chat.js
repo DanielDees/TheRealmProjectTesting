@@ -8,7 +8,6 @@ var chatLog = [];
 function activateChat () {
 
   //Outline for text box while user is typing
-  ctx.shadowColor = "#000";
   ctx.strokeStyle = "#000";
   ctx.lineWidth = 1;
   ctx.strokeRect(5 + FRAME_OF_REFERENCE[0], canvas.height - 26 + FRAME_OF_REFERENCE[1], canvas.width - 210, 20);
@@ -37,7 +36,6 @@ function submitChat (personSpeaking) {
 }
 function displayChat () {
 
-  ctx.shadowColor = "#000";
   ctx.strokeStyle = "#000";
 
   //Text above player

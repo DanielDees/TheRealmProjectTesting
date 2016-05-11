@@ -1415,7 +1415,6 @@ function placeButtonHere (text, X, Y, screenTypeGiven, font, buttonColor, functi
     }
   }
   
-  ctx.shadowColor = "#000";
   ctx.shadowBlur = 10;
   ctx.fillText(text, X + 6, Y + textHeight);
   ctx.shadowBlur = 0;
@@ -1666,7 +1665,6 @@ function drawClassSelectionScreen () {
   ctx.font = "30px Palatino";
   ctx.fillStyle = "#CC0000";
   ctx.shadowBlur = 10;
-  ctx.shadowColor = "#000";
   ctx.fillText("Class Selection", 290, 200);
   ctx.shadowBlur = 0;
 
