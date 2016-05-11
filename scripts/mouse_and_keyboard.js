@@ -28,7 +28,6 @@ var keys = {
 };
 
 //MOUSE AND KEYBOARD =============
-
 var mouse = {
 
   //Mouse Location
@@ -44,14 +43,21 @@ var mouse = {
   //Draw Item being held
   drawItem: function() {
 
-    //Update item location
-    this.item.X = mouse.X - (this.item.width / 2);
-    this.item.Y = mouse.Y - (this.item.height / 2);
+    //Delete mouse item.
+    if (!this.clicked) { this.item = null; }
 
-    //Render
-    this.item.draw();
+    if (this.item) {
+
+      //Update item location
+      this.item.X = mouse.X - (this.item.width / 2);
+      this.item.Y = mouse.Y - (this.item.height / 2);
+
+      //Render
+      this.item.draw();
+    }
   }
 }
+
 function mousePos (e) {
 
   if (!mie) {
