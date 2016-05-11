@@ -136,7 +136,7 @@ function keyClick (e) {
       indexHistory++;
 
       //Stop at oldest message
-      if (indexHistory >= strHistory.length) { 
+      if (indexHistory >= strHistory.length) {
 
         indexHistory = strHistory.length - 1;
       }
@@ -144,14 +144,14 @@ function keyClick (e) {
       str = strHistory[indexHistory];
     }
     //Down arrow shows more recently sent messages
-    else if (e.which == 40 || e.keyCode == 40) {
+    else if (!keys.SHIFT && (e.which == 40 || e.keyCode == 40)) {
 
       indexHistory--;
 
       //Stop at most recent message
-      if (indexHistory < 0) { 
+      if (indexHistory < 0) {
 
-        indexHistory = 0; 
+        indexHistory = 0;
       }
 
       str = strHistory[indexHistory];
