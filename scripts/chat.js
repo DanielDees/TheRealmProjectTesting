@@ -20,10 +20,18 @@ function activateChat () {
 }
 function submitChat (personSpeaking) {
 
-  //In-game Dev-Tools
-  checkDevCommands();
-  
   if (str.length > 0) {
+
+    //When the text is being submited, push the text to the beginning of the history
+    strHistory.unshift(str);
+    //default -1, will be changed with the keypress so it will never look for the index -1!
+    indexHistory = -1;
+    //If the history is longer then 10, we slice it to keep a maximum of 10 logs
+    if (strHistory.length > 10)
+      strHistory = strHistory.slice(0, 10);
+
+    //In-game Dev-Tools
+    checkDevCommands();
 
     //Text, Ypos, age of text, user who submitted
     chatLog.push([" " + str, 16, 0, personSpeaking]);
@@ -72,7 +80,7 @@ function displayChat () {
   ctx.fillStyle = "#FFF";
   ctx.shadowBlur = 10;
   for (var i = 0; i < chatLog.length; i++) {
-  
+
     //Display text on left of screen
     ctx.fillText(chatLog[i][3] + ": " + chatLog[i][0], 10 + FRAME_OF_REFERENCE[0], canvas.height - chatLog[i][1] + FRAME_OF_REFERENCE[1]);
 
@@ -89,7 +97,7 @@ function checkDevCommands () {
 
   if (str.search("/") == 0) {
 
-    if (str.search("/spawnRate") == 0) { 
+    if (str.search("/spawnRate") == 0) {
 
       str = str.slice(11, str.length);
 
@@ -99,19 +107,19 @@ function checkDevCommands () {
     }
     else if (str.search("/godMode") == 0) { playerList[0].MAX_HP = 9999999; playerList[0].HP = 9999999; }
     else if (str.search("/levelUp") == 0) { playerList[0].levelUP(); playerList[0].EXP = 0; }
-    else if (str.search("/level") == 0) { 
+    else if (str.search("/level") == 0) {
 
       str = str.slice(7, str.length);
 
       for (var i = playerList[0].level; i < parseInt(str); i++) { playerList[0].levelUP(); };
     }
     else if (str.search("/kill all") == 0) { enemyList = []; }
-    else if (str.search("/reset xy") == 0) { 
+    else if (str.search("/reset xy") == 0) {
 
       playerList[0].X = 4000;
       playerList[0].Y = 4000;
     }
-    else if (str.search("/clearAll") == 0) { 
+    else if (str.search("/clearAll") == 0) {
 
       //Makes sure is empty
       enemies_remaining_in_realm = 100;
