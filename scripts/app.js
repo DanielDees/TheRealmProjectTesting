@@ -232,6 +232,29 @@ function player () {
       }
     }
   }
+  this.drawInventorySlots = function(i) {
+      
+    //Item Inventory
+    for (var col = 0; col < 8; col++) {
+
+      var row = 0;
+      if (col >= 4) { row = 1; }
+      var topInv = 420;
+
+      if (this.inventory.length < 8) { 
+
+        //Default X, Y, col, row, itemGiven
+        this.inventory.push(new inventorySlot(canvas.width - 184, topInv, col, row)); 
+      }
+      else { this.inventory[col].draw(i); }
+
+      //Draw Item Description
+      if (!mouse.clicked && this.inventory[col].item) { 
+
+        drawItemDescription(this.inventory[col].item); 
+      }
+    }
+  }
   this.drawInventory = function() {
 
     //Perform all movement/item swapping needed.
@@ -244,25 +267,7 @@ function player () {
       this.drawEquipmentSlots(i);
 
       //Draw Item Inventory
-      for (var col = 0; col < 8; col++) {
-
-        var row = 0;
-        if (col >= 4) { row = 1; }
-        var topInv = 420;
-
-        if (this.inventory.length < 8) { 
-
-          //Default X, Y, col, row, itemGiven
-          this.inventory.push(new inventorySlot(canvas.width - 184, topInv, col, row)); 
-        }
-        else { this.inventory[col].draw(i); }
-
-        //Draw Item Description
-        if (!mouse.clicked && this.inventory[col].item) { 
-
-          drawItemDescription(this.inventory[col].item); 
-        }
-      }
+      this.drawInventorySlots(i);
     }
   }
   this.dropItemFromSlot = function(j) {
