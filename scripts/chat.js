@@ -15,7 +15,7 @@ function activateChat () {
   //Text displayed while user is typing
   ctx.fillStyle = "#FFF";
   ctx.shadowBlur = 10;
-  ctx.fillText(str, 10 + FRAME_OF_REFERENCE[0], canvas.height - 10 + FRAME_OF_REFERENCE[1]);
+  ctx.fillText(str.slice(str.length - 50, str.length), 10 + FRAME_OF_REFERENCE[0], canvas.height - 10 + FRAME_OF_REFERENCE[1]);
   ctx.shadowBlur = 0;
 }
 function submitChat (personSpeaking) {
@@ -58,7 +58,7 @@ function displayChat () {
   if (chatLog.length > 0) {
 
     //Max text bubble width;
-    var maxBubbleWidth = 150;
+    var maxBubbleWidth = 200;
 
     var currentMessage = chatLog[chatLog.length - 1];
 
@@ -166,7 +166,6 @@ function checkDevCommands () {
     str = "";
   }
 }
-
 function getWrapedText(text, maxWidth) {
 
   var arr = [];
@@ -196,6 +195,7 @@ function getWrapedText(text, maxWidth) {
     }
   }
 
+  //Push line to array
   arr.push(currentLine);
 
   return arr;
