@@ -1053,32 +1053,6 @@ function displayStats () {
   drawHpBar(absX, absY, canvas.width + FRAME_OF_REFERENCE[0]);
   drawManaBar(absX, absY, canvas.width + FRAME_OF_REFERENCE[0]);
 }
-function drawDebugInfo(absX, absY) {
-
-  //FOR BUG TESTING
-  ctx.fillStyle = "red";
-
-  //Comment/uncomment to hide/show
-  var info = [
-    ["Portals", portalList.length], 
-    ["LootBags", lootBagList.length], 
-    ["ViewingLoot", playerList[0].isViewingLoot], 
-    //["X", playerList[0].X.toFixed(0)], 
-    //["Y", playerList[0].Y.toFixed(0)],
-    ["Slot", whichSlot],
-    //["ScreenType", screenType], 
-    //["FRAME_OF_REFERENCE", FRAME_OF_REFERENCE[0].toFixed(0) + "x | " + FRAME_OF_REFERENCE[1].toFixed(0) + "y"],
-    ["mouse.clicked", mouse.clicked],
-    ["mouse.item", mouse.item],
-    ["mouse.X", mouse.X.toFixed(0)],
-    ["mouse.Y", mouse.Y.toFixed(0)]
-  ];
-
-  for (var i = 0; i < info.length; i++) {
-    
-    ctx.fillText(info[i][0] + ": " + info[i][1], 20 + absX, 30 + (20 * i) + absY);
-  }
-}
 function drawExpBar(absX, absY, rightOfScreen) {
 
   //Exp Bar
@@ -1453,6 +1427,32 @@ function swapItems(a, b) {
 
   a.item = b.item;
   b.item = temp;
+}
+function drawDebugInfo(absX, absY) {
+
+  //FOR BUG TESTING
+  ctx.fillStyle = "red";
+
+  //Comment/uncomment to hide/show
+  var info = [
+    ["Portals", portalList.length], 
+    ["LootBags", lootBagList.length], 
+    ["ViewingLoot", playerList[0].isViewingLoot], 
+    //["X", playerList[0].X.toFixed(0)], 
+    //["Y", playerList[0].Y.toFixed(0)],
+    ["Slot", whichSlot],
+    //["ScreenType", screenType], 
+    //["FRAME_OF_REFERENCE", FRAME_OF_REFERENCE[0].toFixed(0) + "x | " + FRAME_OF_REFERENCE[1].toFixed(0) + "y"],
+    ["mouse.clicked", mouse.clicked],
+    ["mouse.item", mouse.item],
+    ["mouse.X", mouse.X.toFixed(0)],
+    ["mouse.Y", mouse.Y.toFixed(0)]
+  ];
+
+  for (var i = 0; i < info.length; i++) {
+    
+    ctx.fillText(info[i][0] + ": " + info[i][1], 20 + absX, 30 + (20 * i) + absY);
+  }
 }
 //END RANDOM TOOLS
 //GAME SCREEN WINDOW =============
