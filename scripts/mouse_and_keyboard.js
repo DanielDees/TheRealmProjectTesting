@@ -125,20 +125,35 @@ function keyClick (e) {
     else if ((e.which == 13 || e.keyCode == 13) && keys.ENTER) { keys.ENTER = false; submitChat(playerList[0].userName); };
 
   if (!(e.which == 13 || e.keyCode == 13) && keys.ENTER && str.length < 50) {
+
+    //Capitalize letters if needed
     if (!keys.SHIFT) { str += keyButton.toLowerCase(); }
     else if (keys.SHIFT) { str += keyButton.toUpperCase(); };
 
-    //Look for up arrow and change the text to the history
+    //Up arrow shows older sent messages
     if (e.which == 38 || e.keyCode == 38) {
+
       indexHistory++;
-      if (indexHistory >= strHistory.length)
-        indexHistory = 0;
+
+      //Stop at oldest message
+      if (indexHistory >= strHistory.length) { 
+
+        indexHistory = strHistory.length - 1;
+      }
+
       str = strHistory[indexHistory];
     }
+    //Down arrow shows more recently sent messages
     else if (e.which == 40 || e.keyCode == 40) {
+
       indexHistory--;
-      if (indexHistory < 0)
-        indexHistory = strHistory.length - 1;
+
+      //Stop at most recent message
+      if (indexHistory < 0) { 
+
+        indexHistory = 0; 
+      }
+
       str = strHistory[indexHistory];
     }
 

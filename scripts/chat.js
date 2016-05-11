@@ -22,23 +22,31 @@ function submitChat (personSpeaking) {
 
   if (str.length > 0) {
 
-    //When the text is being submited, push the text to the beginning of the history
+    //Push text to beginning of history
     strHistory.unshift(str);
-    //default -1, will be changed with the keypress so it will never look for the index -1!
+
+    //Default -1, it's changed on keypress so index -1 is never searched for
     indexHistory = -1;
-    //If the history is longer then 10, we slice it to keep a maximum of 10 logs
-    if (strHistory.length > 10)
-      strHistory = strHistory.slice(0, 10);
+
+    //Keeps a maximum of 10 logs
+    if (strHistory.length > 10) {
+
+      strHistory = strHistory.slice(0, 10); 
+    }
 
     //In-game Dev-Tools
     checkDevCommands();
 
-    //Text, Ypos, age of text, user who submitted
-    chatLog.push([" " + str, 16, 0, personSpeaking]);
+    //If not dev command
+    if (str.length > 0) {
 
-    //Increase Ypos of text on left of screen.
-    for (var i = 0; i < chatLog.length; i++) { chatLog[i][1] += 20; };
-  };
+      //Text, Ypos, age of text, user who submitted
+      chatLog.push([" " + str, 16, 0, personSpeaking]);
+
+      //Increase Ypos of text on left of screen.
+      for (var i = 0; i < chatLog.length; i++) { chatLog[i][1] += 20; }
+    }
+  }
 
   str = "";
 }
@@ -73,8 +81,8 @@ function displayChat () {
       //Text displayed
       ctx.fillStyle = "black";
       ctx.fillText(chatLog[chatLog.length - 1][0], textBoxX, playerList[0].Y - 14);
-    };
-  };
+    }
+  }
 
   //Text on left of screen
   ctx.fillStyle = "#FFF";
@@ -88,8 +96,8 @@ function displayChat () {
     chatLog[i][2]++;
 
     //Delete text if more than 800 age
-    if (chatLog[i][2] > 800) { chatLog.splice(i, 1); };
-  };
+    if (chatLog[i][2] > 800) { chatLog.splice(i, 1); }
+  }
 
   ctx.shadowBlur = 0;
 }
@@ -111,7 +119,7 @@ function checkDevCommands () {
 
       str = str.slice(7, str.length);
 
-      for (var i = playerList[0].level; i < parseInt(str); i++) { playerList[0].levelUP(); };
+      for (var i = playerList[0].level; i < parseInt(str); i++) { playerList[0].levelUP(); }
     }
     else if (str.search("/kill all") == 0) { enemyList = []; }
     else if (str.search("/reset xy") == 0) {
@@ -134,7 +142,7 @@ function checkDevCommands () {
       str = str.slice(13, str.length);
       console.log("Current renderRange: " + (renderRange / tileSize)) + " tiles";
 
-      if (parseInt(str)) { renderRange = parseInt(str) * tileSize; };
+      if (parseInt(str)) { renderRange = parseInt(str) * tileSize; }
     }
     else {
 
@@ -144,7 +152,7 @@ function checkDevCommands () {
 
     //Clear chat
     str = "";
-  };
+  }
 }
 //-----------------------------
 //End file
