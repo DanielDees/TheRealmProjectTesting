@@ -12,6 +12,9 @@ document.onkeyup = keyClear;
 
 //For chat
 var str = "";
+var strHistory = [""];
+var indexHistory = -1;
+
 var keyButton = "";
 
 //Keyboard keys used in game
@@ -97,7 +100,7 @@ function getKeyPressed (e) {
 }
 function getKeyDown (e) {
   if (e) {
-    if (e.keyCode == 8) { keyClick(e); }
+    if (e.keyCode == 8 || e.keyCode == 38 || e.keyCode == 40) { keyClick(e); }
   };
 }
 function keyClick (e) {
@@ -123,7 +126,21 @@ function keyClick (e) {
 
   if (!(e.which == 13 || e.keyCode == 13) && keys.ENTER && str.length < 50) {
     if (!keys.SHIFT) { str += keyButton.toLowerCase(); }
-      else if (keys.SHIFT) { str += keyButton.toUpperCase(); };
+    else if (keys.SHIFT) { str += keyButton.toUpperCase(); };
+
+    //Look for up arrow and change the text to the history
+    if (e.which == 38 || e.keyCode == 38) {
+      indexHistory++;
+      if (indexHistory >= strHistory.length)
+        indexHistory = 0;
+      str = strHistory[indexHistory];
+    }
+    else if (e.which == 40 || e.keyCode == 40) {
+      indexHistory--;
+      if (indexHistory < 0)
+        indexHistory = strHistory.length - 1;
+      str = strHistory[indexHistory];
+    }
 
     //Delete key
     if ((e.which == 8 || e.keyCode == 8) && str.length > 0) {
