@@ -16,7 +16,7 @@ function activateChat () {
   var strShown = str;
 
   //Cut off any characters that push length over 200px in box
-  for (var i = 0; i < 1000; i++) {
+  for (var i = 0; i < 300; i++) {
     if (ctx.measureText(strShown).width >= 500) {
 
       strShown = strShown.slice(1, strShown.length);
@@ -79,7 +79,7 @@ function displayChat () {
     if (textBoxWidth > maxBubbleWidth)
       textBoxWidth = maxBubbleWidth;
 
-    //this return an array of each lines to print, is used here because the number of lines is needed
+    //Returns an array of each lines to print, is used here because the number of lines is needed
     //before displaying the text
     var listTextToShow = getWrapedText(currentMessage[0], maxBubbleWidth);
     var numberOfLines = listTextToShow.length;
