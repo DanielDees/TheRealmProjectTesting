@@ -155,14 +155,13 @@ function keyClick (e) {
       }
 
       str = strHistory[indexHistory];
-    }
+    } 
+  };
+  //Delete key
+  if ((e.which == 8 || e.keyCode == 8) && str.length > 0) {
 
-    //Delete key
-    if ((e.which == 8 || e.keyCode == 8) && str.length > 0) {
-
-      keyButton = "DELETE";
-      str = str.slice(0, str.length - 2);
-    };
+    keyButton = "DELETE";
+    str = str.slice(0, str.length - 2);
   };
 
   e.preventDefault();

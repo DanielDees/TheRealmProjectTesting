@@ -12,10 +12,22 @@ function activateChat () {
   ctx.lineWidth = 1;
   ctx.strokeRect(5 + FRAME_OF_REFERENCE[0], canvas.height - 26 + FRAME_OF_REFERENCE[1], canvas.width - 210, 20);
 
+  //Hold str value for display in box
+  var strShown = str;
+
+  //Cut off any characters that push length over 200px in box
+  for (var i = 0; i < 1000; i++) {
+    if (ctx.measureText(strShown).width >= 500) {
+
+      strShown = strShown.slice(1, strShown.length);
+    }
+    else { break; }
+  }
+  
   //Text displayed while user is typing
   ctx.fillStyle = "#FFF";
   ctx.shadowBlur = 10;
-  ctx.fillText(str.slice(str.length - 50, str.length), 10 + FRAME_OF_REFERENCE[0], canvas.height - 10 + FRAME_OF_REFERENCE[1]);
+  ctx.fillText(strShown, 10 + FRAME_OF_REFERENCE[0], canvas.height - 10 + FRAME_OF_REFERENCE[1]);
   ctx.shadowBlur = 0;
 }
 function submitChat (personSpeaking) {
