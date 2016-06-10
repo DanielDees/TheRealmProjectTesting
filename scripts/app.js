@@ -1706,11 +1706,27 @@ var bossSpeak = setInterval(function() {
 
   if (enemies_remaining_in_realm > 0) {
 
-    chatLog.push(["THERE ARE " + enemies_remaining_in_realm + " ENEMIES REMAINING!", 16, 201, "Game Boss"]);
+    var messageData = {
+
+      text: "THERE ARE " + enemies_remaining_in_realm + " ENEMIES REMAINING!",
+      Y: 16,
+      age: 401,
+      speaker: "Game Boss"
+    }
+
+    chatLog.push(messageData);
 
   } else {
 
-    chatLog.push(["YOU MUST PAY FOR YOUR SINS!!!", 16, 201, "Game Boss"]);
+    var messageData = {
+
+        text: "YOU MUST PAY FOR YOUR SINS!!!",
+        Y: 16,
+        age: 201,
+        speaker: "Game Boss"
+    }
+
+    chatLog.push(messageData);
     screenType = "BOSS_SCREEN";
     lastKnownLocation = [playerList[0].X, playerList[0].isViewingLoot];
     if (lastKnownLocation[0] < 4000) {
@@ -1719,7 +1735,7 @@ var bossSpeak = setInterval(function() {
     }
     
   }
-  for (var i = 0; i < chatLog.length; i++) { chatLog[i][1] += 20; }
+  for (var i = 0; i < chatLog.length; i++) { chatLog[i].Y += 20; }
 
  } , 60000);
 var drawTheGame = setInterval(drawGameScreen, (1000 / GAME_FPS));

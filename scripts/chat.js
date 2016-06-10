@@ -2,7 +2,7 @@
 //Everything related to chat and sending text messages is in this file.
 //---------------------------------------------------------------------
 
-//All chat text stored here.
+// All chat text stored here.
 var chatLog = [];
 
 function activateChat () {
@@ -52,11 +52,18 @@ function submitChat (personSpeaking) {
     //If not dev command
     if (str.length > 0) {
 
-      //Text, Ypos, age of text, user who submitted
-      chatLog.push([" " + str, 16, 0, personSpeaking]);
+      var messageData = {
+
+        text: str,
+        Y: 16,
+        age: 0,
+        speaker: personSpeaking
+      }
+
+      chatLog.push(messageData);
 
       //Increase Ypos of text on left of screen.
-      for (var i = 0; i < chatLog.length; i++) { chatLog[i][1] += 20; }
+      for (var i = 0; i < chatLog.length; i++) { chatLog[i].Y += 20; }
     }
   }
 
@@ -67,7 +74,7 @@ function displayChat () {
   ctx.strokeStyle = "#000";
 
   //Text above player
-  if (chatLog.length > 0) {
+  if (chatLog.length > 0 && chatLog[chatLog.length - 1].age < 200) {
 
     //Max text bubble width;
     var maxBubbleWidth = 200;
@@ -75,13 +82,14 @@ function displayChat () {
     var currentMessage = chatLog[chatLog.length - 1];
 
     //Text box dimensions.
-    var textBoxWidth = ctx.measureText(currentMessage[0]).width + 5;
-    if (textBoxWidth > maxBubbleWidth)
-      textBoxWidth = maxBubbleWidth;
+    var textBoxWidth = ctx.measureText(currentMessage.text).width + 5;
+    if (textBoxWidth > maxBubbleWidth) {
 
-    //Returns an array of each lines to print, is used here because the number of lines is needed
-    //before displaying the text
-    var listTextToShow = getWrapedText(currentMessage[0], maxBubbleWidth);
+      textBoxWidth = maxBubbleWidth; 
+    }
+
+    //Returns array of each line to print
+    var listTextToShow = getWrapedText(currentMessage.text, maxBubbleWidth);
     var numberOfLines = listTextToShow.length;
 
     var lineHeight = 20;
@@ -114,13 +122,13 @@ function displayChat () {
   for (var i = 0; i < chatLog.length; i++) {
 
     //Display text on left of screen
-    ctx.fillText(chatLog[i][3] + ": " + chatLog[i][0], 10 + FRAME_OF_REFERENCE[0], canvas.height - chatLog[i][1] + FRAME_OF_REFERENCE[1]);
+    ctx.fillText(chatLog[i].speaker + ": " + chatLog[i].text, 10 + FRAME_OF_REFERENCE[0], canvas.height - chatLog[i].Y + FRAME_OF_REFERENCE[1]);
 
     //Increase age of text
-    chatLog[i][2]++;
+    chatLog[i].age++;
 
     //Delete text if more than 800 age
-    if (chatLog[i][2] > 800) { chatLog.splice(i, 1); }
+    if (chatLog[i].age > 800) { chatLog.splice(i, 1); }
   }
 
   ctx.shadowBlur = 0;
