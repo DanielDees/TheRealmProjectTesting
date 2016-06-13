@@ -564,7 +564,12 @@ function lootBag (defaultX, defaultY, imageGiven) {
   this.width = 25;
 
   //Info
-  this.ID = Math.random();
+  this.ID = { 
+
+    value: Math.random(),
+    type: "lootbag"
+  };
+
   this.sprite = imageGiven;
   this.lifeTime = 30 * 62.5;
   this.inventory = [];
@@ -789,7 +794,12 @@ function portal (defaultX, defaultY, nameGiven, destinationGiven, spriteGiven) {
   this.width = 42;
 
   //Info
-  this.ID = Math.random();
+  this.ID = { 
+
+    value: Math.random(),
+    type: "portal"
+  };
+
   this.Image = spriteGiven;
   this.name = nameGiven;
   this.destination = destinationGiven;
