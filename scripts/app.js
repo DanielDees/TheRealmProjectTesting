@@ -23,9 +23,6 @@ var enemyList = [];
 //Projectiles
 var bulletList = [];
 var enemyBulletList = [];
-//Damage Numbers
-var playerDamageNumberList = [];
-var damageNumberList = [];
 //Loot
 var lootBagList = [];
 //Screen
@@ -77,56 +74,70 @@ function player () {
   this.ImageArray = [];
   this.Image = archer_Pics;
   this.timeToSpriteChange = 0;
+
   //Death Stats
   this.deathGlory = 0;
   this.killCount = 0;
   this.killedBy = "Nothing???";
+
   //Weapon and Sprite
   this.bulletImage = player_Bullet_Pic;
+
   //Speed
   this.speed = 15;
   this.speedFormula = 3 + (7 * (this.speed / 100));
   this.MAX_SPEED = 100;
+
   //Damage
   this.maxWeaponDamage = 5;
   this.minWeaponDamage = 1;
   this.damageVariance = function () { return (Math.random() * this.maxWeaponDamage) + this.minWeaponDamage; }
   this.damage = 100;
+
   //Dexterity
   this.dexterity = 200;
   this.MAX_DEXTERITY = 200;
   this.weaponCooldown = 0;
   this.MAX_WEAPON_COOLDOWN = function () { return 125 / (1 + (this.dexterity / 8)); }
-  //Position and Dimensions
+
+  //Position / Dimensions
   this.X = 4000;
   this.Y = 4000;
   this.height = 40;
   this.width = 40;
+
   //Exp/Leveling
   this.EXP = 0;
   this.MAX_level = 25;
   this.level = 1;
   this.levelExpReq = 100;
   this.glory = 0;
+
   //HP
   this.HP = 200;
   this.MAX_HP = 200;
   this.youth = 300;
   this.MAX_YOUTH = 1000;
+  this.damageNumbers = [];
+
   //MP
   this.MP = 150;
   this.MAX_MP = 150;
   this.wizardry = 200;
   this.MAX_WIZARDRY = 400;
+
   //Specials
   this.special_MP_cost = 20;
   this.specialCooldown = 0;
   this.MAX_SPECIAL_COOLDOWN = 20;
+
   //isViewingLoot used to only see one loot bag at a time.
   this.isViewingLoot = [-1, -1];
+
   //Inventory
   this.inventory = [];
   this.inventoryInitialized = false;
+
   //Equipment
   this.equipInv = [];
   
@@ -371,6 +382,37 @@ function player () {
     if (keys.S) { this.Y += this.speedFormula; }
     if (keys.D) { this.X += this.speedFormula; }
   }
+  //Deals damage to player
+  this.takeDamage = function(damageTaken) {
+
+    this.HP -= damageTaken;
+
+    var damageData = {
+
+      damage: damageTaken,
+      age: 10
+    }
+
+    this.damageNumbers.push(damageData);
+  }
+  //Shows player damage numbers
+  this.showDamageNumbers = function() {
+
+    //Damage number color
+    ctx.fillStyle = "red";
+
+    for (var i = 0; i < this.damageNumbers.length; i++) {
+
+      var num = this.damageNumbers[i];
+
+      //Show damage text
+      ctx.fillText("-" + num.damage.toFixed(0), this.X + 8, this.Y - num.age);
+
+      //Increase number age
+      if (num.age > 40) { this.damageNumbers.splice(i, 1); }
+      else { this.damageNumbers[i].age++; }
+    }
+  }
   //Draw Player
   this.draw = function() { 
 
@@ -437,24 +479,35 @@ function playerBullet (defaultXspeed, defaultYspeed, defaultHeight, defaultWidth
 }
 function enemy (defaultHP, expReward, attackDamage, defaultSpeed, defaultHeight, defaultWidth, spriteGiven, movementType, nameGiven, portalType) {
 
+  //Details
+  this.Image = spriteGiven;
+  this.enemyName = nameGiven;
+  this.damageNumbers = [];
+
+  //Position
+  this.X = playerList[0].X + (800 * Math.cos(Math.floor((Math.random() * 360) + 1)));
+  this.Y = playerList[0].Y + (800 * Math.sin(Math.floor((Math.random() * 360) + 1)));
+
+  //Size
+  this.height = defaultHeight;
+  this.width = defaultWidth;
+
+  //Projectile
+  this.bulletSpeed = 6;
+  this.bulletRadius = 15;
+
   this.HP = defaultHP;
   this.MAX_HP = defaultHP;
   this.speed = defaultSpeed;
-  this.X = playerList[0].X + (800 * Math.cos(Math.floor((Math.random() * 360) + 1)));
-  this.Y = playerList[0].Y + (800 * Math.sin(Math.floor((Math.random() * 360) + 1)));
-  this.height = defaultHeight;
-  this.width = defaultWidth;
-  this.bulletSpeed = 6;
-  this.bulletRadius = 15;
+  
   this.damage = attackDamage;
   this.expGiven = expReward;
   this.weaponCooldown = 0;
   this.MAX_WEAPON_COOLDOWN = function () { return 125; }
-  this.Image = spriteGiven;
-  this.enemyName = nameGiven;
-  this.detectionRange = 320;
-
+  
+  //Movement
   this.moveCounter = 0;
+  this.detectionRange = 320;
   this.movement_Pattern = movementType || "random";
   this.movement = "left";
   
@@ -526,6 +579,37 @@ function enemy (defaultHP, expReward, attackDamage, defaultSpeed, defaultHeight,
     playerList[0].EXP += this.expGiven;
     playerList[0].killCount++;
   }
+  //Deals damage to enemy
+  this.takeDamage = function(damageTaken) {
+
+    this.HP -= damageTaken;
+
+    var damageData = {
+
+      damage: damageTaken,
+      age: 12
+    }
+
+    this.damageNumbers.push(damageData);
+  }
+  //Shows enemy damage numbers
+  this.showDamageNumbers = function() {
+
+    //Damage number color
+    ctx.fillStyle = "red";
+
+    for (var i = 0; i < this.damageNumbers.length; i++) {
+
+      var num = this.damageNumbers[i];
+
+      //Show damage text
+      ctx.fillText("-" + num.damage.toFixed(0), this.X, this.Y - num.age);
+
+      //Increase number age
+      if (num.age > 42) { this.damageNumbers.splice(i, 1); }
+      else { this.damageNumbers[i].age++; }
+    }
+  }
   //Draws enemy to screen
   this.draw = function() {
 
@@ -536,6 +620,9 @@ function enemy (defaultHP, expReward, attackDamage, defaultSpeed, defaultHeight,
     ctx.fillRect(this.X, this.Y - 8, this.width - 3, 5);
     ctx.fillStyle = "#00BB00";
     ctx.fillRect(this.X, this.Y - 8, this.HP * ((this.width - 3) / this.MAX_HP), 5);
+
+    //Show Damage Taken
+    this.showDamageNumbers();
   }
 }
 function enemyBullet (bulletSpeed, bulletRadius, startX, startY, angleGiven, damageGiven, ownerGiven) {
@@ -1142,38 +1229,11 @@ function drawEnemyBullet () {
 function showDamageTaken () {
   
   ctx.font = "16px Palatino";
-  ctx.fillStyle = "red";
 
-  //Enemies Damage
-  for (var i = 0; i < damageNumberList.length; i++) {
-    for (var j = 0; j < enemyList.length; j++) {
-      if (damageNumberList[i][4] == j) { 
-
-        damageNumberList[i][1] = enemyList[j].X; 
-        damageNumberList[i][2] = enemyList[j].Y - (damageNumberList[i][3] + 12); 
-      }
-    }
-
-    ctx.fillText("-" + damageNumberList[i][0], damageNumberList[i][1], damageNumberList[i][2]);
-    damageNumberList[i][3]++;
-
-    if (damageNumberList[i][3] > 30) { damageNumberList.splice(i, 1); }
-  }
-  //Players Damage
-  for (var i = 0; i < playerDamageNumberList.length; i++) {
-    for (var j = 0; j < playerList.length; j++) {
-      if (playerDamageNumberList[i][4] == j) { 
-
-        playerDamageNumberList[i][1] = playerList[j].X; 
-        playerDamageNumberList[i][2] = playerList[j].Y - (playerDamageNumberList[i][3] + 12); 
-      }
-    }
-
-    ctx.fillText("-" + playerDamageNumberList[i][0], playerDamageNumberList[i][1], playerDamageNumberList[i][2]);
-    playerDamageNumberList[i][3]++;
-
-    if (playerDamageNumberList[i][3] > 30) { playerDamageNumberList.splice(i, 1); }
-  }
+  //Enemy Damage Numbers
+  for (var i = 0; i < enemyList.length; i++) { enemyList[i].showDamageNumbers(); }
+  //Player Damage Numbers
+  for (var i = 0; i < playerList.length; i++) { playerList[i].showDamageNumbers(); }
 }
 //END DRAWING STUFF ==============
 //MOVE STUFF =====================
@@ -1275,18 +1335,14 @@ function replenishPlayerStats () {
 //COLLISIONS =====================
 function checkCollisions () {
 
-  var i = 0;
-  var p = 0;
-
   //Player bullets
-  for (var k = 0; k < bulletList.length; k++) {
+  for (var i = 0; i < bulletList.length; i++) {
     //Enemies
     for (var j = 0; j < enemyList.length; j++) {
-      
+      //On Collision
       if (i >= 0 && hitboxIntersectCheck(bulletList[i], enemyList[j])) {
 
-        enemyList[j].HP -= bulletList[i].damage;
-        damageNumberList.push([bulletList[i].damage.toFixed(0), enemyList[j].X, enemyList[j].Y - 10, 0, j]);
+        enemyList[j].takeDamage(bulletList[i].damage);
         bulletList.splice(i, 1);
         i--;
         
@@ -1299,27 +1355,21 @@ function checkCollisions () {
         }
       }
     }
-    i++;
   }
   //Enemy Bullets
-  for (var k = 0; k < enemyBulletList.length; k++) {
+  for (var i= 0; i < enemyBulletList.length; i++) {
     //Players
     for (var j = 0; j < playerList.length; j++) {
-      
-      if (p >= 0 && hitboxIntersectCheck(enemyBulletList[p], playerList[j])) {
+      //On Collision
+      if (i >= 0 && hitboxIntersectCheck(enemyBulletList[i], playerList[j])) {
 
-        //Detect which enemy bullet came from.
-        var bulletOwner = enemyBulletList[p].owner;
+        playerList[j].takeDamage(enemyBulletList[i].damage);
+        enemyBulletList.splice(i, 1);
+        i--;
 
-        playerList[j].HP -= enemyBulletList[p].damage;
-        playerDamageNumberList.push([enemyBulletList[p].damage, playerList[j].X, playerList[j].Y - 10, 0, j]);
-        enemyBulletList.splice(p, 1);
-        p--;
-
-        if (playerList[j].HP <= 0) { playerList[j].deathScene(bulletOwner); }
+        if (playerList[j].HP <= 0) { playerList[j].deathScene(enemyBulletList[i].owner); }
       }
     }
-    p++;
   }
 }
 //END COLLISIONS =================
