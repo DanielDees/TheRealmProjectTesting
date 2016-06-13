@@ -23,8 +23,8 @@ function spawn_Game_Boss () {
 function spawnEnemy () {
   
   var difficulty = (Math.random() * 1000) + 1;
-  if (difficulty >= 100 + playerList[0].level) { spawn_Enemy_Bug(); };
-  if (difficulty >= 700 - playerList[0].level) { spawn_Enemy_Skull(); };
-  if (difficulty >= 990 - playerList[0].level) { spawn_Enemy_Skull_Boss(); };
+  if (difficulty >= 990 - playerList[0].level) { spawn_Enemy_Skull_Boss(); }
+  else if (difficulty >= 700 - playerList[0].level) { spawn_Enemy_Skull(); }
+  else if (difficulty >= 100 + playerList[0].level) { spawn_Enemy_Bug(); }
 }
 //END SPAWNING SYSTEMS
