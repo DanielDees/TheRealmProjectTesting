@@ -68,7 +68,15 @@ var screenType = "MAIN_MENU";
 
 //GAME OBJECTS ===================
 function player () {
-   
+  
+  //Position
+  this.X = 4000;
+  this.Y = 4000;
+
+  //Dimensions
+  this.height = 40;
+  this.width = 40;
+
   //Username
   this.userName = defaultNamesList[Math.floor((Math.random() * defaultNamesList.length) + 0).toFixed(0)];
   this.ImageArray = [];
@@ -99,12 +107,6 @@ function player () {
   this.MAX_DEXTERITY = 200;
   this.weaponCooldown = 0;
   this.MAX_WEAPON_COOLDOWN = function () { return 125 / (1 + (this.dexterity / 8)); }
-
-  //Position / Dimensions
-  this.X = 4000;
-  this.Y = 4000;
-  this.height = 40;
-  this.width = 40;
 
   //Exp/Leveling
   this.EXP = 0;
@@ -439,18 +441,23 @@ function player () {
 }
 function playerBullet (defaultXspeed, defaultYspeed, defaultHeight, defaultWidth, angleSend, mouseXSent, mouseYSent, imageGiven) {
 
+  //Position
+  this.X = mouseXSent || playerList[0].X + (playerList[0].width / 2);
+  this.Y = mouseYSent || playerList[0].Y + (playerList[0].height / 2);
+
+  //Dimensions
+  this.height = defaultHeight;
+  this.width = defaultWidth;
+
   //Calculates angle of attack
-  var deltaY = playerList[0].Y + (playerList[0].height / 2) - mouse.Y;
-  var deltaX = playerList[0].X + (playerList[0].width / 2) - mouse.X;
-  this.angle = angleSend * (Math.PI / 180) || Math.atan2(-deltaY, -deltaX);
+  var deltaY = -(playerList[0].Y + (playerList[0].height / 2) - mouse.Y);
+  var deltaX = -(playerList[0].X + (playerList[0].width / 2) - mouse.X);
+  this.angle = angleSend * (Math.PI / 180) || Math.atan2(deltaY, deltaX);
 
   this.damage = (playerList[0].damage / 10) * playerList[0].damageVariance();
   this.Xspeed = defaultXspeed;
   this.Yspeed = defaultYspeed;
-  this.X = mouseXSent || playerList[0].X + (playerList[0].width / 2);
-  this.Y = mouseYSent || playerList[0].Y + (playerList[0].height / 2);
-  this.height = defaultHeight;
-  this.width = defaultWidth;
+
   this.lifeTime = 0.5 * 62.5;
   this.Image = imageGiven;
   
@@ -463,8 +470,8 @@ function playerBullet (defaultXspeed, defaultYspeed, defaultHeight, defaultWidth
   //Movement Logic
   this.move = function() {
 
-    this.X = this.X + (this.Xspeed * Math.cos(this.angle));
-    this.Y = this.Y + (this.Yspeed * Math.sin(this.angle));
+    this.X += this.Xspeed * Math.cos(this.angle);
+    this.Y += this.Yspeed * Math.sin(this.angle);
     this.lifeTime--;
   }
   this.draw = function() {
@@ -488,7 +495,7 @@ function enemy (defaultHP, expReward, attackDamage, defaultSpeed, defaultHeight,
   this.X = playerList[0].X + (800 * Math.cos(Math.floor((Math.random() * 360) + 1)));
   this.Y = playerList[0].Y + (800 * Math.sin(Math.floor((Math.random() * 360) + 1)));
 
-  //Size
+  //Dimensions
   this.height = defaultHeight;
   this.width = defaultWidth;
 
@@ -627,14 +634,19 @@ function enemy (defaultHP, expReward, attackDamage, defaultSpeed, defaultHeight,
 }
 function enemyBullet (bulletSpeed, bulletRadius, startX, startY, angleGiven, damageGiven, ownerGiven) {
 
-  this.height = bulletRadius;
-  this.width = bulletRadius;
+  //Position
   this.X = startX;
   this.Y = startY;
-  this.speed = bulletSpeed;
-  this.angle = angleGiven;
-  this.damage = damageGiven;
+
+  //Dimensions
+  this.height = bulletRadius;
+  this.width = bulletRadius;
+  
+  //Info
   this.owner = ownerGiven;
+  this.speed = bulletSpeed;
+  this.damage = damageGiven;
+  this.angle = angleGiven;
 
   //Hitbox
   this.top = function() { return this.Y; }
@@ -645,8 +657,8 @@ function enemyBullet (bulletSpeed, bulletRadius, startX, startY, angleGiven, dam
   //Movement Logic
   this.move = function() {
 
-    this.X = this.X + (this.speed * Math.cos(this.angle));
-    this.Y = this.Y + (this.speed * Math.sin(this.angle));
+    this.X += (this.speed * Math.cos(this.angle));
+    this.Y += (this.speed * Math.sin(this.angle));
   }
   this.draw = function() {
 
@@ -656,10 +668,15 @@ function enemyBullet (bulletSpeed, bulletRadius, startX, startY, angleGiven, dam
 }
 function loot (imageGiven, nameGiven, effectTextGiven, descriptionGiven) {
 
+  //Position
   this.X = 10;
   this.Y = 10;
+
+  //Dimensions
   this.height = 32;
   this.width = 32;
+
+  //Info
   this.typeOfItem = imageGiven;
   this.beingHeld = false;
 
@@ -720,15 +737,20 @@ function loot (imageGiven, nameGiven, effectTextGiven, descriptionGiven) {
 }
 function lootBag (defaultX, defaultY, imageGiven) {
 
+  //Position
   this.X = defaultX;
   this.Y = defaultY;
+
+  //Dimensions
   this.height = 25;
   this.width = 25;
-  this.lifeTime = 30 * 62.5;
-  this.sprite = imageGiven;
-  this.inventory = [];
-  this.ID = Math.random();
 
+  //Info
+  this.ID = Math.random();
+  this.sprite = imageGiven;
+  this.lifeTime = 30 * 62.5;
+  this.inventory = [];
+  
   //Hitbox
   this.top = function() { return this.Y; }
   this.bottom = function() { return this.Y + this.height; }
@@ -874,8 +896,11 @@ function lootBag (defaultX, defaultY, imageGiven) {
 }
 function inventorySlot (defaultX, defaultY, col, row, itemGiven) {
 
+  //Dimensions
   this.width = 40;
   this.height = 40;
+
+  //Position
   this.X = defaultX + (this.width * col) - (this.width * 4 * row) + (3 * col - (row * 12));
   this.Y = defaultY + (this.height * row) + (row * 3);
 
@@ -937,14 +962,19 @@ function inventorySlot (defaultX, defaultY, col, row, itemGiven) {
 }
 function portal (defaultX, defaultY, nameGiven, destinationGiven, spriteGiven) {
 
+  //Position
   this.X = defaultX;
   this.Y = defaultY;
+
+  //Dimensions
   this.height = 42;
   this.width = 42;
+
+  //Info
+  this.ID = Math.random();
   this.Image = spriteGiven;
   this.name = nameGiven;
   this.destination = destinationGiven;
-  this.ID = Math.random();
 
   this.top = function() { return this.Y; }
   this.bottom = function() { return this.Y + this.height; }
@@ -1055,6 +1085,7 @@ function spellBomb () {
   playerList[0].specialCooldown = playerList[0].MAX_SPECIAL_COOLDOWN;
 } 
 function newBullet (angleSend, mouseXSent, mouseYSent) { 
+
   //Xspeed, Yspeed, width, height, anglesend, mouse.Xsent, mouse.Ysent, Image
   bulletList.push(new playerBullet(10, 10, 26, 26, angleSend, mouseXSent, mouseYSent, playerList[0].bulletImage));
 
@@ -1064,13 +1095,13 @@ function newBullet (angleSend, mouseXSent, mouseYSent) {
 //DRAW STUFF =====================
 function displayLootBags() {
 
-  for (var j = 0; j < lootBagList.length; j++) {
+  for (var i = 0; i < lootBagList.length; i++) {
     
-    lootBagList[j].draw();
+    lootBagList[i].draw();
 
-    if (lootBagList[j].inventory.length < 1 || lootBagList[j].lifeTime < 1) { 
+    if (lootBagList[i].inventory.length < 1 || lootBagList[i].lifeTime < 1) { 
 
-      lootBagList.splice(j, 1); 
+      lootBagList.splice(i, 1); 
     }
   }
 }
