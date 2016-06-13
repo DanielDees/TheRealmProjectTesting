@@ -184,95 +184,97 @@ function enemyBullet (bulletSpeed, bulletRadius, startX, startY, angleGiven, dam
 }
 
 //SPAWNING SYSTEMS ===============
+var GAME_ENEMIES = {
 
-var enemy_bug = {
+  enemy_bug: {
 
-  //Dimensions
-  height: 25,
-  width: 25,
-  
-  //Info
-  HP: 115,
-  expReward: 15,
-  attack: 3,
-  spd: 3,
+    //Dimensions
+    height: 25,
+    width: 25,
+    
+    //Info
+    HP: 115,
+    expReward: 15,
+    attack: 3,
+    spd: 3,
 
-  name: "Enemy Bug",
-  image: enemy_bug_Pic,
-  movementType: "random",
-  portalDrop: "BOSS_SCREEN"
-}
-var enemy_skull = {
+    name: "Enemy Bug",
+    image: enemy_bug_Pic,
+    movementType: "random",
+    portalDrop: "BOSS_SCREEN"
+  },
+  enemy_skull: {
 
-  //Dimensions
-  height: 28,
-  width: 28,
-  
-  //Info
-  HP: 300,
-  expReward: 28,
-  attack: 10,
-  spd: 2,
+    //Dimensions
+    height: 28,
+    width: 28,
+    
+    //Info
+    HP: 300,
+    expReward: 28,
+    attack: 10,
+    spd: 2,
 
-  name: "Enemy Skull",
-  image: enemy_skull_Pic,
-  movementType: "chase",
-  portalDrop: "BOSS_SCREEN"
-}
-var enemy_skull_boss = {
+    name: "Enemy Skull",
+    image: enemy_skull_Pic,
+    movementType: "chase",
+    portalDrop: "BOSS_SCREEN"
+  },
+  enemy_skull_boss: {
 
-  //Dimensions
-  height: 60,
-  width: 60,
-  
-  //Info
-  HP: 2500,
-  expReward: 250,
-  attack: 56,
-  spd: 1,
+    //Dimensions
+    height: 60,
+    width: 60,
+    
+    //Info
+    HP: 2500,
+    expReward: 250,
+    attack: 56,
+    spd: 1,
 
-  name: "Enemy Skull Boss",
-  image: enemy_skull_boss_Pic,
-  movementType: "random",
-  portalDrop: "BOSS_SCREEN"
-}
-var Game_Boss = {
+    name: "Enemy Skull Boss",
+    image: enemy_skull_boss_Pic,
+    movementType: "random",
+    portalDrop: "BOSS_SCREEN"
+  },
+  Game_Boss: {
 
-  //Dimensions
-  height: 120,
-  width: 120,
-  
-  //Info
-  HP: 40000,
-  expReward: 3000,
-  attack: 120,
-  spd: 3,
+    //Dimensions
+    height: 120,
+    width: 120,
+    
+    //Info
+    HP: 40000,
+    expReward: 3000,
+    attack: 120,
+    spd: 3,
 
-  name: "Game Boss",
-  image: enemy_skull_boss_Pic,
-  movementType: "random",
-  portalDrop: "GAME_SCREEN"
+    name: "Game Boss",
+    image: enemy_skull_boss_Pic,
+    movementType: "random",
+    portalDrop: "GAME_SCREEN"
+  },
 }
 
 function spawn_Enemy_Bug () {
   if (enemyList.length < 35) { 
-    enemyList.push(new enemy(enemy_bug)); 
+    enemyList.push(new enemy(GAME_ENEMIES.enemy_bug)); 
   };
 }
 function spawn_Enemy_Skull () {
   if (enemyList.length < 40) { 
-    enemyList.push(new enemy(enemy_skull)); 
+    enemyList.push(new enemy(GAME_ENEMIES.enemy_skull)); 
   };
 }
 function spawn_Enemy_Skull_Boss () {
   if (enemyList.length < 45) { 
     //HP, expReward, attackDamage, speed, width, height, imageGiven, movementType, Enemy Name
-    enemyList.push(new enemy(enemy_skull_boss)); 
+    enemyList.push(new enemy(GAME_ENEMIES.enemy_skull_boss)); 
   };
 }
 function spawn_Game_Boss () {
   //HP, expReward, attackDamage, speed, width, height, imageGiven, movementType, Enemy Name
-  enemyList.push(new enemy(Game_Boss));
+  enemyList.push(new enemy(GAME_ENEMIES.Game_Boss));
 }
 function spawnEnemy () {
   
