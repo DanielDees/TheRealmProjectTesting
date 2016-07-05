@@ -149,6 +149,66 @@ function player () {
   this.left = function() { return this.X; }
   this.right = function() { return this.X + this.width; }
 
+  //Weapon
+  this.fireWeapon = function() {
+
+    if (this.weaponCooldown <= 0) {
+
+      //Player data generating projectile
+      var data = {
+
+        spd: 10,
+        damage: (this.damage / 10) * this.damageVariance(),
+        lifeTime: 0.5 * 62.5,
+
+        width: 26,
+        height: 26,
+
+        X: this.X + this.width / 2,
+        Y: this.Y + this.height / 2,
+
+        angle: null,
+        image: this.bulletImage,
+      }
+
+      bulletList.push(new playerBullet(data));
+
+      this.weaponCooldown = this.MAX_WEAPON_COOLDOWN();
+    }
+  }
+  //Special Ability
+  this.use_ability = function() {
+
+    if (this.specialCooldown <= 0 && this.MP >= this.special_MP_cost) {
+
+      //Update this function to take the ability of special item in equipment slot once equipment has been added.
+      
+      for (var i = 0; i < 21; i++) { 
+
+        //Player data generating projectiles
+        var data = {
+
+          spd: 10,
+          damage: (this.damage / 10) * this.damageVariance(),
+          lifeTime: 0.5 * 62.5,
+
+          width: 26,
+          height: 26,
+
+          X: mouse.X,
+          Y: mouse.Y,
+
+          angle: i * 18,
+          image: this.bulletImage,
+        }
+
+        bulletList.push(new playerBullet(data));
+      }
+
+      this.MP -= this.special_MP_cost;
+      this.specialCooldown = this.MAX_SPECIAL_COOLDOWN;
+    }
+  }
   //This function is under construction. Getting ready for equipment application.
   this.updateEquipment = function() {
 
@@ -376,7 +436,7 @@ function player () {
     this.deathGlory += this.glory;
     this.killedBy = enemyKilledBy;
   }
-  //Movement Logic
+  //Movement
   this.move = function() {
 
     if (keys.W) { this.Y -= this.speedFormula; }
@@ -439,27 +499,26 @@ function player () {
     }
   }
 }
-function playerBullet (defaultXspeed, defaultYspeed, defaultHeight, defaultWidth, angleSend, mouseXSent, mouseYSent, imageGiven) {
+function playerBullet (data) {
 
   //Position
-  this.X = mouseXSent || playerList[0].X + (playerList[0].width / 2);
-  this.Y = mouseYSent || playerList[0].Y + (playerList[0].height / 2);
+  this.X = data.X;
+  this.Y = data.Y;
 
   //Dimensions
-  this.height = defaultHeight;
-  this.width = defaultWidth;
+  this.height = data.height;
+  this.width = data.width;
 
   //Calculates angle of attack
   var deltaY = -(playerList[0].Y + (playerList[0].height / 2) - mouse.Y);
   var deltaX = -(playerList[0].X + (playerList[0].width / 2) - mouse.X);
-  this.angle = angleSend * (Math.PI / 180) || Math.atan2(deltaY, deltaX);
+  this.angle = data.angle * (Math.PI / 180) || Math.atan2(deltaY, deltaX);
 
-  this.damage = (playerList[0].damage / 10) * playerList[0].damageVariance();
-  this.Xspeed = defaultXspeed;
-  this.Yspeed = defaultYspeed;
+  this.damage = data.damage;
+  this.spd = data.spd;
 
-  this.lifeTime = 0.5 * 62.5;
-  this.Image = imageGiven;
+  this.lifeTime = data.lifeTime;
+  this.Image = data.image;
   
   //Hitbox
   this.top = function() { return this.Y; }
@@ -470,8 +529,8 @@ function playerBullet (defaultXspeed, defaultYspeed, defaultHeight, defaultWidth
   //Movement Logic
   this.move = function() {
 
-    this.X += this.Xspeed * Math.cos(this.angle);
-    this.Y += this.Yspeed * Math.sin(this.angle);
+    this.X += this.spd * Math.cos(this.angle);
+    this.Y += this.spd * Math.sin(this.angle);
     this.lifeTime--;
   }
   this.draw = function() {
@@ -829,22 +888,6 @@ function portal (defaultX, defaultY, nameGiven, destinationGiven, spriteGiven) {
   }
 }
 //END GAME OBJECTS ===============
-//PLAYER BULLETS =================
-function spellBomb () {
-
-  for (var i = 0; i < 21; i++) { newBullet(i * 18, mouse.X, mouse.Y); }
-
-  playerList[0].MP -= playerList[0].special_MP_cost;
-  playerList[0].specialCooldown = playerList[0].MAX_SPECIAL_COOLDOWN;
-} 
-function newBullet (angleSend, mouseXSent, mouseYSent) { 
-
-  //Xspeed, Yspeed, width, height, anglesend, mouse.Xsent, mouse.Ysent, Image
-  bulletList.push(new playerBullet(10, 10, 26, 26, angleSend, mouseXSent, mouseYSent, playerList[0].bulletImage));
-
-  playerList[0].weaponCooldown = playerList[0].MAX_WEAPON_COOLDOWN();
-}
-//END PLAYER BULLETS =============
 //DRAW STUFF =====================
 function displayLootBags() {
 
@@ -1340,8 +1383,8 @@ function drawGameScreen () {
     movePlayer();
     moveEnemy();
 
-    if ((mouse.clicked || keys.T) && playerList[0].weaponCooldown <= 0 && !mouse.item) { newBullet(); }
-    if (keys.B && playerList[0].MP >= playerList[0].special_MP_cost && playerList[0].specialCooldown <= 0) { spellBomb(); }
+    if (((mouse.clicked && !mouse.item) || keys.T)) { playerList[0].fireWeapon(); }
+    if (keys.B) { playerList[0].use_ability(); }
 
     movePlayerBullet();
     checkCollisions();
