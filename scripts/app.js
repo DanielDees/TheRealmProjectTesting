@@ -177,12 +177,12 @@ function player () {
     }
   }
   //Special Ability
+  //Update this function to take the ability of special item in equipment slot once equipment has been added.
   this.use_ability = function() {
 
     if (this.specialCooldown <= 0 && this.MP >= this.special_MP_cost) {
-
-      //Update this function to take the ability of special item in equipment slot once equipment has been added.
       
+      //Spellbomb
       for (var i = 0; i < 21; i++) { 
 
         //Player data generating projectiles
