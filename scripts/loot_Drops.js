@@ -84,17 +84,20 @@ function dropWeapons (tier) {
 	var maxDmg = 10 + (tier * 5);
 	var bowName = getBowName(tier);
 	var bowLore = getBowLore(tier);
-	var bowEffect = minDmg + " - " + maxDmg + " Damage";
+	var bowEffectDescription = minDmg + " - " + maxDmg + " Damage";
 	var bowImage = weaponBowList[tier][0];
 
 	var data = {
 
 		type: "bow",
 
+		bowMinDmg: minDmg,
+		bowMaxDmg: maxDmg,
+
 		name: bowName,
 		lore: bowLore,
 		image: bowImage,
-		effect: bowEffect,
+		effect: bowEffectDescription,
 	};
 
 	lootBagList[lootBagList.length - 1].addToInventory(new loot(data));
@@ -105,16 +108,18 @@ function dropArmors (tier) {
 	var armorLore = getArmorLore(tier);
 	var armorImage = armorList[tier];
 	var armorBoost = 10 + (10 * tier);
-	var armorEffect = "Max HP + " + armorBoost;
+	var armorEffectDescription = "Max HP + " + armorBoost;
 
 	var data = {
 
 		type: "armor",
 
+		armorHp: armorBoost,
+
 		name: armorName,
 		lore: armorLore,
 		image: armorImage,
-		effect: armorEffect,
+		effect: armorEffectDescription,
 	};
 
 	lootBagList[lootBagList.length - 1].addToInventory(new loot(data));
