@@ -50,7 +50,19 @@ function enemy (data) {
     var deltaX = this.X - playerList[0].X;
     var angleSend = Math.atan2(-deltaY, -deltaX);
 
-    enemyBulletList.push(new enemyBullet(this.bulletSpeed, this.bulletRadius, this.X, this.Y, angleSend ,this.damage, this.enemyName));
+    var data = {
+
+      X: this.X,
+      Y: this.Y,
+
+      name: this.enemyName,
+      speed: this.bulletSpeed,
+      radius: this.bulletRadius,
+      angle: angleSend,
+      damage: this.damage,
+    }
+
+    enemyBulletList.push(new enemyBullet(data));
     this.weaponCooldown = this.MAX_WEAPON_COOLDOWN();
   }
   //Movement Logic
@@ -151,21 +163,21 @@ function enemy (data) {
   }
 }
 //Enemy Projectiles
-function enemyBullet (bulletSpeed, bulletRadius, startX, startY, angleGiven, damageGiven, ownerGiven) {
+function enemyBullet (data) {
 
   //Position
-  this.X = startX;
-  this.Y = startY;
+  this.X = data.X;
+  this.Y = data.Y;
 
   //Dimensions
-  this.height = bulletRadius;
-  this.width = bulletRadius;
+  this.height = data.radius;
+  this.width = data.radius;
   
   //Info
-  this.owner = ownerGiven;
-  this.speed = bulletSpeed;
-  this.damage = damageGiven;
-  this.angle = angleGiven;
+  this.owner = data.name;
+  this.speed = data.speed;
+  this.damage = data.damage;
+  this.angle = data.angle;
 
   //Hitbox
   this.top = function() { return this.Y; }
