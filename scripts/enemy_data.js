@@ -82,24 +82,24 @@ function enemy (data) {
     for (var i = 0; i < potionNames.length; i++) {
 
       var chance = (Math.random() * 1000) + 1;
-      if (chance > 980) { dropPotions(potionNames[i]); }
+      if (chance > 980) { Game_Loot_System.dropPotions(potionNames[i]); }
     }
     for (var i = 0; i < 3; i++) {
 
       var chance = (Math.random() * 1000) + 1;
-      if (chance > 900) { dropWeapons(i); }
+      if (chance > 900) { Game_Loot_System.dropWeapons(i); }
     }
     for (var i = 0; i < 4; i++) {
 
       var chance = (Math.random() * 1000) + 1;
-      if (chance > 970) { dropArmors(i); }
+      if (chance > 970) { Game_Loot_System.dropArmors(i); }
     }
 
     //Delete bag if empty.
     lootBagList[lootBagList.length - 1].checkIfEmpty();
 
     var chance = (Math.random() * 1000) + 1;
-    if (chance > 800 || this.enemyName == "Game Boss") { dropPortal(this.X, this.Y, this.portalDrop); }
+    if (chance > 800 || this.enemyName == "Game Boss") { Game_Loot_System.dropPortal(this.X, this.Y, this.portalDrop); }
 
     playerList[0].EXP += this.expGiven;
     playerList[0].killCount++;
