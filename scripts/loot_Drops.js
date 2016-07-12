@@ -33,31 +33,41 @@ function getArmorLore (tier) {
 	if (tier == 2) { return "Skillfully crafted in an armory."; };
 	if (tier == 3) { return "Metal so fine only kings wear it."; };
 }
-function getPortalText (location) {
+function getPortalText (destination) {
 
-	if (location == "GAME_SCREEN") { return " To The Realm"; };
-	if (location == "BOSS_SCREEN") { return " Fight Boss!"; };
+	if (destination == "GAME_SCREEN") { return " To The Realm"; };
+	if (destination == "BOSS_SCREEN") { return " Fight Boss!"; };
 }
-function getPortalImage (location) {
+function getPortalImage (destination) {
 
-	if (location == "GAME_SCREEN") { return portalTypes[0]; };
-	if (location == "BOSS_SCREEN") { return portalTypes[1]; };
+	if (destination == "GAME_SCREEN") { return portalTypes[0]; };
+	if (destination == "BOSS_SCREEN") { return portalTypes[1]; };
 }
 
-function getPortalFunction (location) {
+function getPortalFunction (destination) {
 
 	//The function should check whether it is a main menu area or a dungeon, and teleport the player to either 0,0 or 4000, 4000 based on that. Enumerated types should be good here. Find a good way to check in the if statements easily.
 
-	if (location == "GAME_SCREEN") { 
+	if (destination == "GAME_SCREEN") { 
 
 		playerList[0].X = 4000;
 		playerList[0].Y = 4000;
 	};
-	if (location == "BOSS_SCREEN") { return portalTypes[1]; };
+	if (destination == "BOSS_SCREEN") { return portalTypes[1]; };
 }
-function dropPortal (X, Y, location) {
+function dropPortal (X, Y, destination) {
 
-	portalList.push(new portal(X, Y, getPortalText(location), location, getPortalImage(location)));
+	var data = {
+
+		X: X,
+		Y: Y,
+		
+		destination: destination,
+		name: getPortalText(destination),
+		image: getPortalImage(destination),
+	}
+
+	portalList.push(new portal(data));
 }
 function dropPotions (namePassed) {
   

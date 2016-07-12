@@ -843,11 +843,11 @@ function inventorySlot (defaultX, defaultY, col, row, itemGiven) {
     }
   }
 }
-function portal (defaultX, defaultY, nameGiven, destinationGiven, spriteGiven) {
+function portal (data) {
 
   //Position
-  this.X = defaultX;
-  this.Y = defaultY;
+  this.X = data.X;
+  this.Y = data.Y;
 
   //Dimensions
   this.height = 42;
@@ -860,9 +860,9 @@ function portal (defaultX, defaultY, nameGiven, destinationGiven, spriteGiven) {
     type: "portal"
   };
 
-  this.Image = spriteGiven;
-  this.name = nameGiven;
-  this.destination = destinationGiven;
+  this.Image = data.image;
+  this.name = data.name;
+  this.destination = data.destination;
 
   this.top = function() { return this.Y; }
   this.bottom = function() { return this.Y + this.height; }
