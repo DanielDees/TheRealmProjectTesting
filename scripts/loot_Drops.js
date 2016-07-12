@@ -66,7 +66,17 @@ function dropPotions (namePassed) {
 	var potionEffect = "+1 " + namePassed;
 	var potionImage = potionList[potionType];
 
- 	lootBagList[lootBagList.length - 1].addToInventory(new loot(potionImage, potionName, potionEffect));
+	var data = {
+
+		type: "potion",
+
+		name: potionName,
+		lore: namePassed,
+		image: potionImage,
+		effect: potionEffect,
+	};
+
+ 	lootBagList[lootBagList.length - 1].addToInventory(new loot(data));
 }
 function dropWeapons (tier) {
   
@@ -77,7 +87,17 @@ function dropWeapons (tier) {
 	var bowEffect = minDmg + " - " + maxDmg + " Damage";
 	var bowImage = weaponBowList[tier][0];
 
-	lootBagList[lootBagList.length - 1].addToInventory(new loot(bowImage, bowName, bowEffect, bowLore));
+	var data = {
+
+		type: "bow",
+
+		name: bowName,
+		lore: bowLore,
+		image: bowImage,
+		effect: bowEffect,
+	};
+
+	lootBagList[lootBagList.length - 1].addToInventory(new loot(data));
 } 
 function dropArmors (tier) {
   
@@ -87,6 +107,16 @@ function dropArmors (tier) {
 	var armorBoost = 10 + (10 * tier);
 	var armorEffect = "Max HP + " + armorBoost;
 
-	lootBagList[lootBagList.length - 1].addToInventory(new loot(armorImage, armorName, armorEffect, armorLore));
+	var data = {
+
+		type: "armor",
+
+		name: armorName,
+		lore: armorLore,
+		image: armorImage,
+		effect: armorEffect,
+	};
+
+	lootBagList[lootBagList.length - 1].addToInventory(new loot(data));
 }
 //END LOOT DROPS ====================

@@ -543,7 +543,7 @@ function playerBullet (data) {
     ctx.restore();
   }
 }
-function loot (imageGiven, nameGiven, effectTextGiven, descriptionGiven) {
+function loot (data) {
 
   //Position
   this.X = 10;
@@ -554,12 +554,13 @@ function loot (imageGiven, nameGiven, effectTextGiven, descriptionGiven) {
   this.width = 32;
 
   //Info
-  this.typeOfItem = imageGiven;
+  this.itemType = data.type;
+  this.image = data.image;
   this.beingHeld = false;
 
-  this.itemName = nameGiven || "Item Name";
-  this.itemEffectText = effectTextGiven || "Item Description";
-  this.itemDescription = descriptionGiven || "Item Lore";
+  this.itemName = data.name || "Item Name";
+  this.itemEffectText = data.effect || "Item Effect";
+  this.itemDescription = data.lore || "Item Lore";
   
   //Hitbox
   this.top = function() { return this.Y; }
@@ -570,35 +571,35 @@ function loot (imageGiven, nameGiven, effectTextGiven, descriptionGiven) {
   //Gives Loot
   this.giveItem = function() {
       
-    if (this.typeOfItem == potionList[1] && playerList[0].speed < playerList[0].MAX_SPEED) { 
+    if (this.image == potionList[1] && playerList[0].speed < playerList[0].MAX_SPEED) { 
 
       playerList[0].speed++; 
       playerList[0].speedFormula = 3 + (7 * (playerList[0].speed / 100));
     }
-    if (this.typeOfItem == potionList[0]) { playerList[0].damage++; }
-    if (this.typeOfItem == potionList[2] && playerList[0].dexterity < playerList[0].MAX_DEXTERITY) { 
+    if (this.image == potionList[0]) { playerList[0].damage++; }
+    if (this.image == potionList[2] && playerList[0].dexterity < playerList[0].MAX_DEXTERITY) { 
 
       playerList[0].dexterity++; 
     }
-    if (this.typeOfItem == potionList[3] && playerList[0].wizardry < playerList[0].MAX_WIZARDRY) { playerList[0].wizardry++; }
-    if (this.typeOfItem == potionList[4] && playerList[0].youth < playerList[0].MAX_YOUTH) { playerList[0].youth++; }
-    if (this.typeOfItem == armorList[0]) { playerList[0].MAX_HP += 10; }
-    if (this.typeOfItem == armorList[1]) { playerList[0].MAX_HP += 20; }
-    if (this.typeOfItem == armorList[2]) { playerList[0].MAX_HP += 30; }
-    if (this.typeOfItem == armorList[3]) { playerList[0].MAX_HP += 40; }
-    if (this.typeOfItem == weaponBowList[0][0]) { 
+    if (this.image == potionList[3] && playerList[0].wizardry < playerList[0].MAX_WIZARDRY) { playerList[0].wizardry++; }
+    if (this.image == potionList[4] && playerList[0].youth < playerList[0].MAX_YOUTH) { playerList[0].youth++; }
+    if (this.image == armorList[0]) { playerList[0].MAX_HP += 10; }
+    if (this.image == armorList[1]) { playerList[0].MAX_HP += 20; }
+    if (this.image == armorList[2]) { playerList[0].MAX_HP += 30; }
+    if (this.image == armorList[3]) { playerList[0].MAX_HP += 40; }
+    if (this.image == weaponBowList[0][0]) { 
 
       playerList[0].bulletImage = weaponBowList[0][1];
       playerList[0].maxWeaponDamage = 10;
       playerList[0].minWeaponDamage = 5;
     }
-    if (this.typeOfItem == weaponBowList[1][0]) { 
+    if (this.image == weaponBowList[1][0]) { 
 
       playerList[0].bulletImage = weaponBowList[1][1]; 
       playerList[0].maxWeaponDamage = 25;
       playerList[0].minWeaponDamage = 15;
     }
-    if (this.typeOfItem == weaponBowList[2][0]) { 
+    if (this.image == weaponBowList[2][0]) { 
 
       playerList[0].bulletImage = weaponBowList[2][1]; 
       playerList[0].maxWeaponDamage = 45;
@@ -609,7 +610,7 @@ function loot (imageGiven, nameGiven, effectTextGiven, descriptionGiven) {
   //Draw Item
   this.draw = function() {
 
-    ctx.drawImage(this.typeOfItem, this.X, this.Y, this.width, this.height);
+    ctx.drawImage(this.image, this.X, this.Y, this.width, this.height);
   }
 }
 function lootBag (defaultX, defaultY, imageGiven) {
