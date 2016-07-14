@@ -78,7 +78,7 @@ function player () {
   this.width = 40;
 
   //Username
-  this.userName = defaultNamesList[Math.floor((Math.random() * defaultNamesList.length) + 0).toFixed(0)];
+  this.name = defaultNamesList[Math.floor((Math.random() * defaultNamesList.length) + 0).toFixed(0)];
   this.ImageArray = [];
   this.Image = archer_Pics;
   this.timeToSpriteChange = 0;
@@ -183,7 +183,7 @@ function player () {
     if (this.specialCooldown <= 0 && this.MP >= this.special_MP_cost) {
       
       //Spellbomb
-      for (var i = 0; i < 21; i++) { 
+      for (var i = 1; i < 21; i++) { 
 
         //Player data generating projectiles
         var data = {
@@ -198,7 +198,7 @@ function player () {
           X: mouse.X,
           Y: mouse.Y,
 
-          angle: i * 18,
+          angle: i * 18 * (Math.PI / 180),
           image: this.bulletImage,
         }
 
@@ -512,7 +512,9 @@ function playerBullet (data) {
   //Calculates angle of attack
   var deltaY = -(playerList[0].Y + (playerList[0].height / 2) - mouse.Y);
   var deltaX = -(playerList[0].X + (playerList[0].width / 2) - mouse.X);
-  this.angle = data.angle * (Math.PI / 180) || Math.atan2(deltaY, deltaX);
+
+  //Convert from Degrees to Rad
+  this.angle = data.angle || getMouseAngle("rad");
 
   this.damage = data.damage;
   this.spd = data.spd;
@@ -952,7 +954,7 @@ function displayStats () {
   ctx.fillText("Glory: " + playerList[0].deathGlory, canvas.width - 275  + absX, 20 + absY);
   ctx.shadowBlur = 0;
   ctx.fillStyle = "#BBB";
-  ctx.fillText("Name: " + playerList[0].userName, canvas.width - 190  + absX, 212 + absY);
+  ctx.fillText("Name: " + playerList[0].name, canvas.width - 190  + absX, 212 + absY);
   ctx.fillText("Level: " + playerList[0].level, canvas.width - 190  + absX, 230 + absY);
   ctx.font = "14px black Palatino";
   ctx.fillText("Attack: " + playerList[0].damage, canvas.width - 185  + absX, 320 + absY);
@@ -1305,6 +1307,47 @@ function swapItems(a, b) {
   a.item = b.item;
   b.item = temp;
 }
+function getMouseAngle(type) {
+
+  //Calculate center of player.
+  var deltaX = playerList[0].X + (playerList[0].width / 2) - mouse.X;
+  var deltaY = playerList[0].Y + (playerList[0].height / 2) - mouse.Y;
+
+  //Find angle in Rad
+  var angle = Math.atan2(deltaY, deltaX);
+
+  //Convert from Rad to Degrees
+  angle *= (180 / Math.PI);
+
+  //Make angle positive on 360 degree values
+  angle += 180;
+
+  //Convert to Rad if necessary
+  if (type == "rad") { angle *= (Math.PI / 180); }
+  
+  return angle;
+}
+function getAngleTo(entityFrom, entityTo, type) {
+
+  //Calculate center of player.
+  var deltaX = entityFrom.X + (entityFrom.width / 2) - entityTo.X;
+  var deltaY = entityFrom.Y + (entityFrom.height / 2) - entityTo.Y;
+
+  //Find angle in Rad
+  var angle = Math.atan2(deltaY, deltaX);
+
+  //Convert from Rad to Degrees
+  angle *= (180 / Math.PI);
+
+  //Make angle positive on 360 degree values
+  angle += 180;
+
+  //Convert to Rad if necessary
+  if (type == "rad") { angle *= (Math.PI / 180); }
+
+  //Return angle in Degrees
+  return angle;
+}
 function drawDebugInfo(absX, absY) {
 
   //FOR BUG TESTING
@@ -1326,13 +1369,46 @@ function drawDebugInfo(absX, absY) {
     //["mouse.clicked", mouse.clicked],
     //["mouse.item", mouseItem],
     //["mouse.X", mouse.X.toFixed(0)],
-    //["mouse.Y", mouse.Y.toFixed(0)]
+    //["mouse.Y", mouse.Y.toFixed(0)],
+    ["mouseAngle", getMouseAngle().toFixed(0) + "°"],
+    ["mouseAngle", getMouseAngle("rad").toFixed(2) + " Rad"],
   ];
 
   for (var i = 0; i < info.length; i++) {
     
     ctx.fillText(info[i][0] + ": " + info[i][1], 20 + absX, 30 + (20 * i) + absY);
   }
+}
+function findNearestPlayer(entity) {
+
+  var closest = {
+
+    name: "Nobody Nearby",
+
+    X: 9999999,
+    Y: 9999999,
+
+    distance: 999999,
+    angle: 999,
+  };
+
+  for (var i = 0; i < playerList.length; i++) {
+    
+    var Xdistance = entity.X - playerList[i].X;
+    var Ydistance = entity.Y - playerList[i].Y;
+
+    var totalDistance = Xdistance + Ydistance;
+
+    if (totalDistance < closest.distance && entity.name != playerList[i].name) {
+
+      closest.name = playerList[i].name;
+      closest.X = playerList[i].X;
+      closest.Y = playerList[i].Y;
+      closest.distance = totalDistance;
+    }
+  }
+
+  return closest;
 }
 //END RANDOM TOOLS
 //GAME SCREEN WINDOW =============
@@ -1514,7 +1590,7 @@ function drawDeathScreen () {
 
   ctx.font = "28px Palatino";
   ctx.fillStyle = "#888";
-  ctx.fillText(playerList[0].userName + " was killed", (canvas.width / 3) + 30, 200);
+  ctx.fillText(playerList[0].name + " was killed", (canvas.width / 3) + 30, 200);
   
   ctx.font = "18px Palatino";
   if (playerList[0].level < 50) { ctx.fillText("Died at level: " + playerList[0].level, 240, 250); }
