@@ -904,41 +904,46 @@ function progressBar (data) {
   this.X = data.X;
   this.Y = data.Y;
 
+  //Text Location
+  this.textX = data.textX;
+  this.textY = data.textY;
+
   //Dimensions
   this.width = data.width || 150;
   this.height = data.height || 30;
 
   //Colors
-  this.bgColor = data.color || "#333";
+  this.bgColor = data.bgColor || "grey";
   this.barColor = data.barColor;
 
   //Fill level
-  this.min = data.min || 0;
+  this.min = data.min || "Not Specified";
 
   //Max bar value
-  this.max = data.max;
+  this.max = data.max || "Not Specified";
 
   //Hitbox
-  this.top = function() { return this.Y; }
-  this.bottom = function() { return this.Y + this.height; }
-  this.left = function() { return this.X; }
-  this.right = function() { return this.X + this.width; }
+  this.top = function() { return this.Y(); }
+  this.bottom = function() { return this.Y() + this.height; }
+  this.left = function() { return this.X(); }
+  this.right = function() { return this.X() + this.width; }
 
   this.draw = function() {
 
-    //Bar base
-    ctx.fillStyle = this.bgColor;
-    ctx.fillRect(this.X, this.Y, this.width, this.height);
-
-    //Text
-    if (mouseIsTouching()) {
-
-      ctx.fillStyle = this.hoverColor;
-      ctx.fillText(this.min + " / " + this.max, this.X + (this.width / 2.2), this.Y + this.height - 2);
-    }
+    //Bar background
+    ctx.fillStyle = this.bgColor();
+    ctx.fillRect(this.X(), this.Y(), this.width, this.height);
 
     //Bar fill level
-    ctx.fillRect(this.X, this.Y, this.width * (this.min / this.max), this.height);
+    ctx.fillStyle = this.barColor();
+    ctx.fillRect(this.X(), this.Y(), this.width * (this.min() / this.max()), this.height);
+
+    //Text
+    if (mouseIsTouching(this)) {
+
+      ctx.fillStyle = "white";
+      ctx.fillText(this.min() + " / " + this.max(), this.textX(), this.textY());
+    }
   }
 }
 //END GAME OBJECTS ===============
@@ -1017,6 +1022,8 @@ function displayStats () {
   drawDebugInfo(absX, absY);
 
   ctx.font = "18px Palatino";
+
+
   drawExpBar(absX, absY, canvas.width + FRAME_OF_REFERENCE[0]);
   drawHpBar(absX, absY, canvas.width + FRAME_OF_REFERENCE[0]);
   drawManaBar(absX, absY, canvas.width + FRAME_OF_REFERENCE[0]);
@@ -1025,68 +1032,97 @@ function displayStats () {
 //Convert these into a bar class which can be customized.
 function drawExpBar(absX, absY, rightOfScreen) {
 
-  //Exp Bar
-  ctx.fillStyle = "grey";
-  ctx.fillRect(canvas.width - 190 + absX, 240 + absY, 150, 18);
+  var data = {
 
-  if (playerList[0].level < playerList[0].MAX_level) { 
+    X: function() { return canvas.width - 190 + absX; },
+    Y: function() { return 240 + absY; },
 
-    ctx.fillStyle = "#00AA00"; 
-    ctx.fillRect(canvas.width - 190 + absX, 240 + absY, playerList[0].EXP * (150 / playerList[0].levelExpReq), 18);
-  }
+    textX: function() { return canvas.width - 140 + absX; },
+    textY: function() { return 256 + absY; },
 
-  //Glory Bar
-  else { 
+    width: 175,
+    height: 18,
 
-    ctx.fillStyle = "orange";
-    ctx.fillRect(canvas.width - 190 + absX, 240 + absY, 150, 18);
-  }
+    bgColor: function() { return "grey" },
+    barColor: function() {
 
-  //Display Level Text
-  if (mouse.X > rightOfScreen - 190 && mouse.X < rightOfScreen - 36 && mouse.Y > 242 + FRAME_OF_REFERENCE[1] && mouse.Y < 262 + FRAME_OF_REFERENCE[1]) {
+      //Exp Bar
+      if (playerList[0].level < playerList[0].MAX_level) { return "#0A0"; }
 
-    ctx.fillStyle = "white";
+      //Glory Bar
+      else { return "orange"; }
+    },
 
-    if (playerList[0].level < playerList[0].MAX_level) { 
-
-      ctx.fillText(playerList[0].EXP.toFixed(0) + " / " + playerList[0].levelExpReq, canvas.width - 150 + absX, 256 + absY); 
-
-    } else { 
+    min: function() { 
 
       playerList[0].glory = playerList[0].EXP / 2000;
-      ctx.fillText(playerList[0].glory.toFixed(0), canvas.width - 125 + absX, 256 + absY); 
-    }
+
+      //Exp Bar
+      if (playerList[0].level < playerList[0].MAX_level) { return playerList[0].EXP; }
+
+      //Glory Bar
+      else { return playerList[0].glory.toFixed(0); }
+    },
+    max: function() { 
+
+      playerList[0].glory = playerList[0].EXP / 2000;
+
+      //Exp Bar
+      if (playerList[0].level < playerList[0].MAX_level) { return playerList[0].levelExpReq; }
+
+      //Glory Bar
+      else { return playerList[0].glory.toFixed(0); }
+    },
   }
+
+  var expBar = new progressBar(data);
+  expBar.draw();
 }
 function drawHpBar (absX, absY, rightOfScreen) {
 
-  //HP Bar
-  ctx.fillStyle = "grey";
-  ctx.fillRect(canvas.width - 190 + absX, 260 + absY, 150, 18);
-  ctx.fillStyle = "#CC0000";
-  ctx.fillRect(canvas.width - 190 + absX, 260 + absY, playerList[0].HP * (150 / playerList[0].MAX_HP), 18);
+  var data = {
 
-  //Display HP Text
-  if (mouse.X > rightOfScreen - 190 && mouse.X < rightOfScreen - 36 && mouse.Y > 262 + FRAME_OF_REFERENCE[1] && mouse.Y < 282 + FRAME_OF_REFERENCE[1]) {
+    X: function() { return canvas.width - 190 + absX; },
+    Y: function() { return 260 + absY; },
 
-    ctx.fillStyle = "white";
-    ctx.fillText(playerList[0].HP.toFixed(0) + " / " + playerList[0].MAX_HP, canvas.width - 150 + absX, 276 + absY);
+    textX: function() { return canvas.width - 140 + absX; },
+    textY: function() { return 276 + absY; },
+
+    width: 175,
+    height: 18,
+
+    bgColor: function() { return "grey"; },
+    barColor: function() { return "#CD3333"; },
+
+    min: function() { return playerList[0].HP.toFixed(0); },
+    max: function() { return playerList[0].MAX_HP.toFixed(0); },
   }
+
+  var hpBar = new progressBar(data);
+  hpBar.draw();
 }
 function drawManaBar (absX, absY, rightOfScreen) {
 
-  //Mana Bar
-  ctx.fillStyle = "grey";
-  ctx.fillRect(canvas.width - 190 + absX, 280 + absY, 150, 18);
-  ctx.fillStyle = "#0000FF";
-  ctx.fillRect(canvas.width - 190 + absX, 280 + absY, playerList[0].MP * (150 / playerList[0].MAX_MP), 18);
+  var data = {
 
-  //Display Mana Text
-  if (mouse.X > rightOfScreen - 190 && mouse.X < rightOfScreen - 36 && mouse.Y > 282 + FRAME_OF_REFERENCE[1] && mouse.Y < 302 + FRAME_OF_REFERENCE[1]) {
+    X: function() { return canvas.width - 190 + absX; },
+    Y: function() { return 280 + absY; },
 
-    ctx.fillStyle = "white";
-    ctx.fillText(playerList[0].MP.toFixed(0) + " / " + playerList[0].MAX_MP, canvas.width - 150 + absX, 296 + absY);
+    textX: function() { return canvas.width - 140 + absX; },
+    textY: function() { return 296 + absY; },
+
+    width: 175,
+    height: 18,
+
+    bgColor: function() { return "grey"; },
+    barColor: function() { return "#05C"; },
+
+    min: function() { return playerList[0].MP.toFixed(0); },
+    max: function() { return playerList[0].MAX_MP.toFixed(0); },
   }
+
+  var manaBar = new progressBar(data);
+  manaBar.draw();
 }
 // END SIDE-BAR DISPLAY ==========
 function drawPlayer () {

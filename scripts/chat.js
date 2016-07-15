@@ -151,7 +151,7 @@ function checkDevCommands () {
 
       str = str.slice(7, str.length);
 
-      for (var i = playerList[0].level; i < parseInt(str); i++) { playerList[0].levelUP(); }
+      for (var i = playerList[0].level; i < parseInt(str); i++) { playerList[0].levelUP(); playerList[0].EXP = 0; }
     }
     else if (str.search("/kill all") == 0) { enemyList = []; }
     else if (str.search("/reset xy") == 0) {

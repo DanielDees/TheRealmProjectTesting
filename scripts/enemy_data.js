@@ -91,16 +91,21 @@ function enemy (data) {
 
     var potionNames = ["Attack", "Speed", "Dexterity", "Wizardry", "Youth"];
 
+    //Potion Drops
     for (var i = 0; i < potionNames.length; i++) {
 
       var chance = (Math.random() * 1000) + 1;
       if (chance > 980) { Game_Loot_System.dropPotions(potionNames[i]); }
     }
+
+    //Weapon Drops
     for (var i = 0; i < 3; i++) {
 
       var chance = (Math.random() * 1000) + 1;
       if (chance > 900) { Game_Loot_System.dropWeapons(i); }
     }
+
+    //Armor Drops
     for (var i = 0; i < 4; i++) {
 
       var chance = (Math.random() * 1000) + 1;
@@ -260,7 +265,7 @@ var GAME_ENEMIES = {
     
     //Info
     HP: 40000,
-    expReward: 3000,
+    expReward: 30000,
     attack: 120,
     spd: 3,
 
