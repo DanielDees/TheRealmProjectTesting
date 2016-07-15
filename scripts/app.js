@@ -890,6 +890,51 @@ function portal (data) {
     }
   }
 }
+
+//ProgressBar Class is Unfinished.
+function progressBar (data) {
+
+  //Location
+  this.X = data.X;
+  this.Y = data.Y;
+
+  //Dimensions
+  this.width = data.width || 150;
+  this.height = data.height || 30;
+
+  //Colors
+  this.bgColor = data.color || "#333";
+  this.barColor = data.barColor;
+
+  //Fill level
+  this.min = data.min || 0;
+
+  //Max bar value
+  this.max = data.max;
+
+  //Hitbox
+  this.top = function() { return this.Y; }
+  this.bottom = function() { return this.Y + this.height; }
+  this.left = function() { return this.X; }
+  this.right = function() { return this.X + this.width; }
+
+  this.draw = function() {
+
+    //Bar base
+    ctx.fillStyle = this.bgColor;
+    ctx.fillRect(this.X, this.Y, this.width, this.height);
+
+    //Text
+    if (mouseIsTouching()) {
+
+      ctx.fillStyle = this.hoverColor;
+      ctx.fillText(this.min + " / " + this.max, this.X + (this.width / 2.2), this.Y + this.height - 2);
+    }
+
+    //Bar fill level
+    ctx.fillRect(this.X, this.Y, this.width * (this.min / this.max), this.height);
+  }
+}
 //END GAME OBJECTS ===============
 //DRAW STUFF =====================
 function displayLootBags() {
@@ -970,6 +1015,8 @@ function displayStats () {
   drawHpBar(absX, absY, canvas.width + FRAME_OF_REFERENCE[0]);
   drawManaBar(absX, absY, canvas.width + FRAME_OF_REFERENCE[0]);
 }
+
+//Convert these into a bar class which can be customized.
 function drawExpBar(absX, absY, rightOfScreen) {
 
   //Exp Bar
