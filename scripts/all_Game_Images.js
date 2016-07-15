@@ -41,6 +41,7 @@ function Character_Images() {
       this.getWarriorImages = function(type) {
 
             var temp = new Image();
+            var imagePath = PATH.characters;
 
             switch (type) {
 
@@ -49,25 +50,183 @@ function Character_Images() {
                   case "left":
                   case "down":
                   case "right":
-                        temp.src = PATH.characters + "characterSprite.png";
-                        return temp;
+                        temp.src = imagePath + "characterSprite.png";
+                        break;
                   
                   //Attacking
                   case "upAttack":
                   case "leftAttack":
                   case "downAttack":
                   case "rightAttack":
-                        temp.src = PATH.characters + "characterSprite.png";
-                        return temp;
+                        temp.src = imagePath + "characterSprite.png";
+                        break;
                   
                   //Movement
-                  case "upMove":
-                  case "leftMove":
-                  case "downMove":
-                  case "rightMove":
-                        temp.src = PATH.characters + "characterSprite.png";
-                        return temp;
+
+                  //Up
+                  case "upMove1":
+                  case "upMove2":
+
+                  //Left
+                  case "leftMove1":
+                  case "leftMove2":
+
+                  //Down
+                  case "downMove1":
+                  case "downMove2":
+
+                  //Right
+                  case "rightMove1":
+                  case "rightMove2":
+                        temp.src = imagePath + "characterSprite.png";
+                        break;
             }
+
+            return temp;
+      }
+      this.getArcherImages = function(type) {
+
+            var temp = new Image();
+            var imagePath = PATH.characters;
+
+            switch (type) {
+
+                  //Standing still
+                  case "up":
+                        temp.src = imagePath + "archer_up_Pic.png";
+                        break;
+                  case "left":
+                        temp.src = imagePath + "archer_left_Pic.png";
+                        break;
+                  case "down":
+                        temp.src = imagePath + "archer_down_Pic.png";
+                        break;
+                  case "right":
+                        temp.src = imagePath + "archer_right_Pic.png";
+                        break;
+                  
+                  //Attacking
+                  case "upAttack":
+                        temp.src = imagePath + "";
+                        break;
+                  case "leftAttack":
+                        temp.src = imagePath + "";
+                        break;
+                  case "downAttack":
+                        temp.src = imagePath + "";
+                        break;
+                  case "rightAttack":
+                        temp.src = imagePath + "";
+                        break;
+                  
+                  //Movement
+
+                  //Up
+                  case "upMove1":
+                        temp.src = imagePath + "archer_up_move1_Pic.png";
+                        break;
+                  case "upMove2":
+                        temp.src = imagePath + "archer_up_move1_Pic.png";
+                        break;
+
+                  //Left
+                  case "leftMove1":
+                        temp.src = imagePath + "archer_left_move1_Pic.png";
+                        break;
+                  case "leftMove2":
+                        temp.src = imagePath + "archer_left_move1_Pic.png";
+                        break;
+
+                  //Down     
+                  case "downMove1":
+                        temp.src = imagePath + "archer_down_move1_Pic.png";
+                        break;
+                  case "downMove2":
+                        temp.src = imagePath + "archer_down_move1_Pic.png";
+                        break;
+
+                  //Right     
+                  case "rightMove1":
+                        temp.src = imagePath + "archer_right_move1_Pic.png";
+                        break;
+                  case "rightMove2":
+                        temp.src = imagePath + "archer_right_move1_Pic.png";
+                        break;
+            }
+
+            return temp;
+      }
+      this.getMageImages = function(type) {
+
+            var temp = new Image();
+            var imagePath = PATH.characters;
+
+            switch (type) {
+
+                  //Standing still
+                  case "up":
+                        temp.src = imagePath + "mage_up_Pic.png";
+                        break;
+                  case "left":
+                        temp.src = imagePath + "mage_left_Pic.png";
+                        break;
+                  case "down":
+                        temp.src = imagePath + "mage_down_Pic.png";
+                        break;
+                  case "right":
+                        temp.src = imagePath + "mage_right_Pic.png";
+                        break;
+                  
+                  //Attacking
+                  case "upAttack":
+                        temp.src = imagePath + "";
+                        break;
+                  case "leftAttack":
+                        temp.src = imagePath + "";
+                        break;
+                  case "downAttack":
+                        temp.src = imagePath + "";
+                        break;
+                  case "rightAttack":
+                        temp.src = imagePath + "";
+                        break;
+                  
+                  //Movement
+
+                  //Up
+                  case "upMove1":
+                        temp.src = imagePath + "mage_up_move1_Pic.png";
+                        break;
+                  case "upMove2":
+                        temp.src = imagePath + "mage_up_move1_Pic.png";
+                        break;
+
+                  //Left
+                  case "leftMove1":
+                        temp.src = imagePath + "mage_left_move1_Pic.png";
+                        break;
+                  case "leftMove2":
+                        temp.src = imagePath + "mage_left_move1_Pic.png";
+                        break;
+
+                  //Down     
+                  case "downMove1":
+                        temp.src = imagePath + "mage_down_move1_Pic.png";
+                        break;
+                  case "downMove2":
+                        temp.src = imagePath + "mage_down_move1_Pic.png";
+                        break;
+
+                  //Right     
+                  case "rightMove1":
+                        temp.src = imagePath + "mage_right_move1_Pic.png";
+                        break;
+                  case "rightMove2":
+                        temp.src = imagePath + "mage_right_move1_Pic.png";
+                        break;
+            }
+
+            return temp;
       }
 }
 
