@@ -15,6 +15,62 @@ var PATH = {
       lootBags: "sprites/loot_bags/"
 };
 
+/*
+      The idea for the Character_Images Class is that
+            it will be able to return values for each
+            of the images of a character.
+      These values it returns can then be assigned to a
+            class for each character and it can have it's
+            sprites labeled as this.upSprite, this.downSprite, etc.
+      This will likely be in the format of something like
+
+      function Warrior_Class () {
+      
+            this.images = {
+      
+                  up: (insert up sprite),
+                  down: (insert down sprite),
+                  left: (insert left sprite),
+                  right: (insert right sprite),
+                  etc: (etc...),
+            }
+      }
+*/
+function Character_Images() {
+
+      this.getWarriorImages = function(type) {
+
+            var temp = new Image();
+
+            switch (type) {
+
+                  //Standing still
+                  case "up":
+                  case "left":
+                  case "down":
+                  case "right":
+                        temp.src = PATH.characters + "characterSprite.png";
+                        return temp;
+                  
+                  //Attacking
+                  case "upAttack":
+                  case "leftAttack":
+                  case "downAttack"
+                  case "rightAttack":
+                        temp.src = PATH.characters + "characterSprite.png";
+                        return temp;
+                  
+                  //Movement
+                  case "upMove":
+                  case "leftMove":
+                  case "downMove":
+                  case "rightMove":
+                        temp.src = PATH.characters + "characterSprite.png";
+                        return temp;
+            }
+      }
+}
+
 //MAP TILES
 
 //Stone Ground types.
