@@ -3,6 +3,12 @@ var versionInfo = "Version 1.2.C";
 
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
+
+//For image sharpness
+ctx.webkitImageSmoothingEnabled = false;
+ctx.mozImageSmoothingEnabled = false;
+ctx.imageSmoothingEnabled = false; /// future
+
 //Re-implement when you remove spacing between map tiles.
 document.getElementById("myCanvas").style.background = "url('sprites/groundTiles/oldStoneFloor.png') repeat";
 document.getElementById("myCanvas").style.backgroundSize = "50px";
