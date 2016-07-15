@@ -1023,22 +1023,20 @@ function displayStats () {
 
   ctx.font = "18px Palatino";
 
-
-  drawExpBar(absX, absY, canvas.width + FRAME_OF_REFERENCE[0]);
-  drawHpBar(absX, absY, canvas.width + FRAME_OF_REFERENCE[0]);
-  drawManaBar(absX, absY, canvas.width + FRAME_OF_REFERENCE[0]);
+  drawExpBar();
+  drawHpBar();
+  drawManaBar();
 }
 
-//Convert these into a bar class which can be customized.
-function drawExpBar(absX, absY, rightOfScreen) {
+function drawExpBar() {
 
   var data = {
 
-    X: function() { return canvas.width - 190 + absX; },
-    Y: function() { return 240 + absY; },
+    X: function() { return canvas.width + playerList[0].X - 440; },
+    Y: function() { return playerList[0].Y - 60; },
 
-    textX: function() { return canvas.width - 140 + absX; },
-    textY: function() { return 256 + absY; },
+    textX: function() { return canvas.width + playerList[0].X - 390; },
+    textY: function() { return playerList[0].Y - 44; },
 
     width: 175,
     height: 18,
@@ -1078,15 +1076,15 @@ function drawExpBar(absX, absY, rightOfScreen) {
   var expBar = new progressBar(data);
   expBar.draw();
 }
-function drawHpBar (absX, absY, rightOfScreen) {
+function drawHpBar () {
 
   var data = {
 
-    X: function() { return canvas.width - 190 + absX; },
-    Y: function() { return 260 + absY; },
+    X: function() { return canvas.width + playerList[0].X - 440; },
+    Y: function() { return playerList[0].Y - 40; },
 
-    textX: function() { return canvas.width - 140 + absX; },
-    textY: function() { return 276 + absY; },
+    textX: function() { return canvas.width + playerList[0].X - 390; },
+    textY: function() { return playerList[0].Y - 24; },
 
     width: 175,
     height: 18,
@@ -1101,15 +1099,15 @@ function drawHpBar (absX, absY, rightOfScreen) {
   var hpBar = new progressBar(data);
   hpBar.draw();
 }
-function drawManaBar (absX, absY, rightOfScreen) {
+function drawManaBar () {
 
   var data = {
 
-    X: function() { return canvas.width - 190 + absX; },
-    Y: function() { return 280 + absY; },
+    X: function() { return canvas.width + playerList[0].X - 440; },
+    Y: function() { return playerList[0].Y - 20; },
 
-    textX: function() { return canvas.width - 140 + absX; },
-    textY: function() { return 296 + absY; },
+    textX: function() { return canvas.width + playerList[0].X - 390; },
+    textY: function() { return playerList[0].Y - 4; },
 
     width: 175,
     height: 18,
