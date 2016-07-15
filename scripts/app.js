@@ -72,7 +72,7 @@ var screenType = {
 */
 var screenType = "MAIN_MENU";
 
-//GAME OBJECTS ===================
+//GAME CLASSES ===================
 function player () {
   
   //Position
@@ -896,8 +896,6 @@ function portal (data) {
     }
   }
 }
-
-//ProgressBar Class is Unfinished.
 function progressBar (data) {
 
   //Location
@@ -946,7 +944,68 @@ function progressBar (data) {
     }
   }
 }
-//END GAME OBJECTS ===============
+function button (data) {
+
+  //Location
+  this.X = data.X;
+  this.Y = data.Y;
+
+  //Dimensions
+  this.width = data.width;
+  this.height = data.height;
+
+  //Text
+  this.text = data.text || "Not Specified";
+  this.textX = data.textX || this.X;
+  this.textY = data.textY || this.Y;
+  this.textHeight = parseInt(data.font);
+
+  //Style
+  this.font = data.font;
+  this.blur = data.blur || 10;
+  this.color = data.color || "white";
+  this.hoverColor = data.hoverColor || "red";
+
+  //Function button performs
+  this.action = data.action;
+
+  //Hitbox
+  this.top = function() { return this.Y; }
+  this.bottom = function() { return this.Y + this.height; }
+  this.left = function() { return this.X; }
+  this.right = function() { return this.X + this.width; }
+
+  this.draw = function() {
+
+    ctx.fillStyle = this.color;
+    ctx.fillRect(this.X, this.Y, this.width, this.height);
+
+    //Make hitbox for button visible
+    //ctx.strokeRect(this.X, this.Y, this.width, this.height);
+
+    if (mouseIsTouching(this)) {
+
+      ctx.fillStyle = this.hoverColor;
+
+      //On click
+      if (mouse.clicked) {
+
+        //For debug
+        console.log("Positon: " + playerList[0].X.toFixed(0) + "x | " + playerList[0].Y.toFixed(0) + "y" + "\nGame Screen: " + screenType);
+        
+        //Execute action
+        if (this.action) { this.action(); }
+
+        mouse.clicked = false;
+      }
+    }
+
+    ctx.shadowBlur = this.blur;
+    ctx.fillText(this.text, this.textX, this.textY + this.textHeight);
+    ctx.shadowBlur = 0;
+  }
+}
+//END GAME CLASSES ===============
 //DRAW STUFF =====================
 function displayLootBags() {
 
@@ -1027,7 +1086,6 @@ function displayStats () {
   drawHpBar();
   drawManaBar();
 }
-
 function drawExpBar() {
 
   var data = {
@@ -1344,6 +1402,7 @@ function isEqualTo () {
   return false;
 }
 var lastKnownLocation = [playerList[0].X, playerList[0].isViewingLoot];
+
 function placeButtonHere (text, X, Y, screenTypeGiven, font, buttonColor, functionToPerform) {
 
   //Ctx.save/restore can bug out buttons (no frame_of_reference check).
@@ -1354,7 +1413,6 @@ function placeButtonHere (text, X, Y, screenTypeGiven, font, buttonColor, functi
   var height = parseInt(font) + 10;
   var textHeight = parseInt(font);
   ctx.fillStyle = buttonColor;
-  ctx.fillRect(X, Y, width, height);
   ctx.fillRect(X, Y, width, height);
 
   //Make hitbox for button visible
