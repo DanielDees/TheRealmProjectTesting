@@ -55,7 +55,7 @@ function Character_Images() {
                   //Attacking
                   case "upAttack":
                   case "leftAttack":
-                  case "downAttack"
+                  case "downAttack":
                   case "rightAttack":
                         temp.src = PATH.characters + "characterSprite.png";
                         return temp;
