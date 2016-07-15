@@ -7,47 +7,91 @@ function Loot_Drop_System () {
 
 	this.getPotionType = function (type) {
 
-		if (type == "Attack") { return 0; };
-		if (type == "Speed") { return 1; };
-		if (type == "Dexterity") { return 2; };
-		if (type == "Wizardry") { return 3; };
-		if (type == "Youth") { return 4; };
+		switch (type) {
+
+			case "Attack":
+				return 0;
+			case "Speed":
+				return 1;
+			case "Dexterity":
+				return 2;
+			case "Wizardry":
+				return 3;
+			case "Youth":
+				return 4;
+		}
 	}
 	this.getBowName = function (tier) {
 
-		if (tier == 0) { return "Shadow Bow"; };
-		if (tier == 1) { return "Innocent Blood Bow"; };
-		if (tier == 2) { return "Sunset Bow"; };
+		switch (tier) {
+
+			case 0:
+				return "Shadow Bow";
+			case 1:
+				return "Innocent Blood Bow";
+			case 2:
+				return "Sunset Bow";
+		}
 	}
 	this.getBowLore = function (tier) {
 
-		if (tier == 0) { return "Shadowy shadow lore..."; };
-		if (tier == 1) { return "Blood was spilled for this bow."; };
-		if (tier == 2) { return "A gift from the Sun God."; };
+		switch (tier) {
+
+			case 0:
+				return "Shadowy shadow lore...";
+			case 1:
+				return "Blood was spilled for this bow.";
+			case 2:
+				return "A gift from the Sun God.";
+		}
 	}
 	this.getArmorName = function (tier) {
 
-		if (tier == 0) { return "Rusty Steel Armor"; };
-		if (tier == 1) { return "Swamp Armor"; };
-		if (tier == 2) { return "Enchanted Fire Armor"; };
-		if (tier == 3) { return "Neptunian Armor"; };
+		switch (tier) {
+
+			case 0:
+				return "Rusty Steel Armor";
+			case 1:
+				return "Swamp Armor";
+			case 2:
+				return "Enchanted Fire Armor";
+			case 3:	
+				return "Neptunian Armor";
+		}
 	}
 	this.getArmorLore = function (tier) {
 
-		if (tier == 0) { return "Forged by a local blacksmith."; };
-		if (tier == 1) { return "Once worn by a hero."; };
-		if (tier == 2) { return "Skillfully crafted in an armory."; };
-		if (tier == 3) { return "Metal so fine only kings wear it."; };
+		switch (tier) {
+
+			case 0:
+				return "Forged by a local blacksmith.";
+			case 1:
+				return "Once worn by a hero.";
+			case 2:
+				return "Skillfully crafted in an armory.";
+			case 3:
+				return "Metal so fine only kings wear it.";
+		}
 	}
 	this.getPortalText = function (destination) {
 
-		if (destination == "GAME_SCREEN") { return " To The Realm"; };
-		if (destination == "BOSS_SCREEN") { return " Fight Boss!"; };
+		switch (destination) {
+
+			case "GAME_SCREEN":
+				return " To The Realm";
+			case "BOSS_SCREEN":
+				return " Fight Boss!";
+		}
 	}
 	this.getPortalImage = function (destination) {
 
-		if (destination == "GAME_SCREEN") { return portalTypes[0]; };
-		if (destination == "BOSS_SCREEN") { return portalTypes[1]; };
+		switch (destination) {
+
+			case "GAME_SCREEN":
+				return portalTypes[0];
+			case "BOSS_SCREEN":
+				return portalTypes[1];
+		}
 	}
 
 	this.getPortalFunction = function (destination) {
