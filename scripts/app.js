@@ -1,5 +1,5 @@
 //VERSION INFO
-var versionInfo = "Version 1.2.C";
+var versionInfo = "Version 1.2.D";
 
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
