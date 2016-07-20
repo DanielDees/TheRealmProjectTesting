@@ -234,25 +234,9 @@ function player () {
     for (var j = 0; j < this.inventory.length; j++) {
 
       if (this.inventory[j].item) {
-
-        //On mouse click
-        if (mouse.clicked) {
-
-          //Give Item if Shift Clicking
-          if (keys.SHIFT && mouseIsTouching(this.inventory[j]) && !mouse.item) {
-
-            this.inventory[j].giveItem();
-            break;
-          }
-          //Select item if clicking it and not holding anything else
-          if (mouseIsTouching(this.inventory[j].item) && !mouse.item) {
-            
-            this.inventory[j].item.beingHeld = true;
-            mouse.item = this.inventory[j].item;
-          }
-        }
+        
         //When not clicking
-        else {
+        if (!mouse.clicked) {
 
           //Item moving/swapping
           for (var k = 0; k < this.inventory.length; k++) {
@@ -569,6 +553,9 @@ function loot (data) {
   this.itemName = data.name || "Item Name";
   this.itemEffectText = data.effect || "Item Effect";
   this.itemDescription = data.lore || "Item Lore";
+
+  //Effect
+  this.itemEffect = data.itemEffect;
   
   //Hitbox
   this.top = function() { return this.Y; }
@@ -577,8 +564,11 @@ function loot (data) {
   this.right = function() { return this.X + this.width; }
 
   //Gives Loot
-  this.giveItem = function() {
-      
+  this.give = function() {
+    
+    //Perfrom item action
+    if (this.itemEffect) { this.itemEffect(); }
+
     if (this.image == potionList[1] && playerList[0].speed < playerList[0].MAX_SPEED) { 
 
       playerList[0].speed++; 
@@ -614,7 +604,26 @@ function loot (data) {
       playerList[0].minWeaponDamage = 30;
     }
   }
+  //Check if mouse holding this
+  this.hold = function() {
 
+    //Select item if clicking it and not holding anything else
+    if (mouseIsTouching(this) && !mouse.item || this.beingHeld) {
+      
+      this.beingHeld = true;
+      mouse.item = this;
+
+      //Center on mouse
+      this.X = mouse.X - (this.width / 2);
+      this.Y = mouse.Y - (this.height / 2);
+    }
+    //Remove item from hand if not clicking.
+    else if (!mouse.clicked && this.beingHeld) {
+
+      this.beingHeld = false;
+      mouse.item = null;
+    }
+  }
   //Draw Item
   this.draw = function() {
 
@@ -697,28 +706,7 @@ function lootBag (defaultX, defaultY, imageGiven) {
 
       if (this.inventory[j].item) {
 
-        //Give Item if Shift Clicking
-        if (mouse.clicked && keys.SHIFT && mouseIsTouching(this.inventory[j]) && !mouse.item) {
-
-          this.inventory[j].giveItem();
-          this.checkIfEmpty();
-          break;
-        }
-        //Select item if clicking it and not holding anything else
-        if (mouse.clicked && mouseIsTouching(this.inventory[j].item) && !mouse.item) {
-          
-          this.inventory[j].item.beingHeld = true;
-
-          //Give mouse the item.
-          mouse.item = this.inventory[j].item;
-        }
-        //Hold item while mouse is held
-        else if (mouse.clicked && this.inventory[j].item.beingHeld && mouse.item) {
-
-          //Prevent else statement...
-        }
-        //When not clicking
-        else {
+        if (!(mouse.clicked && this.inventory[j].item.beingHeld)) {
 
           //Item move/swap with other slots
           for (var k = 0; k < this.inventory.length; k++) {
@@ -764,7 +752,7 @@ function lootBag (defaultX, defaultY, imageGiven) {
         }
       }
     }
-    //Draw slots on first pass, items on second.
+    //Draw slots on first pass, items on second
     for (var i = 0; i < 2; i++) {
       for (var col = 0; col < 8; col++) {
 
@@ -777,6 +765,9 @@ function lootBag (defaultX, defaultY, imageGiven) {
         }
       }
     }
+
+    //Delete self if Empty
+    this.checkIfEmpty();
   }
   this.draw = function() {
 
@@ -804,15 +795,19 @@ function inventorySlot (defaultX, defaultY, col, row, itemGiven) {
 
   this.draw = function(i) {
 
-    //If item in slot is being held by mouse
-    if (this.item && this.item.beingHeld) {
+    if (mouse.clicked) {
 
-      this.item.X = mouse.X - (this.item.width / 2);
-      this.item.Y = mouse.Y - (this.item.height / 2);
+      //Check if giving item
+      this.giveItem();
 
-    } else if (this.item) {
+      //Hold item
+      if (this.item) { this.item.hold(); }
+    }
 
-      //Return item in slot to inventory position when not being held.
+    //If item in slot not being held
+    if (this.item && !this.item.beingHeld) {
+
+      //Return item to slot
       this.item.X = this.left() + 4;
       this.item.Y = this.top() + 4;
     }
@@ -836,16 +831,16 @@ function inventorySlot (defaultX, defaultY, col, row, itemGiven) {
     }
     else if (this.item) {
 
-      //Draw inventory slot's item
+      //Draw inventory slot item
       this.item.draw();
     }
   }
   this.giveItem = function() {
 
     //Give item and delete it
-    if (this.item) { 
+    if (keys.SHIFT && mouseIsTouching(this) && this.item && !mouse.item) { 
 
-      this.item.giveItem(); 
+      this.item.give(); 
       this.item = null;
       mouse.clicked = false;
     }
