@@ -714,13 +714,13 @@ function drawGameScreen () {
     backgroundScrollingScene(); 
     checkFrameOfReference(0, 0);
   }
-  if (screenType == "MAIN_MENU") { drawMainMenuScreen(); }
+  if (screenType == "MAIN_MENU") { drawMainMenu(); }
   if (screenType == "INSTRUCTIONS") { drawInstructionsScreen(); }
   if (screenType == "DEATH_SCREEN") { drawDeathScreen(); }
-  if (screenType == "OPTIONS") { drawOptionsScreen(); }
+  if (screenType == "OPTIONS") { drawOptionsMenu(); }
   if (screenType == "CLASS_SELECTION") { drawClassSelectionScreen(); }
 }
-function drawMainMenuScreen () {
+/* function drawMainMenuScreen () {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = 'rgba(30, 30, 30, 0.7)';
@@ -743,7 +743,7 @@ function drawMainMenuScreen () {
   ctx.font = "16px Palatino";
   ctx.fillStyle = "#008888";
   ctx.fillText(versionInfo + " - Game by ExplorersX", 15, 30);
-}
+} 
 function drawOptionsScreen () {
    
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -767,7 +767,7 @@ function drawOptionsScreen () {
   ctx.fillText(versionInfo + " - Game by ExplorersX", 15, 30);
 
   placeButtonHere("Back to Main", 310, 360, "MAIN_MENU", "25px Palatino", "#696969");
-}
+} */
 function drawInstructionsScreen () {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
