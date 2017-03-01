@@ -580,7 +580,7 @@ function drawGameScreen () {
     checkFrameOfReference(0, 0);
   }
   if (screenType == "MAIN_MENU") { drawMainMenu(); }
-  if (screenType == "INSTRUCTIONS") { drawInstructionsScreen(); }
+  if (screenType == "INSTRUCTIONS") { drawInstructionsMenu(); }
   if (screenType == "DEATH_SCREEN") { drawDeathScreen(); }
   if (screenType == "OPTIONS") { drawOptionsMenu(); }
   if (screenType == "CLASS_SELECTION") { drawClassSelectionScreen(); }
@@ -632,7 +632,7 @@ function drawOptionsScreen () {
   ctx.fillText(versionInfo + " - Game by ExplorersX", 15, 30);
 
   placeButtonHere("Back to Main", 310, 360, "MAIN_MENU", "25px Palatino", "#696969");
-} */
+}
 function drawInstructionsScreen () {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -655,7 +655,7 @@ function drawInstructionsScreen () {
   ctx.fillText(versionInfo + " - Game by ExplorersX", 15, 30);
 
   placeButtonHere("Back to Main", 310, 360, "MAIN_MENU", "25px Palatino", "#696969");
-}
+} */
 function drawDeathScreen () {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -669,7 +669,7 @@ function drawDeathScreen () {
   ctx.fillText(playerList[0].name + " was killed", (canvas.width / 3) + 30, 200);
   
   ctx.font = "18px Palatino";
-  if (playerList[0].level < 50) { ctx.fillText("Died at level: " + playerList[0].level, 240, 250); }
+  if (playerList[0].level < playerList[0].MAX_level) { ctx.fillText("Died at level: " + playerList[0].level, 240, 250); }
   else { ctx.fillText("Died with " + playerList[0].glory.toFixed(0) + " renowned Glory", 240, 250); }
 
   ctx.fillText("Killed by: " + playerList[0].killedBy, 240, 270);
