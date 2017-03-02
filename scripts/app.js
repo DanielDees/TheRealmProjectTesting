@@ -32,44 +32,6 @@ var enemyBulletList = [];
 //Loot
 var lootBagList = [];
 //Screen
-
-//Change to switch-case object. Pseudo-code ahead.
-/*
-
-var screenType = {
-  
-  location: MAIN_MENU,
-
-  render: function() {
-  
-    switch:
-
-      case MAIN_MENU:
-        drawMainMenu();
-        break;
-
-      case BOSS_SCREEN:
-        drawBossScreen();
-        break;
-
-      etc...
-  }
-}
-
-Another possibility is to have a list of screentypes
-and just render whichever ones are true
-
-var screenType = {
-  
-  MAIN_MENU:    true,
-  GAME_MAP:     false,
-  BOSS_ROOM:    false,
-  OPTIONS:      false,
-  INSTRUCTIONS: false,
-  CHAR_SELECT:  false,
-}
-
-*/
 var screenType = "MAIN_MENU";
 
 //DRAW STUFF =====================

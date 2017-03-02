@@ -1,13 +1,47 @@
-This file is to be used as a thinktank where you 
+This file is to be used as a think-tank where you 
 can throw down pseudo code or write down random 
 thoughts to think through problems more easily.
 
 |+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|
 
 
-lootbag should have 8 slots already.
+//Change the screenType variable to switch-case object. Pseudo-code ahead.
+/*
 
-iterate through slots find first empty item, assign item to it.
+var screenType = {
+  
+  location: MAIN_MENU,
+
+  render: function() {
+  
+    switch:
+
+      case MAIN_MENU:
+        drawMainMenu();
+        break;
+
+      case BOSS_SCREEN:
+        drawBossScreen();
+        break;
+
+      etc...
+  }
+}
+
+Another possibility is to have a list of screen types
+and just render whichever ones are true
+
+var screenType = {
+  
+  MAIN_MENU:    true,
+  GAME_MAP:     false,
+  BOSS_ROOM:    false,
+  OPTIONS:      false,
+  INSTRUCTIONS: false,
+  CHAR_SELECT:  false,
+}
+
+*/
 
 
 |+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|
