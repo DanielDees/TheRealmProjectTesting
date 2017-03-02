@@ -341,7 +341,7 @@ function drawGameScreen () {
   if (screenType == "INSTRUCTIONS") { drawInstructionsMenu(); }
   if (screenType == "DEATH_SCREEN") { drawDeathScreen(); }
   if (screenType == "OPTIONS") { drawOptionsMenu(); }
-  if (screenType == "CLASS_SELECTION") { drawClassSelectionMenu(); }
+  if (screenType == "CLASS_SELECTION") { class_selection_menu.draw(); }
 }
 function drawCreditsScreen () {
 

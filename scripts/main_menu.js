@@ -12,10 +12,6 @@ main_menu.buttonData = {
     text: "Play",
     font: "35px Palatino",
     color: "#FFF",
-    hoverColor: "#EBE1A0",
-
-    //Background
-    bgColor: "#696969",
 
     //Action
     action: function() { screenType = "CLASS_SELECTION"; },
@@ -30,10 +26,6 @@ main_menu.buttonData = {
     text: "Instructions",
     font: "25px Palatino",
     color: "#FFF",
-    hoverColor: "#EBE1A0",
-
-    //Background
-    bgColor: "#696969",
 
     //Action
     action: function() { screenType = "INSTRUCTIONS"; },
@@ -48,10 +40,6 @@ main_menu.buttonData = {
     text: "Options",
     font: "25px Palatino",
     color: "#FFF",
-    hoverColor: "#EBE1A0",
-
-    //Background
-    bgColor: "#696969",
 
     //Action
     action: function() { screenType = "OPTIONS"; },
@@ -78,6 +66,7 @@ main_menu.draw = function () {
   main_menu.buttons.instructions.draw();
   main_menu.buttons.options.draw();
 
+  //Game Title
   ctx.font = "40px Palatino";
   ctx.fillStyle = "#CC0000";
   ctx.shadowBlur = 20;
@@ -85,6 +74,7 @@ main_menu.draw = function () {
   ctx.fillText("The Realm Project", canvas.width / 3.4, 200);
   ctx.shadowBlur = 0;
 
+  //Version Info
   ctx.font = "16px Palatino";
   ctx.fillStyle = "#008888";
   ctx.fillText(versionInfo + " - Game by ExplorersX", 15, 30);
