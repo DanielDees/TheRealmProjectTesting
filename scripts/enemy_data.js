@@ -6,7 +6,7 @@ function enemy (data) {
 
   //Details
   this.Image = data.image;
-  this.enemyName = data.name;
+  this.name = data.name;
   this.portalDrop = data.portalDrop;
   this.damageNumbers = [];
 
@@ -55,7 +55,7 @@ function enemy (data) {
       X: this.X,
       Y: this.Y,
 
-      name: this.enemyName,
+      owner: this.name,
       speed: this.bulletSpeed,
       radius: this.bulletRadius,
       angle: angleSend,
@@ -179,7 +179,7 @@ function enemyBullet (data) {
   this.width = data.radius;
   
   //Info
-  this.owner = data.name;
+  this.owner = data.owner || "A Projectile of Unknown Origin";
   this.speed = data.speed;
   this.damage = data.damage;
   this.angle = data.angle;

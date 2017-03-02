@@ -269,11 +269,15 @@ function checkCollisions () {
       //On Collision
       if (i >= 0 && hitboxIntersectCheck(enemyBulletList[i], playerList[j])) {
 
+        //Damage player
         playerList[j].takeDamage(enemyBulletList[i].damage);
+
+        //This little fracker has to exist before you die...
+        if (playerList[j].HP <= 0) { playerList[j].deathScene(enemyBulletList[i].owner); }
+
+        //Remove Projectile
         enemyBulletList.splice(i, 1);
         i--;
-
-        if (playerList[j].HP <= 0) { playerList[j].deathScene(enemyBulletList[i].owner); }
       }
     }
   }
