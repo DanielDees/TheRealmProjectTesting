@@ -337,7 +337,7 @@ function drawGameScreen () {
     backgroundScrollingScene(); 
     checkFrameOfReference(0, 0);
   }
-  if (screenType == "MAIN_MENU") { drawMainMenu(); }
+  if (screenType == "MAIN_MENU") { main_menu.draw(); }
   if (screenType == "INSTRUCTIONS") { drawInstructionsMenu(); }
   if (screenType == "DEATH_SCREEN") { drawDeathScreen(); }
   if (screenType == "OPTIONS") { drawOptionsMenu(); }

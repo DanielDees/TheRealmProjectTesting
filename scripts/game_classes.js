@@ -873,19 +873,18 @@ function button (data) {
 
   //Dimensions
   this.width = data.width;
-  this.height = data.height;
+  this.height = data.height || parseInt(data.font) + 10;
 
   //Text
   this.text = data.text || "Not Specified";
-  this.textX = data.textX || this.X;
-  this.textY = data.textY || this.Y;
   this.textHeight = parseInt(data.font);
 
   //Style
   this.font = data.font;
   this.blur = data.blur || 10;
   this.color = data.color || "white";
-  this.hoverColor = data.hoverColor || "red";
+  this.bgColor = data.bgColor || "#696969";
+  this.hoverColor = data.hoverColor || "#EBE1A0";
 
   //Function button performs
   this.action = data.action;
@@ -898,14 +897,24 @@ function button (data) {
 
   this.draw = function() {
 
-    ctx.fillStyle = this.color;
+    //Change font size before measuring
+    ctx.font = this.font;
+    this.width = ctx.measureText(this.text).width + 15;
+
+    //Button rectangle
+    ctx.fillStyle = this.bgColor;
     ctx.fillRect(this.X, this.Y, this.width, this.height);
 
     //Make hitbox for button visible
+    ctx.strokeStyle = "#222";
+    ctx.lineWidth = 1;
+    ctx.fillStyle = "#DDD";
     //ctx.strokeRect(this.X, this.Y, this.width, this.height);
 
+    //On mouseover
     if (mouseIsTouching(this)) {
 
+      //Change text color
       ctx.fillStyle = this.hoverColor;
 
       //On click
@@ -920,9 +929,12 @@ function button (data) {
         mouse.clicked = false;
       }
     }
+    //Normal text color
+    else { ctx.fillStyle = this.color; }
 
+    //Draw text
     ctx.shadowBlur = this.blur;
-    ctx.fillText(this.text, this.textX, this.textY + this.textHeight);
+    ctx.fillText(this.text, this.X + 6, this.Y + this.textHeight);
     ctx.shadowBlur = 0;
   }
 }
