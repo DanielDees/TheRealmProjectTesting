@@ -1,4 +1,4 @@
-function drawClassSelectionScreen () {
+function drawClassSelectionMenu () {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = 'rgba(30, 30, 30, 0.7)';
