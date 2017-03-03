@@ -5,8 +5,8 @@ death_menu.buttonData = {
   main_menu: {
 
     //Location
-    X: 350,
-    Y: 520,
+    X: function() { return 350; },
+    Y: function() { return 520; },
 
     //Text
     text: "Main Menu",

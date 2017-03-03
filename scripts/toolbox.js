@@ -52,48 +52,6 @@ function isEqualTo () {
   return false;
 }
 var lastKnownLocation = [playerList[0].X, playerList[0].isViewingLoot];
-
-function placeButtonHere (text, X, Y, screenTypeGiven, font, buttonColor, functionToPerform) {
-
-  //Ctx.save/restore can bug out buttons (no frame_of_reference check).
-
-  ctx.font = font;
-  //Adjust hitbox for size of text.
-  var width = ctx.measureText(text).width + 15;
-  var height = parseInt(font) + 10;
-  var textHeight = parseInt(font);
-  ctx.fillStyle = buttonColor;
-  ctx.fillRect(X, Y, width, height);
-
-  //Make hitbox for button visible
-  ctx.strokeStyle = "#222";
-  ctx.lineWidth = 1;
-  ctx.fillStyle = "#DDD";
-  //ctx.strokeRect(X, Y, width, height);
-
-  //If mouse is over button
-  if (mouse.X > X && mouse.X < X + width && mouse.Y > Y && mouse.Y < Y + height) {
-    
-    //Hover color
-    ctx.fillStyle = "#EBE1A0";
-
-    if (mouse.clicked) {
-
-      //For debug
-      console.log("Positon: " + playerList[0].X + "x | " + playerList[0].Y + "y" + "\nGame Screen: " + screenType);
-      
-      //Function that button executes on click.
-      if (functionToPerform) { functionToPerform(); }
-
-      screenType = screenTypeGiven;
-      mouse.clicked = false;
-    }
-  }
-  
-  ctx.shadowBlur = 10;
-  ctx.fillText(text, X + 6, Y + textHeight);
-  ctx.shadowBlur = 0;
-}
 function swapItems(a, b) {
 
   //Javascript only passes objects by reference, everything else is passed by value. So don't directly swap items.

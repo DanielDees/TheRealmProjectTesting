@@ -5,8 +5,8 @@ instructions_menu.buttonData = {
   main_menu: {
 
     //Location
-    X: 320,
-    Y: 360,
+    X: function() { return 320; },
+    Y: function() { return 360; },
 
     //Text
     text: "Main Menu",

@@ -5,8 +5,8 @@ class_selection_menu.buttonData = {
   start: {
 
     //Location
-    X: 340,
-    Y: 423,
+    X: function() { return 340 },
+    Y: function() { return 423; },
 
     //Text
     text: "Play",
@@ -19,8 +19,8 @@ class_selection_menu.buttonData = {
   main_menu: {
 
     //Location
-    X: 445,
-    Y: 430,
+    X: function() { return 445; },
+    Y: function() { return 430; },
 
     //Text
     text: "Main Menu",
@@ -33,8 +33,8 @@ class_selection_menu.buttonData = {
   options: {
 
     //Location
-    X: 220,
-    Y: 430,
+    X: function() { return 220; },
+    Y: function() { return 430; },
 
     //Text
     text: "Options",

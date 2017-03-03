@@ -786,7 +786,7 @@ function portal (data) {
   this.ID = { 
 
     value: Math.random(),
-    type: "portal"
+    type: "portal",
   };
 
   this.Image = data.image;
@@ -802,12 +802,33 @@ function portal (data) {
 
     ctx.drawImage(this.Image, this.X, this.Y, this.height, this.width);
   }
+
+  //Button info
+  this.buttonData = {
+
+    //Location
+    X: function() { return (canvas.width - 180 + FRAME_OF_REFERENCE[0]) },
+    Y: function() { return (canvas.height - 50 + FRAME_OF_REFERENCE[1]) },
+
+    //Text
+    text: this.name,
+    font: "20px Arial",
+    color: "#FFF",
+
+    //Action
+    action: function() { screenType = data.destination; },
+  }
+
+  //Create button
+  this.button = new button(this.buttonData);
+
   this.drawButton = function () {
 
     //View Portal if touching it and not viewing another portal.
     if (hitboxIntersectCheck(this, playerList[0]) && (playerList[0].isViewingLoot[1] == -1 || playerList[0].isViewingLoot[1] == this.ID)) {
- 
-        placeButtonHere(this.name, canvas.width - 180 + FRAME_OF_REFERENCE[0], canvas.height - 50 + FRAME_OF_REFERENCE[1], this.destination, "20px Arial", "#696969");
+        
+        //Show portal button        
+        this.button.draw();
 
         playerList[0].isViewingLoot[1] = this.ID;
     }
@@ -890,10 +911,10 @@ function button (data) {
   this.action = data.action;
 
   //Hitbox
-  this.top = function() { return this.Y; }
-  this.bottom = function() { return this.Y + this.height; }
-  this.left = function() { return this.X; }
-  this.right = function() { return this.X + this.width; }
+  this.top = function() { return this.Y(); }
+  this.bottom = function() { return this.Y() + this.height; }
+  this.left = function() { return this.X(); }
+  this.right = function() { return this.X() + this.width; }
 
   this.draw = function() {
 
@@ -903,13 +924,13 @@ function button (data) {
 
     //Button rectangle
     ctx.fillStyle = this.bgColor;
-    ctx.fillRect(this.X, this.Y, this.width, this.height);
+    ctx.fillRect(this.X(), this.Y(), this.width, this.height);
 
     //Make hitbox for button visible
     ctx.strokeStyle = "#222";
     ctx.lineWidth = 1;
     ctx.fillStyle = "#DDD";
-    //ctx.strokeRect(this.X, this.Y, this.width, this.height);
+    //ctx.strokeRect(this.X(), this.Y(), this.width, this.height);
 
     //On mouseover
     if (mouseIsTouching(this)) {
@@ -934,7 +955,7 @@ function button (data) {
 
     //Draw text
     ctx.shadowBlur = this.blur;
-    ctx.fillText(this.text, this.X + 6, this.Y + this.textHeight);
+    ctx.fillText(this.text, this.X() + 6, this.Y() + this.textHeight);
     ctx.shadowBlur = 0;
   }
 }

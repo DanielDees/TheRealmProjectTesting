@@ -5,8 +5,8 @@ options_menu.buttonData = {
   main_menu: {
 
     //Location
-    X: 320,
-    Y: 360,
+    X: function() { return 320; },
+    Y: function() { return 360; },
 
     //Text
     text: "Main Menu",
@@ -19,8 +19,8 @@ options_menu.buttonData = {
   enable_music: {
 
     //Location
-    X: 310,
-    Y: 260,
+    X: function() { return 310; },
+    Y: function() { return 260; },
 
     //Text
     text: "Enable Music",
@@ -33,8 +33,8 @@ options_menu.buttonData = {
   disable_music: {
 
     //Location
-    X: 305,
-    Y: 260,
+    X: function() { return 305; },
+    Y: function() { return 260; },
 
     //Text
     text: "Disable Music",
@@ -70,18 +70,14 @@ options_menu.draw = function() {
   if (gameBackgroundMusic.volume < 0.1) {
 
     options_menu.buttons.enable_music.draw();
-    //placeButtonHere("Enable Music!", 305, 260, "OPTIONS", "25px Palatino", "#696969", unMuteGame);
-
-  } 
+  }
   else { 
 
     options_menu.buttons.disable_music.draw();
-    //placeButtonHere("Disable Music!", 305, 260, "OPTIONS", "25px Palatino", "#696969", muteGame); 
   }
 
   //Main Menu Button
   options_menu.buttons.main_menu.draw();
-  //placeButtonHere("Back to Main", 310, 360, "MAIN_MENU", "25px Palatino", "#696969");
 
   //Version Info
   ctx.font = "16px Palatino";
