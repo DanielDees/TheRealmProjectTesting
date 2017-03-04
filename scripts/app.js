@@ -107,55 +107,42 @@ function showDamageTaken () {
 //MOVE STUFF =====================
 function movePlayer () {
 
+  //For sprite location
+  var direction = undefined;
+  var W = 2;
+  var A = 1;
+  var S = 3;
+  var D = 0;
+
   for (var i = 0; i < playerList.length; i++) { playerList[i].move(); }
 
-    //Updates sprites.
-    var maxTime = 30;
-    playerList[0].timeToSpriteChange++;
-    if (playerList[0].timeToSpriteChange >= maxTime * 2) { 
+  //Updates sprites.
+  var maxTime = 30;
+  playerList[0].timeToSpriteChange++;
 
-      playerList[0].timeToSpriteChange = 0;
-    }
-   if (!keys.ENTER) {
+  if (playerList[0].timeToSpriteChange >= maxTime * 2) { 
+
+    playerList[0].timeToSpriteChange = 0;
+  }
+
+  //When not in chat
+  if (!keys.ENTER) {
+
     //Movement
-    if (keys.W) { 
+    if (keys.W) { direction = W; }
+    if (keys.A) { direction = A; }
+    if (keys.S) { direction = S; }
+    if (keys.D) { direction = D; }
+
+    //Cannot just do if(direction) because D evaluates to false
+    if (direction != undefined) { 
       if (playerList[0].timeToSpriteChange >= maxTime) {
 
-        playerList[0].Image = playerList[0].ImageArray[2][1];
+        playerList[0].Image = playerList[0].ImageArray[direction][1];
       } 
       else {
 
-        playerList[0].Image = playerList[0].ImageArray[2][2];
-      }
-    }
-    if (keys.A) { 
-      if (playerList[0].timeToSpriteChange >= maxTime) {
-
-        playerList[0].Image = playerList[0].ImageArray[1][1];
-      } 
-      else {
-
-        playerList[0].Image = playerList[0].ImageArray[1][2];
-      }
-    }
-    if (keys.S) { 
-      if (playerList[0].timeToSpriteChange >= maxTime) {
-
-        playerList[0].Image = playerList[0].ImageArray[3][1];
-      } 
-      else {
-
-        playerList[0].Image = playerList[0].ImageArray[3][2];
-      }
-    }
-    if (keys.D) { 
-      if (playerList[0].timeToSpriteChange >= maxTime) {
-
-        playerList[0].Image = playerList[0].ImageArray[0][1];
-      } 
-      else {
-
-        playerList[0].Image = playerList[0].ImageArray[0][2];
+        playerList[0].Image = playerList[0].ImageArray[direction][2];
       }
     }
   }

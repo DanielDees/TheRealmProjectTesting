@@ -901,7 +901,7 @@ function button (data) {
   this.textHeight = parseInt(data.font);
 
   //Style
-  this.font = data.font;
+  this.font = data.font || "25px Palatino";
   this.blur = data.blur || 10;
   this.color = data.color || "white";
   this.bgColor = data.bgColor || "#696969";
