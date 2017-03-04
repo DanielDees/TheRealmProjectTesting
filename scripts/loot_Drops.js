@@ -93,7 +93,6 @@ function Loot_Drop_System () {
 				return portalTypes[1];
 		}
 	}
-
 	this.getPortalFunction = function (destination) {
 
 		//The function should check whether it is a main menu area or a dungeon, and teleport the player to either 0,0 or 4000, 4000 based on that. Enumerated types should be good here. Find a good way to check in the if statements easily.
