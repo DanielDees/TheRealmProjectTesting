@@ -343,10 +343,6 @@ function drawGameScreen () {
   if (screenType == "OPTIONS") { options_menu.draw(); }
   if (screenType == "CLASS_SELECTION") { class_selection_menu.draw(); }
 }
-function drawCreditsScreen () {
-
-  //To be implemented later...
-}
 //END GAME SCREEN WINDOW =========
 //RUNTIME FUNCTIONS ==============
 
