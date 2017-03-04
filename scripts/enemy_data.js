@@ -119,6 +119,7 @@ function enemy (data) {
     if (chance > 800 || this.name == "Game Boss") { Game_Loot_System.dropPortal(this.X, this.Y, this.portalDrop); }
 
     playerList[0].EXP += this.expGiven;
+    playerList[0].levelUp();
     playerList[0].killCount++;
   }
   //Deals damage to enemy

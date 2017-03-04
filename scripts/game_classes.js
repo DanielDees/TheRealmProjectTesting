@@ -301,9 +301,9 @@ function player () {
     }
   }
   //Leveling up
-  this.levelUP = function() {
+  this.levelUp = function() {
     
-    if (this.level < this.MAX_level) {
+    while (this.level < this.MAX_level && this.EXP >= this.levelExpReq) {
       //Dexterity
       this.dexterity += Math.floor((Math.random() * 5) + 2);
       //HP
@@ -324,8 +324,6 @@ function player () {
       this.EXP -= this.levelExpReq;
       this.level++;
       this.levelExpReq += 150;
-
-      if (this.EXP >= this.levelExpReq) { this.levelUP(); }
     }
   }
   //Death Scene

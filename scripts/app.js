@@ -172,7 +172,6 @@ function backgroundScrollingScene() {
 }
 function replenishPlayerStats () {
 
-  if (playerList[0].EXP >= playerList[0].levelExpReq) { playerList[0].levelUP(); }
   if (playerList[0].MP < playerList[0].MAX_MP) { playerList[0].MP += (0.001 * playerList[0].wizardry); }
   if (playerList[0].HP < playerList[0].MAX_HP) { playerList[0].HP += (0.0015 * playerList[0].youth); }
   if (playerList[0].weaponCooldown > 0) { playerList[0].weaponCooldown--; }

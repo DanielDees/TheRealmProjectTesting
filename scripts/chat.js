@@ -146,7 +146,7 @@ function checkDevCommands () {
       console.log("Spawning enemies every: " + (parseInt(str) / 1000) + " seconds.");
     }
     else if (str.search("/godMode") == 0) { playerList[0].MAX_HP = 9999999; playerList[0].HP = 9999999; }
-    else if (str.search("/levelUp") == 0) { playerList[0].levelUP(); playerList[0].EXP = 0; }
+    else if (str.search("/levelUp") == 0) { playerList[0].playerList[0].EXP = playerList[0].levelExpReq; }
     else if (str.search("/level") == 0) {
 
       str = str.slice(7, str.length);
