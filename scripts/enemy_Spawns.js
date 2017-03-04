@@ -12,12 +12,10 @@ function spawn_Enemy_Skull () {
 }
 function spawn_Enemy_Skull_Boss () {
   if (enemyList.length < 45) { 
-    //HP, expReward, attackDamage, speed, width, height, imageGiven, movementType, Enemy Name
     enemyList.push(new enemy(GAME_ENEMIES.enemy_skull_boss)); 
   };
 }
 function spawn_Game_Boss () {
-  //HP, expReward, attackDamage, speed, width, height, imageGiven, movementType, Enemy Name
   enemyList.push(new enemy(GAME_ENEMIES.Game_Boss));
 }
 function spawnEnemy () {

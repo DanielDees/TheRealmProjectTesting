@@ -116,7 +116,7 @@ function enemy (data) {
     lootBagList[lootBagList.length - 1].checkIfEmpty();
 
     var chance = (Math.random() * 1000) + 1;
-    if (chance > 800 || this.enemyName == "Game Boss") { Game_Loot_System.dropPortal(this.X, this.Y, this.portalDrop); }
+    if (chance > 800 || this.name == "Game Boss") { Game_Loot_System.dropPortal(this.X, this.Y, this.portalDrop); }
 
     playerList[0].EXP += this.expGiven;
     playerList[0].killCount++;
@@ -272,7 +272,7 @@ var GAME_ENEMIES = {
     name: "Game Boss",
     image: enemy_skull_boss_Pic,
     movementType: "random",
-    portalDrop: "GAME_SCREEN"
+    portalDrop: "GAME_SCREEN",
   },
 }
 //=======================
