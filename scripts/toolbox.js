@@ -29,6 +29,8 @@ function drawItemDescription (myThingy) {
     //Box
     ctx.fillStyle = "#AAA";
     ctx.fillRect(mouse.X, mouse.Y, -200, -280);
+
+    //Box outline
     ctx.strokeStyle = "#444";
     ctx.lineWidth = 3;
     ctx.strokeRect(mouse.X, mouse.Y, -200, -280);
@@ -54,7 +56,9 @@ function isEqualTo () {
 var lastKnownLocation = [playerList[0].X, playerList[0].isViewingLoot];
 function swapItems(a, b) {
 
-  //Javascript only passes objects by reference, everything else is passed by value. So don't directly swap items.
+  //Javascript only passes objects by reference.
+  //Everything else is passed by value. 
+  //So don't directly swap items.
   var temp = a.item;
 
   a.item = b.item;
@@ -123,8 +127,8 @@ function drawDebugInfo(absX, absY) {
     //["mouse.item", mouseItem],
     //["mouse.X", mouse.X.toFixed(0)],
     //["mouse.Y", mouse.Y.toFixed(0)],
-    ["mouseAngle", getMouseAngle().toFixed(0) + "°"],
-    ["mouseAngle", getMouseAngle("rad").toFixed(2) + " Rad"],
+    //["mouseAngle", getMouseAngle().toFixed(0) + "°"],
+    //["mouseAngle", getMouseAngle("rad").toFixed(2) + " Rad"],
   ];
 
   for (var i = 0; i < info.length; i++) {
