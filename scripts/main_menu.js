@@ -1,81 +1,84 @@
-var main_menu = {}
+var main_menu = new Game_main_menu();
 
-main_menu.buttonData = {
+function Game_main_menu() {
 
-  play: {
+  this.buttonData = {
 
-    //Location
-    X: function() { return 340; },
-    Y: function() { return 423; },
+    play: {
 
-    //Text
-    text: "Play",
-    font: "35px Palatino",
-    color: "#FFF",
+      //Location
+      X: function() { return 340; },
+      Y: function() { return 423; },
 
-    //Action
-    action: function() { screenType = "CLASS_SELECTION"; },
-  },
-  instructions: {
+      //Text
+      text: "Play",
+      font: "35px Palatino",
+      color: "#FFF",
 
-    //Location
-    X: function() { return 445; },
-    Y: function() { return 430; },
+      //Action
+      action: function() { screenType = "CLASS_SELECTION"; },
+    },
+    instructions: {
 
-    //Text
-    text: "Instructions",
-    font: "25px Palatino",
-    color: "#FFF",
+      //Location
+      X: function() { return 445; },
+      Y: function() { return 430; },
 
-    //Action
-    action: function() { screenType = "INSTRUCTIONS"; },
-  },
-  options: {
+      //Text
+      text: "Instructions",
+      font: "25px Palatino",
+      color: "#FFF",
 
-    //Location
-    X: function() { return 220; },
-    Y: function() { return 430; },
+      //Action
+      action: function() { screenType = "INSTRUCTIONS"; },
+    },
+    options: {
 
-    //Text
-    text: "Options",
-    font: "25px Palatino",
-    color: "#FFF",
+      //Location
+      X: function() { return 220; },
+      Y: function() { return 430; },
 
-    //Action
-    action: function() { screenType = "OPTIONS"; },
-  },
-}
+      //Text
+      text: "Options",
+      font: "25px Palatino",
+      color: "#FFF",
 
-main_menu.buttons = {
+      //Action
+      action: function() { screenType = "OPTIONS"; },
+    },
+  };
 
-  play: new button(main_menu.buttonData.play),
-  instructions: new button(main_menu.buttonData.instructions),
-  options: new button(main_menu.buttonData.options),
-}
+  this.buttons = {
 
-main_menu.draw = function () {
+    play: new button(this.buttonData.play),
+    instructions: new button(this.buttonData.instructions),
+    options: new button(this.buttonData.options),
+  };
 
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = 'rgba(30, 30, 30, 0.7)';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = "#696969";
-  ctx.fillRect(0, 400, canvas.width, 90);
+  this.draw = function () {
 
-  //Main Menu Buttons
-  main_menu.buttons.play.draw();
-  main_menu.buttons.instructions.draw();
-  main_menu.buttons.options.draw();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = 'rgba(30, 30, 30, 0.7)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#696969";
+    ctx.fillRect(0, 400, canvas.width, 90);
 
-  //Game Title
-  ctx.font = "40px Palatino";
-  ctx.fillStyle = "#CC0000";
-  ctx.shadowBlur = 20;
-  ctx.shadowColor = "#000";
-  ctx.fillText("The Realm Project", canvas.width / 3.4, 200);
-  ctx.shadowBlur = 0;
+    //Main Menu Buttons
+    this.buttons.play.draw();
+    this.buttons.instructions.draw();
+    this.buttons.options.draw();
 
-  //Version Info
-  ctx.font = "16px Palatino";
-  ctx.fillStyle = "#008888";
-  ctx.fillText(versionInfo + " - Game by ExplorersX", 15, 30);
+    //Game Title
+    ctx.font = "40px Palatino";
+    ctx.fillStyle = "#CC0000";
+    ctx.shadowBlur = 20;
+    ctx.shadowColor = "#000";
+    ctx.fillText("The Realm Project", canvas.width / 3.4, 200);
+    ctx.shadowBlur = 0;
+
+    //Version Info
+    ctx.font = "16px Palatino";
+    ctx.fillStyle = "#008888";
+    ctx.fillText(versionInfo + " - Game by ExplorersX", 15, 30);
+  };
 }

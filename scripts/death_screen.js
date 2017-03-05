@@ -1,58 +1,61 @@
-var death_menu = {}
+var death_menu = new Game_death_menu();
 
-death_menu.buttonData = {
+function Game_death_menu() {
 
-  main_menu: {
+  this.buttonData = {
 
-    //Location
-    X: function() { return 350; },
-    Y: function() { return 520; },
+    main_menu: {
 
-    //Text
-    text: "Main Menu",
-    font: "25px Palatino",
-    color: "#FFF",
+      //Location
+      X: function() { return 350; },
+      Y: function() { return 520; },
 
-    //Button
-    bgColor: "#222",
+      //Text
+      text: "Main Menu",
+      font: "25px Palatino",
+      color: "#FFF",
 
-    //Action
-    action: function() { screenType = "MAIN_MENU"; },
-  },
-}
+      //Button
+      bgColor: "#222",
 
-death_menu.buttons = {
+      //Action
+      action: function() { screenType = "MAIN_MENU"; },
+    },
+  };
 
-  main_menu: new button(death_menu.buttonData.main_menu),
-}
+  this.buttons = {
 
-death_menu.draw = function() {
+    main_menu: new button(this.buttonData.main_menu),
+  };
 
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = "#222";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  this.draw = function() {
 
-  //Player Sprite
-  ctx.drawImage(playerList[0].ImageArray[0][0], (canvas.width / 2) - 32, 80, 64, 64);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#222";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  //Death message
-  ctx.font = "28px Palatino";
-  ctx.fillStyle = "#888";
-  ctx.fillText(playerList[0].name + " was killed", (canvas.width / 3) + 30, 200);
-  
-  //Death message
-  ctx.font = "18px Palatino";
-  if (playerList[0].level < playerList[0].MAX_level) { ctx.fillText("Died at level: " + playerList[0].level, 240, 250); }
-  else { ctx.fillText("Died with " + playerList[0].glory.toFixed(0) + " renowned Glory", 240, 250); }
+    //Player Sprite
+    ctx.drawImage(playerList[0].ImageArray[0][0], (canvas.width / 2) - 32, 80, 64, 64);
 
-  //Death message
-  ctx.fillText("Killed by: " + playerList[0].killedBy, 240, 270);
+    //Death message
+    ctx.font = "28px Palatino";
+    ctx.fillStyle = "#888";
+    ctx.fillText(playerList[0].name + " was killed", (canvas.width / 3) + 30, 200);
+    
+    //Death message
+    ctx.font = "18px Palatino";
+    if (playerList[0].level < playerList[0].MAX_level) { ctx.fillText("Died at level: " + playerList[0].level, 240, 250); }
+    else { ctx.fillText("Died with " + playerList[0].glory.toFixed(0) + " renowned Glory", 240, 250); }
 
-  //Main Menu button
-  death_menu.buttons.main_menu.draw();
+    //Death message
+    ctx.fillText("Killed by: " + playerList[0].killedBy, 240, 270);
 
-  //Version Info
-  ctx.font = "16px Palatino";
-  ctx.fillStyle = "#008888";
-  ctx.fillText(versionInfo + " - Game by ExplorersX", 15, 30);
+    //Main Menu button
+    death_menu.buttons.main_menu.draw();
+
+    //Version Info
+    ctx.font = "16px Palatino";
+    ctx.fillStyle = "#008888";
+    ctx.fillText(versionInfo + " - Game by ExplorersX", 15, 30);
+  };
 }

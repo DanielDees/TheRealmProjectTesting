@@ -1,111 +1,114 @@
-var class_selection_menu = {}
+var class_selection_menu = new Game_class_selection_menu();
 
-class_selection_menu.buttonData = {
+function Game_class_selection_menu() {
 
-  start: {
+  this.buttonData = {
 
-    //Location
-    X: function() { return 340 },
-    Y: function() { return 423; },
+    start: {
 
-    //Text
-    text: "Play",
-    font: "35px Palatino",
-    color: "#FFF",
+      //Location
+      X: function() { return 340 },
+      Y: function() { return 423; },
 
-    //Action
-    action: function() { screenType = "GAME_SCREEN"; },
-  },
-  main_menu: {
+      //Text
+      text: "Play",
+      font: "35px Palatino",
+      color: "#FFF",
 
-    //Location
-    X: function() { return 445; },
-    Y: function() { return 430; },
+      //Action
+      action: function() { screenType = "GAME_SCREEN"; },
+    },
+    main_menu: {
 
-    //Text
-    text: "Main Menu",
-    font: "25px Palatino",
-    color: "#FFF",
+      //Location
+      X: function() { return 445; },
+      Y: function() { return 430; },
 
-    //Action
-    action: function() { screenType = "MAIN_MENU"; },
-  },
-  options: {
+      //Text
+      text: "Main Menu",
+      font: "25px Palatino",
+      color: "#FFF",
 
-    //Location
-    X: function() { return 220; },
-    Y: function() { return 430; },
+      //Action
+      action: function() { screenType = "MAIN_MENU"; },
+    },
+    options: {
 
-    //Text
-    text: "Options",
-    font: "25px Palatino",
-    color: "#FFF",
+      //Location
+      X: function() { return 220; },
+      Y: function() { return 430; },
 
-    //Action
-    action: function() { screenType = "OPTIONS"; },
-  },
-}
+      //Text
+      text: "Options",
+      font: "25px Palatino",
+      color: "#FFF",
 
-class_selection_menu.buttons = {
+      //Action
+      action: function() { screenType = "OPTIONS"; },
+    },
+  };
 
-  start: new button(class_selection_menu.buttonData.start),
-  main_menu: new button(class_selection_menu.buttonData.main_menu),
-  options: new button(class_selection_menu.buttonData.options),
-}
+  this.buttons = {
 
-class_selection_menu.draw = function() {
+    start: new button(this.buttonData.start),
+    main_menu: new button(this.buttonData.main_menu),
+    options: new button(this.buttonData.options),
+  };
 
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = 'rgba(30, 30, 30, 0.7)';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = "#696969";
-  ctx.fillRect(0, 400, canvas.width, 90);
+  this.draw = function() {
 
-  //Main Menu Buttons
-  class_selection_menu.buttons.start.draw();
-  class_selection_menu.buttons.main_menu.draw();
-  class_selection_menu.buttons.options.draw();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = 'rgba(30, 30, 30, 0.7)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#696969";
+    ctx.fillRect(0, 400, canvas.width, 90);
 
-  //Main Text
-  ctx.font = "30px Palatino";
-  ctx.fillStyle = "#CC0000";
-  ctx.shadowBlur = 10;
-  ctx.fillText("Class Selection", 290, 200);
-  ctx.shadowBlur = 0;
+    //Main Menu Buttons
+    class_selection_menu.buttons.start.draw();
+    class_selection_menu.buttons.main_menu.draw();
+    class_selection_menu.buttons.options.draw();
 
-  //Characters to select from
-  for (var i = 0; i < classSelectionPics.length; i++) {
+    //Main Text
+    ctx.font = "30px Palatino";
+    ctx.fillStyle = "#CC0000";
+    ctx.shadowBlur = 10;
+    ctx.fillText("Class Selection", 290, 200);
+    ctx.shadowBlur = 0;
 
-    //If mouse is touching a character
-    if (mouse.X > 260 + (i * 90) && mouse.X < 260 + (i * 90) + 64 && mouse.Y > canvas.height / 2 && mouse.Y < (canvas.height / 2) + 64) {
+    //Characters to select from
+    for (var i = 0; i < classSelectionPics.length; i++) {
 
-      //Change character highlight color
-      ctx.shadowColor = "white";
+      //If mouse is touching a character
+      if (mouse.X > 260 + (i * 90) && mouse.X < 260 + (i * 90) + 64 && mouse.Y > canvas.height / 2 && mouse.Y < (canvas.height / 2) + 64) {
 
-      //On click
-      if (mouse.clicked) { 
+        //Change character highlight color
+        ctx.shadowColor = "white";
 
-        playerList[0].Image = classSelectionPics[i];
+        //On click
+        if (mouse.clicked) { 
 
-        //Player is now that character
-        if (i == 0) { playerList[0].ImageArray = warrior_Pics; }
-        if (i == 1) { playerList[0].ImageArray = archer_Pics; }
-        if (i == 2) { playerList[0].ImageArray = mage_Pics; }
+          playerList[0].Image = classSelectionPics[i];
 
-        //Start game
-        screenType = "GAME_SCREEN";
+          //Player is now that character
+          if (i == 0) { playerList[0].ImageArray = warrior_Pics; }
+          if (i == 1) { playerList[0].ImageArray = archer_Pics; }
+          if (i == 2) { playerList[0].ImageArray = mage_Pics; }
+
+          //Start game
+          screenType = "GAME_SCREEN";
+        }
       }
+
+      //Show character highlighting
+      ctx.shadowBlur = 10;
+      ctx.drawImage(classSelectionPics[i], 260 + (i * 90), canvas.height / 2, 64, 64);
+      ctx.shadowBlur = 0;
+      ctx.shadowColor = "#000";
     }
 
-    //Show character highlighting
-    ctx.shadowBlur = 10;
-    ctx.drawImage(classSelectionPics[i], 260 + (i * 90), canvas.height / 2, 64, 64);
-    ctx.shadowBlur = 0;
-    ctx.shadowColor = "#000";
-  }
-
-  //Version Info
-  ctx.font = "16px Palatino";
-  ctx.fillStyle = "#008888";
-  ctx.fillText(versionInfo + " - Game by ExplorersX", 15, 30);
+    //Version Info
+    ctx.font = "16px Palatino";
+    ctx.fillStyle = "#008888";
+    ctx.fillText(versionInfo + " - Game by ExplorersX", 15, 30);
+  };
 }

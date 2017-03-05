@@ -164,7 +164,7 @@ function moveEnemyBullet () {
 
   for (var i = 0; i < enemyBulletList.length; i++) { enemyBulletList[i].move(); }
 }
-function backgroundScrollingScene() {
+function backgroundScrollingScene () {
 
   backgroundPos[0] -= 0.2;
   backgroundPos[1] -= 0.2;
