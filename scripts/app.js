@@ -307,7 +307,9 @@ function drawGameScreen () {
     //CHAT
     if (keys.ENTER) { activateChat(); }
     displayChat();
-    displayStats();
+
+    //Side bar
+    side_bar.draw();
 
     //INVENTORY SLOTS
     drawPlayerInventory();

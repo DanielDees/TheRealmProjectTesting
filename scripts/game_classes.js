@@ -847,12 +847,12 @@ function progressBar (data) {
   this.textY = data.textY;
 
   //Dimensions
-  this.width = data.width || 150;
-  this.height = data.height || 30;
+  this.width = data.width || 175;
+  this.height = data.height || 18;
 
   //Colors
   this.bgColor = data.bgColor || "grey";
-  this.barColor = data.barColor;
+  this.barColor = data.barColor || "white";
 
   //Fill level
   this.min = data.min || "Not Specified";
@@ -869,7 +869,7 @@ function progressBar (data) {
   this.draw = function() {
 
     //Bar background
-    ctx.fillStyle = this.bgColor();
+    ctx.fillStyle = this.bgColor;
     ctx.fillRect(this.X(), this.Y(), this.width, this.height);
 
     //Bar fill level
