@@ -353,10 +353,35 @@ function player () {
   //Movement
   this.move = function() {
 
-    if (keys.W) { this.Y -= this.speedFormula; }
-    if (keys.A) { this.X -= this.speedFormula; }
-    if (keys.S) { this.Y += this.speedFormula; }
-    if (keys.D) { this.X += this.speedFormula; }
+    //Single directional movement
+
+    //UP
+    if (keys.W && !keys.A && !keys.D) { this.Y -= this.speedFormula; }
+    //LEFT
+    if (keys.A && !keys.W && !keys.S) { this.X -= this.speedFormula; }
+    //DOWN
+    if (keys.S && !keys.A && !keys.D) { this.Y += this.speedFormula; }
+    //RIGHT
+    if (keys.D && !keys.W && !keys.S) { this.X += this.speedFormula; }
+
+    //Two keys pressed
+
+    //UP-RIGHT
+    if (keys.W && keys.A && !keys.D) { this.Y -= this.speedFormula / Math.sqrt(2); }
+    //UP-LEFT
+    if (keys.W && !keys.A && keys.D) { this.Y -= this.speedFormula / Math.sqrt(2); }
+    //LEFT-UP
+    if (keys.A && keys.W && !keys.S) { this.X -= this.speedFormula / Math.sqrt(2); }
+    //LEFT-DOWN
+    if (keys.A && !keys.W && keys.S) { this.X -= this.speedFormula / Math.sqrt(2); }
+    //DOWN-LEFT
+    if (keys.S && keys.A && !keys.D) { this.Y += this.speedFormula / Math.sqrt(2); }
+    //DOWN-RIGHT
+    if (keys.S && !keys.A && keys.D) { this.Y += this.speedFormula / Math.sqrt(2); }
+    //RIGHT-UP
+    if (keys.D && keys.W && !keys.S) { this.X += this.speedFormula / Math.sqrt(2); }
+    //RIGHT-DOWN
+    if (keys.D && !keys.W && keys.S) { this.X += this.speedFormula / Math.sqrt(2); }
   }
   //Deals damage to player
   this.takeDamage = function(damageTaken) {

@@ -128,7 +128,7 @@ function movePlayer () {
   //When not in chat
   if (!keys.ENTER) {
 
-    //Movement
+    //Movement direction
     if (keys.W) { direction = W; }
     if (keys.A) { direction = A; }
     if (keys.S) { direction = S; }
