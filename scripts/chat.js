@@ -60,6 +60,24 @@ function submitChat (personSpeaking) {
         speaker: personSpeaking,
       }
 
+      //Message info
+      /*
+      var messageData2 = {
+
+        //Location
+        X: 10 + FRAME_OF_REFERENCE[0],
+        Y: 16,
+
+        //Dimensions
+        width: 300,
+
+        //Text
+        text: personSpeaking + ": " + str,
+      };
+
+      var chatMessage = new textbox(globalChatData);
+      */
+
       chatLog.push(messageData);
 
       //Increase Ypos of text on left of screen.
@@ -76,6 +94,7 @@ function displayChat () {
   //Text above player
   if (chatLog.length > 0 && chatLog[chatLog.length - 1].age < 400) {
 
+    //Message info
     var textBubbleData = {
 
       //Location
@@ -89,6 +108,7 @@ function displayChat () {
       text: chatLog[chatLog.length - 1].text,
     }
 
+    //Create new text bubble
     var textBubble = new textbox(textBubbleData);
 
     //Overlay text on background.
@@ -99,6 +119,25 @@ function displayChat () {
   ctx.fillStyle = "#FFF";
   ctx.shadowBlur = 10;
   for (var i = 0; i < chatLog.length; i++) {
+
+    //Message info
+    var globalChatData = {
+
+      //Location
+      X: 10 + FRAME_OF_REFERENCE[0],
+      Y: canvas.height - chatLog[i].Y + FRAME_OF_REFERENCE[1],
+
+      //Dimensions
+      width: 300,
+
+      //Text
+      text: chatLog[i].speaker + ": " + chatLog[i].text,
+    };
+
+    var globalChatMessage = new textbox(globalChatData);
+
+    ctx.fillStyle = "white";
+    //globalChatMessage.draw();
 
     //Display text on left of screen
     ctx.fillText(chatLog[i].speaker + ": " + chatLog[i].text, 10 + FRAME_OF_REFERENCE[0], canvas.height - chatLog[i].Y + FRAME_OF_REFERENCE[1]);
