@@ -57,7 +57,7 @@ function submitChat (personSpeaking) {
         text: str,
         Y: 16,
         age: 0,
-        speaker: personSpeaking
+        speaker: personSpeaking,
       }
 
       chatLog.push(messageData);
@@ -74,46 +74,25 @@ function displayChat () {
   ctx.strokeStyle = "#000";
 
   //Text above player
-  if (chatLog.length > 0 && chatLog[chatLog.length - 1].age < 200) {
+  if (chatLog.length > 0 && chatLog[chatLog.length - 1].age < 400) {
 
-    //Max text bubble width;
-    var maxBubbleWidth = 200;
+    var textBubbleData = {
 
-    var currentMessage = chatLog[chatLog.length - 1];
+      //Location
+      X: playerList[0].X + (playerList[0].width / 2) - 100,
+      Y: playerList[0].Y - 10,
 
-    //Text box dimensions.
-    var textBoxWidth = ctx.measureText(currentMessage.text).width + 5;
-    if (textBoxWidth > maxBubbleWidth) {
+      //Background
+      bg: true,
 
-      textBoxWidth = maxBubbleWidth; 
+      //Text
+      text: chatLog[chatLog.length - 1].text,
     }
 
-    //Returns array of each line to print
-    var listTextToShow = getWrapedText(currentMessage.text, maxBubbleWidth);
-    var numberOfLines = listTextToShow.length;
+    var textBubble = new textbox(textBubbleData);
 
-    var lineHeight = 20;
-    var textBoxHeight = lineHeight * numberOfLines;
-
-    //Textbox/Text location
-    var textBoxX = playerList[0].X + (playerList[0].width / 2) - (textBoxWidth / 2);
-    var textBoxY = playerList[0].Y - 10 - textBoxHeight;
-
-    //White background for text
-    ctx.fillStyle = "#DDDDDD";
-    ctx.fillRect(textBoxX, textBoxY, textBoxWidth, textBoxHeight);
-
-    //Outline for text background
-    ctx.lineWidth = 0.7;
-    ctx.strokeRect(textBoxX, textBoxY, textBoxWidth, textBoxHeight);
-
-    //Text displayed
-    ctx.fillStyle = "black";
-    for (var i = 0; i < listTextToShow.length; i++) {
-
-      var currentText = listTextToShow[i];
-      ctx.fillText(currentText, textBoxX, playerList[0].Y + 6 - textBoxHeight + lineHeight * i);
-    }
+    //Overlay text on background.
+    textBubble.draw();
   }
 
   //Text on left of screen

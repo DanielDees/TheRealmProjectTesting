@@ -5,13 +5,17 @@ function textbox(data) {
 	this.Y = data.Y;
 
 	//Dimensions
-	this.height = data.height || 280;
+	this.height = 0;
+	this.lineheight = data.lineheight || 20;
 	this.width = data.width || 200;
 	this.padding = data.padding || 10;
 
 	//Text
 	this.text = data.text;
 	this.wrap = [];
+
+	//Background
+	this.bg = data.bg || false;
 
 	//Format text to wrap form.
 	this.wrapText = function() {
@@ -45,17 +49,38 @@ function textbox(data) {
 			this.wrap.push(line); 
 			line = "";
 		}
+
+		//Get the height of the textbox
+		this.height = this.wrap.length * this.lineheight;
 	};
 
+	this.drawBg = function(lineCount) {
+
+		//Background
+	    ctx.fillStyle = "#DDDDDD";
+	    ctx.fillRect(this.X, this.Y - (lineCount * this.lineheight), this.width, this.height + 5); 
+
+	    //Outline for background
+	    ctx.lineWidth = 0.7;
+	    ctx.strokeRect(this.X, this.Y - (lineCount * this.lineheight), this.width, this.height + 5);
+	}
+
 	//Draw text
-	this.draw = function() {
+	this.draw = function(direction) {
 
 		//Wrap text on initial draw
 		if (this.wrap != []) { this.wrapText(); }
 
+		//Draw Background (if there is one)
+		if (this.bg) { this.drawBg(this.wrap.length + 1); }
+
+		//Font color
+		ctx.fillStyle = "black";
+
+		//Draw text
 		for (var i = 0; i < this.wrap.length; i++) {
 			
-			ctx.fillText(this.wrap[i], this.X + this.padding, this.Y + (i * 20));
+			ctx.fillText(this.wrap[i], this.X + this.padding, this.Y -(this.wrap.length * this.lineheight) + (i * this.lineheight));
 		}
 	};
 }

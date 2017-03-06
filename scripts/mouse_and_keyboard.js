@@ -122,7 +122,7 @@ function keyClick (e) {
 
   //Chat bar
   if ((e.which == 13 || e.keyCode == 13 || keyButton == "/") && !keys.ENTER) { keys.ENTER = true; }
-    else if ((e.which == 13 || e.keyCode == 13) && keys.ENTER) { keys.ENTER = false; submitChat(playerList[0].userName); };
+    else if ((e.which == 13 || e.keyCode == 13) && keys.ENTER) { keys.ENTER = false; submitChat(playerList[0].name); };
 
   if (!(e.which == 13 || e.keyCode == 13) && keys.ENTER && str.length < 200) {
 
