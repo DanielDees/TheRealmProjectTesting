@@ -204,40 +204,6 @@ function checkDevCommands () {
     str = "";
   }
 }
-function getWrapedText(text, maxWidth) {
-
-  var arr = [];
-  var currentLine = '';
-
-  //Loop through text passed
-  for (var i = 0; i < text.length; i++) {
-
-    var lineTest = currentLine + text.charAt(i) + '';
-    var lineWidth = ctx.measureText(lineTest).width;
-
-    //Once text in line is >= max line width
-    if (lineWidth > maxWidth - 5) {
-
-      //Add - if a word is being broken
-      if (text.charAt(i) !== " ") { currentLine += "-" ; }
-
-      //Push line to array
-      arr.push(currentLine);
-
-      //Start new line
-      currentLine = " " + text.charAt(i);
-    }
-    else {
-
-      currentLine = lineTest;
-    }
-  }
-
-  //Push line to array
-  arr.push(currentLine);
-
-  return arr;
-}
 
 //-----------------------------
 //End file
