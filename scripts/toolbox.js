@@ -37,10 +37,44 @@ function drawItemDescription (myThingy) {
 
     //Text
     ctx.fillStyle = "#111";
-    ctx.fillText(myThingy.itemName, mouse.X - 190, mouse.Y - 260);
+
+    var nameData = {
+
+      //Location
+      X: mouse.X - 190,
+      Y: mouse.Y - 260,
+
+      //Text
+      text: myThingy.itemName,
+    }
+    var effectData = {
+
+      //Location
+      X: mouse.X - 200,
+      Y: mouse.Y - 230,
+
+      //Text
+      text: myThingy.itemEffectText,
+    }
+    var descriptionData = {
+
+      //Location
+      X: mouse.X - 200,
+      Y: mouse.Y - 200,
+
+      //Text
+      text: myThingy.itemDescription,
+    }
+
+    var name = new textbox(nameData);
+    var effect = new textbox(effectData);
+    var description = new textbox(descriptionData);
+    
+    name.draw();
+
     ctx.font = "14px Palatino";
-    ctx.fillText(myThingy.itemEffectText, mouse.X - 190, mouse.Y - 230);
-    ctx.fillText(myThingy.itemDescription, mouse.X - 190, mouse.Y - 200);
+    effect.draw();
+    description.draw();
   }
 }
 function isEqualTo () {

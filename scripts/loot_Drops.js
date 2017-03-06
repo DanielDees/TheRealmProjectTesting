@@ -40,9 +40,9 @@ function Loot_Drop_System () {
 			case 0:
 				return "Shadowy shadow lore...";
 			case 1:
-				return "Blood was spilled for this bow.";
+				return "Blood was spilled for this bow. The string has been blackened with dried blood...";
 			case 2:
-				return "A gift from the Sun God.";
+				return "A gift from the Sun God. This was bestowed upon the hero who rid the land of darkness long ago...";
 		}
 	}
 	this.getArmorName = function (tier) {
@@ -64,13 +64,13 @@ function Loot_Drop_System () {
 		switch (tier) {
 
 			case 0:
-				return "Forged by a local blacksmith.";
+				return "Forged by a local blacksmith. Nothing special, but it will work well for now...";
 			case 1:
-				return "Once worn by a hero.";
+				return "Once worn by an ancient hero who saved the land...";
 			case 2:
-				return "Skillfully crafted in an armory.";
+				return "Skillfully crafted in the finest armory...";
 			case 3:
-				return "Metal so fine only kings wear it.";
+				return "Metal so fine only great kings wear it...";
 		}
 	}
 	this.getPortalText = function (destination) {

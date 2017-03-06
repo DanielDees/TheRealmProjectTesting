@@ -64,12 +64,12 @@ function generateGameMap () {
 
     if (completionPercent >= nextPercent) { 
 
-      console.log("Map is " + completionPercent.toFixed(0) + "% loaded..."); 
+      //console.log("Map is " + completionPercent.toFixed(0) + "% loaded..."); 
       nextPercent += 25; 
     };
   };
 
-  console.log("Map Size: " + MAX_MAP_SIZE + " x " + MAX_MAP_SIZE);
+  //console.log("Map Size: " + MAX_MAP_SIZE + " x " + MAX_MAP_SIZE);
 
   MAP_TYPE = REALM_MAP;
 }
@@ -100,14 +100,14 @@ function generateBossMap () {
 
     if (completionPercent >= nextPercent) { 
 
-      console.log("Map is " + completionPercent.toFixed(0) + "% loaded..."); 
+      //console.log("Map is " + completionPercent.toFixed(0) + "% loaded..."); 
       nextPercent += 25;
     };
   };
 
   spawn_Game_Boss();
 
-  console.log("Map Size: " + MAX_MAP_SIZE + " x " + MAX_MAP_SIZE);
+  //console.log("Map Size: " + MAX_MAP_SIZE + " x " + MAX_MAP_SIZE);
   MAP_TYPE = BOSS_ROOM_MAP;
 }
 function placeWall (row, col) {
