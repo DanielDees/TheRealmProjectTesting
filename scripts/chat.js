@@ -52,16 +52,7 @@ function submitChat (personSpeaking) {
     //If not dev command
     if (str.length > 0) {
 
-      var messageData = {
-
-        text: str,
-        Y: 16,
-        age: 0,
-        speaker: personSpeaking,
-      }
-
       //Message info
-      /*
       var messageData2 = {
 
         //Location
@@ -72,29 +63,24 @@ function submitChat (personSpeaking) {
         width: 300,
 
         //Text
-        text: personSpeaking + ": " + str,
-      };
+        text: str,
 
-      var chatMessage = new textbox(globalChatData);
+        //Info
+        speaker: personSpeaking,
+      };
       
       //Add message to global chat
-      chatLog.push(chatMessage);
+      chatLog.push(new textbox(messageData2));
 
       //Increase Ypos of text on left of screen.
       for (var i = 0; i < chatLog.length; i++) { 
         
         //The wrapText function sets the height of the textbox
-        chatLog[chatLog.length - 1].wrapText();
+        if(!chatLog[chatLog.length - 1].height) { chatLog[chatLog.length - 1].wrapText(); }
 
-        //Move chat on left of screen up the new message's height
-        chatLog[i].Y += chatLog[chatLog.length - 1].height; 
+        //Move chat on left of screen up the new message's height + an extra line
+        chatLog[i].Y += (chatLog[chatLog.length - 1].height + 5 || 25); 
       }
-      */
-
-      chatLog.push(messageData);
-
-      //Increase Ypos of text on left of screen.
-      for (var i = 0; i < chatLog.length; i++) { chatLog[i].Y += 20; }
     }
   }
 
@@ -154,14 +140,11 @@ function displayChat () {
 
     globalChatMessage.draw();
 
-    //Display text on left of screen
-    //ctx.fillText(chatLog[i].speaker + ": " + chatLog[i].text, 10 + FRAME_OF_REFERENCE[0], canvas.height - chatLog[i].Y + FRAME_OF_REFERENCE[1]);
-
     //Increase age of text
     chatLog[i].age++;
 
-    //Delete text if more than 800 age
-    if (chatLog[i].age > 800) { chatLog.splice(i, 1); }
+    //Delete text if more than 1400 age
+    if (chatLog[i].age > 1400) { chatLog.splice(i, 1); }
   }
 
   ctx.shadowBlur = 0;

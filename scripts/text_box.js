@@ -14,6 +14,10 @@ function textbox(data) {
 	this.text = data.text;
 	this.wrap = [];
 
+	//Info
+	this.speaker = data.speaker;
+	this.age = 0;
+
 	//Style
 	this.bg = data.bg || false;
 	this.color = data.color || "black";
