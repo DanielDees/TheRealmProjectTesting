@@ -58,11 +58,11 @@ function textbox(data) {
 
 		//Background
 	    ctx.fillStyle = "#DDDDDD";
-	    ctx.fillRect(this.X, this.Y - (lineCount * this.lineheight), this.width, this.height + 5); 
+	    ctx.fillRect(this.X, this.Y - (lineCount * this.lineheight), this.width, this.height + 8); 
 
 	    //Outline for background
 	    ctx.lineWidth = 0.7;
-	    ctx.strokeRect(this.X, this.Y - (lineCount * this.lineheight), this.width, this.height + 5);
+	    ctx.strokeRect(this.X, this.Y - (lineCount * this.lineheight), this.width, this.height + 8);
 	}
 
 	//Draw text
@@ -80,7 +80,10 @@ function textbox(data) {
 		//Draw text
 		for (var i = 0; i < this.wrap.length; i++) {
 			
-			ctx.fillText(this.wrap[i], this.X + this.padding, this.Y -(this.wrap.length * this.lineheight) + (i * this.lineheight));
+			//In the case of chat bubble text rises up
+			if (this.bg) { ctx.fillText(this.wrap[i], this.X + this.padding, this.Y -(this.wrap.length * this.lineheight) + (i * this.lineheight)); }
+			//If text goes down such as in item description
+			if (!this.bg) { ctx.fillText(this.wrap[i], this.X + this.padding, this.Y + (i * this.lineheight)); }
 		}
 	};
 }
