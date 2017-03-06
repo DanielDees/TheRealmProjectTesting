@@ -14,8 +14,9 @@ function textbox(data) {
 	this.text = data.text;
 	this.wrap = [];
 
-	//Background
+	//Style
 	this.bg = data.bg || false;
+	this.color = data.color || "black";
 
 	//Format text to wrap form.
 	this.wrapText = function() {
@@ -75,7 +76,7 @@ function textbox(data) {
 		if (this.bg) { this.drawBg(this.wrap.length + 1); }
 
 		//Font color
-		ctx.fillStyle = "black";
+		ctx.fillStyle = this.color;
 
 		//Draw text
 		for (var i = 0; i < this.wrap.length; i++) {

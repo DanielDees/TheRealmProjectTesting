@@ -76,6 +76,19 @@ function submitChat (personSpeaking) {
       };
 
       var chatMessage = new textbox(globalChatData);
+      
+      //Add message to global chat
+      chatLog.push(chatMessage);
+
+      //Increase Ypos of text on left of screen.
+      for (var i = 0; i < chatLog.length; i++) { 
+        
+        //The wrapText function sets the height of the textbox
+        chatLog[chatLog.length - 1].wrapText();
+
+        //Move chat on left of screen up the new message's height
+        chatLog[i].Y += chatLog[chatLog.length - 1].height; 
+      }
       */
 
       chatLog.push(messageData);
@@ -132,15 +145,17 @@ function displayChat () {
 
       //Text
       text: chatLog[i].speaker + ": " + chatLog[i].text,
+
+      //Style
+      color: "white",
     };
 
     var globalChatMessage = new textbox(globalChatData);
 
-    ctx.fillStyle = "white";
-    //globalChatMessage.draw();
+    globalChatMessage.draw();
 
     //Display text on left of screen
-    ctx.fillText(chatLog[i].speaker + ": " + chatLog[i].text, 10 + FRAME_OF_REFERENCE[0], canvas.height - chatLog[i].Y + FRAME_OF_REFERENCE[1]);
+    //ctx.fillText(chatLog[i].speaker + ": " + chatLog[i].text, 10 + FRAME_OF_REFERENCE[0], canvas.height - chatLog[i].Y + FRAME_OF_REFERENCE[1]);
 
     //Increase age of text
     chatLog[i].age++;
