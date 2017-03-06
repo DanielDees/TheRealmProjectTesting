@@ -816,6 +816,7 @@ function portal (data) {
   this.name = data.name;
   this.destination = data.destination;
 
+  //Hitbox
   this.top = function() { return this.Y; }
   this.bottom = function() { return this.Y + this.height; }
   this.left = function() { return this.X; }
@@ -981,5 +982,30 @@ function button (data) {
     ctx.fillText(this.text, this.X() + 6, this.Y() + this.textHeight);
     ctx.shadowBlur = 0;
   }
+}
+function obstacle (data) {
+
+  //Location
+  this.X = data.X;
+  this.Y = data.Y;
+
+  //Dimensions
+  this.width = data.width;
+  this.height = data.height;
+
+  //Sprite
+  this.image = data.image;
+
+  //Hitbox
+  this.top = function() { return this.Y; }
+  this.bottom = function() { return this.Y + this.height; }
+  this.left = function() { return this.X; }
+  this.right = function() { return this.X + this.width; }
+
+  //Draw
+  this.draw = function() {
+
+    ctx.drawImage(this.image, this.X, this.Y, this.width, this.height);
+  };
 }
 //END GAME CLASSES ===============
