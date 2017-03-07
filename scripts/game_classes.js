@@ -11,8 +11,8 @@ function player () {
 
   //Username
   this.name = defaultNamesList[Math.floor((Math.random() * defaultNamesList.length) + 0).toFixed(0)];
-  this.ImageArray = [];
-  this.Image = archer_Pics;
+  this.ImageArray = archer_Pics;
+  this.Image = archer_Pics[3][0];
   this.timeToSpriteChange = 0;
 
   //Death Stats
