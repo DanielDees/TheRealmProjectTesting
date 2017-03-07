@@ -16,7 +16,7 @@ function activateChat () {
   var strShown = str;
 
   //Cut off any characters that push length over 200px in box
-  for (var i = 0; i < 300; i++) {
+  for (var i = 0; i < str.length; i++) {
     if (ctx.measureText(strShown).width >= 500) {
 
       strShown = strShown.slice(1, strShown.length);
@@ -76,10 +76,9 @@ function submitChat (personSpeaking) {
         chatLog[chatLog.length - 1].wrapText();
       }
 
-      //Increase Ypos of text on left of screen.
+      //Move global chat up the new message's height
       for (var i = 0; i < chatLog.length; i++) { 
 
-        //Move chat on left of screen up the new message's height
         chatLog[i].Y += (chatLog[chatLog.length - 1].height + 5); 
       }
     }
