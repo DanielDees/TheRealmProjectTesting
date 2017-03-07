@@ -53,7 +53,7 @@ function submitChat (personSpeaking) {
     if (str.length > 0) {
 
       //Message info
-      var messageData2 = {
+      var messageData = {
 
         //Location
         X: 10 + FRAME_OF_REFERENCE[0],
@@ -70,7 +70,7 @@ function submitChat (personSpeaking) {
       };
       
       //Add message to global chat
-      chatLog.push(new textbox(messageData2));
+      chatLog.push(new textbox(messageData));
 
       //Increase Ypos of text on left of screen.
       for (var i = 0; i < chatLog.length; i++) { 
@@ -86,33 +86,7 @@ function submitChat (personSpeaking) {
 
   str = "";
 }
-function displayChat () {
-
-  ctx.strokeStyle = "#000";
-
-  //Text above player
-  if (chatLog.length > 0 && chatLog[chatLog.length - 1].age < 400) {
-
-    //Message info
-    var textBubbleData = {
-
-      //Location
-      X: playerList[0].X + (playerList[0].width / 2) - 100,
-      Y: playerList[0].Y - 10,
-
-      //Background
-      bg: true,
-
-      //Text
-      text: chatLog[chatLog.length - 1].text,
-    }
-
-    //Create new text bubble
-    var textBubble = new textbox(textBubbleData);
-
-    //Overlay text on background.
-    textBubble.draw();
-  }
+function displayGlobalChat() {
 
   //Text on left of screen
   ctx.fillStyle = "#FFF";
@@ -132,12 +106,14 @@ function displayChat () {
       //Text
       text: chatLog[i].speaker + ": " + chatLog[i].text,
 
-      //Style
-      color: "white",
+      //Color
+      global: true,
+      globalColor: chatLog[i].globalColor,
     };
 
     var globalChatMessage = new textbox(globalChatData);
 
+    //Draw text
     globalChatMessage.draw();
 
     //Increase age of text
@@ -148,6 +124,40 @@ function displayChat () {
   }
 
   ctx.shadowBlur = 0;
+}
+function displayPlayerChat() {
+
+  //Text above player
+  if (chatLog.length > 0 && chatLog[chatLog.length - 1].age < 400 && chatLog[chatLog.length - 1].speaker == playerList[0].name) {
+
+    //Message info
+    var textBubbleData = {
+
+      //Location
+      X: playerList[0].X + (playerList[0].width / 2) - 100,
+      Y: playerList[0].Y - 10,
+
+      //Background
+      bg: true,
+
+      //Text
+      text: chatLog[chatLog.length - 1].text,
+    }
+
+    //Create new text bubble
+    var textBubble = new textbox(textBubbleData);
+
+    //Draw text bubble
+    textBubble.draw();
+  }
+}
+function displayChat () {
+
+  //Draw player chat
+  displayPlayerChat();
+
+  //Draw global chat
+  displayGlobalChat();
 }
 function checkDevCommands () {
 

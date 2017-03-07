@@ -337,38 +337,49 @@ function drawGameScreen () {
 var generateEnemies = setInterval(function() { if (screenType == "GAME_SCREEN" && (enemies_remaining_in_realm - enemyList.length) > 0) { spawnEnemy(); } } , 1000000);
 var bossSpeak = setInterval(function() { 
 
+  var bossText = "NO_BOSS_TEXT";
+
   if (enemies_remaining_in_realm > 0) {
 
-    var messageData = {
-
-      text: "THERE ARE " + enemies_remaining_in_realm + " ENEMIES REMAINING!",
-      Y: 16,
-      age: 401,
-      speaker: "Game Boss"
-    }
-
-    chatLog.push(messageData);
+    bossText = "THERE ARE " + enemies_remaining_in_realm + " ENEMIES REMAINING!";
 
   } else {
 
-    var messageData = {
-
-        text: "YOU MUST PAY FOR YOUR SINS!!!",
-        Y: 16,
-        age: 201,
-        speaker: "Game Boss"
-    }
-
-    chatLog.push(messageData);
+    bossText = "YOU MUST PAY FOR YOUR SINS!!!";
     screenType = "BOSS_SCREEN";
-    lastKnownLocation = [playerList[0].X, playerList[0].isViewingLoot];
-    if (lastKnownLocation[0] < 4000) {
-
-      console.log("X: " + lastKnownLocation[0] + "\nViewing Loot: " + lastKnownLocation[1] + "\nGame Screen: " + screenType);
-    }
-    
   }
-  for (var i = 0; i < chatLog.length; i++) { chatLog[i].Y += 20; }
+
+  //Message info
+  var messageData = {
+
+    //Location
+    X: 10 + FRAME_OF_REFERENCE[0],
+    Y: 16,
+
+    //Dimensions
+    width: 300,
+
+    //Text
+    text: bossText,
+    global: true,
+    globalColor: "#FB4F51FF",
+
+    //Info
+    speaker: "Game Boss",
+  };
+  
+  //Add message to global chat
+  chatLog.push(new textbox(messageData));
+
+  //Increase Ypos of text on left of screen.
+  for (var i = 0; i < chatLog.length; i++) { 
+    
+    //The wrapText function sets the height of the textbox
+    if(!chatLog[chatLog.length - 1].height) { chatLog[chatLog.length - 1].wrapText(); }
+
+    //Move chat on left of screen up the new message's height + an extra line
+    chatLog[i].Y += (chatLog[chatLog.length - 1].height + 5 || 25); 
+  }
 
  } , 60000);
 var drawTheGame = setInterval(drawGameScreen, (1000 / GAME_FPS));

@@ -965,8 +965,8 @@ function button (data) {
       //On click
       if (mouse.clicked) {
 
-        //For debug
-        console.log("Positon: " + playerList[0].X.toFixed(0) + "x | " + playerList[0].Y.toFixed(0) + "y" + "\nGame Screen: " + screenType);
+        //Debug
+        //console.log("Positon: " + playerList[0].X.toFixed(0) + "x | " + playerList[0].Y.toFixed(0) + "y" + "\nGame Screen: " + screenType);
         
         //Execute action
         if (this.action) { this.action(); }

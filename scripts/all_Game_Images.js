@@ -12,7 +12,8 @@ var PATH = {
       projectiles: "sprites/projectiles/",
       enemies: "sprites/enemies/",
       portals: "sprites/portals/",
-      lootBags: "sprites/loot_bags/"
+      lootBags: "sprites/loot_bags/",
+      obstacles: "sprites/obstacles/",
 };
 
 /*
@@ -361,6 +362,10 @@ var potionList = [new Image(), new Image(), new Image(), new Image(), new Image(
 //Loot Bags
 var lootBagPics = [new Image()];
       lootBagPics[0].src = PATH.lootBags + "brownLootBag.png";
+
+//Obstacles
+var obstaclePics = [new Image()];
+      obstaclePics[0].src = PATH.obstacles + "rock.png";
 
 //----------------------
 //These comments are for
