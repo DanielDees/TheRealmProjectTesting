@@ -135,7 +135,7 @@ function displayPlayerChat() {
     var textBubbleData = {
 
       //Location
-      X: playerList[0].X + (playerList[0].width / 2) - 100,
+      X: playerList[0].X + (playerList[0].width / 2),
       Y: playerList[0].Y - 10,
 
       //Background

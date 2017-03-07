@@ -59,8 +59,18 @@ function textbox(data) {
 			this.wrap.push(line); 
 		}
 
-		//Get the height of the textbox
+		var longestLine = 0;
+
+		//Find longest line of text.
+		for (var i = 0; i < this.wrap.length; i++) {
+			if (longestLine < ctx.measureText(this.wrap[i]).width) {
+				longestLine = ctx.measureText(this.wrap[i]).width;
+			}
+		}
+
+		//Get the dimensions of the textbox
 		this.height = this.wrap.length * this.lineheight;
+		this.width = longestLine + (this.padding * 2);
 	};
 
 	this.drawBg = function(line) {
@@ -73,11 +83,11 @@ function textbox(data) {
 		//Background
 		ctx.strokeStyle = "#000";
 	    ctx.fillStyle = "#DDDDDD";
-	    ctx.fillRect(this.X, this.Y - (line * this.lineheight), this.width, this.height + 8); 
+	    ctx.fillRect(this.X - (this.width / 2), this.Y - (line * this.lineheight), this.width, this.height + 8); 
 
 	    //Outline for background
 	    ctx.lineWidth = 0.7;
-	    ctx.strokeRect(this.X, this.Y - (line * this.lineheight), this.width, this.height + 8);
+	    ctx.strokeRect(this.X - (this.width / 2), this.Y - (line * this.lineheight), this.width, this.height + 8);
 	}
 
 	//Draw text
@@ -100,7 +110,7 @@ function textbox(data) {
 		for (var i = 0; i < this.wrap.length; i++) {
 			
 			//In the case of chat bubble text rises up
-			if (this.bg) { ctx.fillText(this.wrap[i], this.X + this.padding, this.Y -(this.wrap.length * this.lineheight) + (i * this.lineheight)); }
+			if (this.bg) { ctx.fillText(this.wrap[i], this.X + this.padding - (this.width / 2), this.Y -(this.wrap.length * this.lineheight) + (i * this.lineheight)); }
 			//If text goes down such as in item description
 			if (!this.bg) { ctx.fillText(this.wrap[i], this.X + this.padding, this.Y + (i * this.lineheight)); }
 		}
