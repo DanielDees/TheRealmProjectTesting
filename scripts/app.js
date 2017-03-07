@@ -377,9 +377,8 @@ var bossSpeak = setInterval(function() {
   //Increase Ypos of text on left of screen.
   for (var i = 0; i < chatLog.length; i++) { 
 
-    //Move chat on left of screen up the new message's height + an extra line
+    //Move chat on left of screen up the new message's height
     chatLog[i].Y += (chatLog[chatLog.length - 1].height + 5);
-    console.log("last msg height: " + (chatLog[chatLog.length - 1].height));
   }
 
  } , 60000);
