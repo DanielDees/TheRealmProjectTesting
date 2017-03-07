@@ -3,6 +3,9 @@ var side_bar = new Game_side_bar();
 
 function Game_side_bar() {
 
+  this.X = function() { return playerList[0].X - 250; };
+  this.Y = function() { return playerList[0].Y - 300; };
+
   this.progressBarData = {
 
     exp: {
@@ -78,48 +81,67 @@ function Game_side_bar() {
     mana: new progressBar(this.progressBarData.mana),
   };
 
-  this.draw = function() {
+  this.drawBg = function() {
 
-    //Top left of player screen
-    var absX = playerList[0].X - 250;
-    var absY = playerList[0].Y - 300;
-
-    //Lines for box of displaying stats
+    //Side line
     ctx.fillStyle = "#000";
-    ctx.fillRect(canvas.width - 200 + absX, 0 + absY, 2, canvas.height);
+    ctx.fillRect(canvas.width - 200 + this.X(), this.Y(), 2, canvas.height);
+
+    //Box
     ctx.fillStyle = "#333";
-    ctx.fillRect(canvas.width - 198  + absX, 0 + absY, 198, canvas.height);
+    ctx.fillRect(canvas.width - 198  + this.X(), this.Y(), 198, canvas.height);
+  };
+  this.showMinimap = function() {
 
     //MINIMAP
     ctx.fillStyle = "#000000";
-    ctx.fillRect(canvas.width - 195  + absX, 5 + absY, 190, 190);
+    ctx.fillRect(canvas.width - 195  + this.X(), 5 + this.Y(), 190, 190);
+  };
+  this.showStats = function() {
 
     //Glory
     ctx.fillStyle = "Orange";
     ctx.shadowBlur = 3;
-    ctx.fillText("Glory: " + playerList[0].deathGlory, canvas.width - 275  + absX, 20 + absY);
+    ctx.fillText("Glory: " + playerList[0].deathGlory.toFixed(0), canvas.width - 275  + this.X(), 20 + this.Y());
     ctx.shadowBlur = 0;
 
     //Player Info
     ctx.fillStyle = "#BBB";
-    ctx.fillText("Name: " + playerList[0].name, canvas.width - 190  + absX, 212 + absY);
-    ctx.fillText("Level: " + playerList[0].level, canvas.width - 190  + absX, 230 + absY);
+    ctx.fillText("Name: " + playerList[0].name, canvas.width - 190  + this.X(), 212 + this.Y());
+    ctx.fillText("Level: " + playerList[0].level, canvas.width - 190  + this.X(), 230 + this.Y());
 
     //Player Stats
     ctx.font = "14px black Palatino";
-    ctx.fillText("Attack: " + playerList[0].damage, canvas.width - 185  + absX, 320 + absY);
-    ctx.fillText("Speed: " + playerList[0].speed.toFixed(0), canvas.width - 95  + absX, 320 + absY);
-    ctx.fillText("Wizardry: " + playerList[0].wizardry, canvas.width - 185  + absX, 340 + absY);
-    ctx.fillText("Dexterity: " + playerList[0].dexterity, canvas.width - 95  + absX, 340 + absY);
-    ctx.fillText("Youth: " + playerList[0].youth, canvas.width - 185 + absX, 360 + absY);
-
-    //Debug Info
-    drawDebugInfo(absX, absY);
+    ctx.fillText("Attack: " + playerList[0].damage, canvas.width - 185  + this.X(), 320 + this.Y());
+    ctx.fillText("Speed: " + playerList[0].speed.toFixed(0), canvas.width - 95  + this.X(), 320 + this.Y());
+    ctx.fillText("Wizardry: " + playerList[0].wizardry, canvas.width - 185  + this.X(), 340 + this.Y());
+    ctx.fillText("Dexterity: " + playerList[0].dexterity, canvas.width - 95  + this.X(), 340 + this.Y());
+    ctx.fillText("Youth: " + playerList[0].youth, canvas.width - 185 + this.X(), 360 + this.Y());
+  };
+  this.showStatBars = function() {
 
     //EXP/HP/MP bars
     ctx.font = "18px Palatino";
     this.progressBars.exp.draw();
     this.progressBars.hp.draw();
     this.progressBars.mana.draw();
+  };
+
+  this.draw = function() {
+
+    //Background
+    this.drawBg();
+
+    //Mini-Map
+    this.showMinimap();
+
+    //Show player stats
+    this.showStats();
+
+    //Show Exp/Hp/Mp bars
+    this.showStatBars();
+
+    //Debug Info
+    //drawDebugInfo();
   };
 }
