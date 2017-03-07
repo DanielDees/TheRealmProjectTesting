@@ -25,10 +25,13 @@ function textbox(data) {
 	this.globalColor = data.globalColor || "white";
 
 	//Format text to wrap form.
-	this.wrapText = function() {
+	this.wrapText = function(input) {
+
+		//Default calculation is for global chat
+		if (!input) { input = this.speaker + ": " + this.text; }
 
 		//Break text into array of words
-		var words = this.text.split(' ');
+		var words = input.split(' ');
 		var line = "";
 
 		//Maximum width that a line can take up
@@ -80,8 +83,11 @@ function textbox(data) {
 	//Draw text
 	this.draw = function(direction) {
 
+		//If in global chat, include speaker name length for proper height calculation
+		if (this.global) { this.wrapText(); }
+
 		//Wrap text on initial draw
-		if (this.wrap != []) { this.wrapText(); }
+		if (!this.global) { this.wrapText(this.text); }
 
 		//Draw Background (if there is one)
 		if (this.bg) { this.drawBg(this.wrap.length + 1); }

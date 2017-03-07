@@ -64,22 +64,23 @@ function submitChat (personSpeaking) {
 
         //Text
         text: str,
-
-        //Info
         speaker: personSpeaking,
       };
       
       //Add message to global chat
       chatLog.push(new textbox(messageData));
 
+      //The wrapText function sets the height of the textbox
+      if(!chatLog[chatLog.length - 1].height) { 
+
+        chatLog[chatLog.length - 1].wrapText();
+      }
+
       //Increase Ypos of text on left of screen.
       for (var i = 0; i < chatLog.length; i++) { 
-        
-        //The wrapText function sets the height of the textbox
-        if(!chatLog[chatLog.length - 1].height) { chatLog[chatLog.length - 1].wrapText(); }
 
-        //Move chat on left of screen up the new message's height + an extra line
-        chatLog[i].Y += (chatLog[chatLog.length - 1].height + 5 || 25); 
+        //Move chat on left of screen up the new message's height
+        chatLog[i].Y += (chatLog[chatLog.length - 1].height + 5); 
       }
     }
   }
@@ -104,7 +105,8 @@ function displayGlobalChat() {
       width: 300,
 
       //Text
-      text: chatLog[i].speaker + ": " + chatLog[i].text,
+      text: chatLog[i].text,
+      speaker: chatLog[i].speaker,
 
       //Color
       global: true,
