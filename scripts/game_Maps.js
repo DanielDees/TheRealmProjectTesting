@@ -11,7 +11,7 @@ var BOSS_ROOM_MAP = [];
 //var NEXUS_MAP = [];
 
 //How far around the player to load map tiles from.
-var MAX_MAP_SIZE = 1000;
+var MAX_MAP_SIZE = 100;
 var tileSize = 49;
 var renderRange = 10 * tileSize;
 
@@ -72,6 +72,7 @@ function generateGameMap () {
   //console.log("Map Size: " + MAX_MAP_SIZE + " x " + MAX_MAP_SIZE);
 
   MAP_TYPE = REALM_MAP;
+  map_tile_color_loader.load();
 }
 function generateBossMap () {
 
@@ -80,7 +81,6 @@ function generateBossMap () {
   
   var completionPercent = 0;
   var nextPercent = 0;
-
   var elevation = 10;
 
   for (var row = 0; row < MAX_MAP_SIZE; row++) {
@@ -90,10 +90,10 @@ function generateBossMap () {
       var tileX = col * tileSize;
       var tileY = row * tileSize;
       
-      if (chance <= 7) { BOSS_ROOM_MAP.push([stoneGround[0] , tileX, tileY, elevation]); }
+           if (chance <= 7) { BOSS_ROOM_MAP.push([stoneGround[0] , tileX, tileY, elevation]); }
       else if (chance <= 8) { BOSS_ROOM_MAP.push([stoneGround[1] , tileX, tileY, elevation]); }
       else if (chance <= 9) { BOSS_ROOM_MAP.push([stoneGround[2] , tileX, tileY, elevation]); }
-      else if (chance <= 10) { BOSS_ROOM_MAP.push([stoneGround[3] , tileX, tileY, elevation]); };
+      else if (chance <= 10){ BOSS_ROOM_MAP.push([stoneGround[3] , tileX, tileY, elevation]); };
     };
 
     completionPercent += (100 / MAX_MAP_SIZE);
@@ -109,21 +109,18 @@ function generateBossMap () {
 
   //console.log("Map Size: " + MAX_MAP_SIZE + " x " + MAX_MAP_SIZE);
   MAP_TYPE = BOSS_ROOM_MAP;
+  map_tile_color_loader.load();
 }
 function placeWall (row, col) {
 
   MAP_TILES.push([classSelectionPics[0], col * tileSize, row * tileSize]);
-}
-function getMapTileColor(tile) {
-
-  //X, Y, W, H
-  console.log("IMG Data: " + ctx.getImageData(tile[1], tile[2], 50, 50));
 }
 function getRenderedMapTiles() {
   
   //Holds all loaded tile data
   var tileData = [];
   var rowTileData = [];
+  var tileColor = "white";
 
   //Get location for map rendering
   var minX = Math.round(((playerList[0].X - renderRange) / tileSize));
@@ -138,16 +135,17 @@ function getRenderedMapTiles() {
       
       //i = the row (each row being MAX_MAP_SIZE in length)
       //j = tiles over that you are.
-      var k = (i * MAX_MAP_SIZE) + j;
+      var tileNum = (i * MAX_MAP_SIZE) + j;
     
       try { 
-        if (k >= 0 && k < MAP_TYPE.length) { 
+        if (tileNum >= 0 && tileNum < MAP_TYPE.length) { 
 
-          //Add all tiles in row to row data
-          rowTileData.push(MAP_TYPE[k][0]);
+          //Get tile color for minimap
+          //Add tile in row to row data
+          rowTileData.push(MAP_TILE_COLORS[tileNum]);
         } 
       }
-      catch (err) { throw err + "\nUnable to find: MAP_TYPE["+k+"]"; };
+      catch (err) { throw err + "\nUnable to find: MAP_TYPE[" + tileNum + "]"; };
     };
 
     //Add row to the loaded tile list

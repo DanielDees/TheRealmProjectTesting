@@ -33,7 +33,8 @@ function Game_mini_map() {
 	    for (var i = 0; i < this.map.length; i++) {
 	      //Loop through each tile in i
 	      for (var j = 0; j < this.map[i].length; j++) {
-	      	ctx.drawImage(this.map[i][j], this.X() + (j * this.tWidth), this.Y() + (i * this.tHeight), this.tWidth, this.tHeight);
+	      	ctx.fillStyle = this.map[i][j];
+	      	ctx.fillRect(this.X() + (j * this.tWidth), this.Y() + (i * this.tHeight), this.tWidth, this.tHeight);
 	      }
 	  	}
 
