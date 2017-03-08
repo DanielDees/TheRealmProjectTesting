@@ -44,7 +44,7 @@ function Game_map_loader() {
     for (var row = 0; row < this.MAX_SIZE; row++) {
       for (var col = 0; col < this.MAX_SIZE; col++) {
 
-        var chance = Math.random() * 10;
+        var chance = Math.random();
         var tileX = col * this.tileSize;
         var tileY = row * this.tileSize;
         
@@ -55,11 +55,11 @@ function Game_map_loader() {
         var elevation = Math.random() * 5;
 
         //Low elevation creates water.
-        //if (elevation < 1) { REALM_MAP.push([waterGround[0] , realCol * this.tileSize, realRow * this.tileSize, elevation]); }
-        if (chance <= 7) { REALM_MAP.push([grassGround[0] , tileX, tileY, elevation]); }
-        else if (chance <= 8) { REALM_MAP.push([grassGround[1] , tileX, tileY, elevation]); }
-        else if (chance <= 9) { REALM_MAP.push([grassGround[2] , tileX, tileY, elevation]); }
-        else if (chance <= 10) { REALM_MAP.push([grassGround[3] , tileX, tileY, elevation]); };
+        //if (elevation < 0.1) { REALM_MAP.push([waterGround[0] , realCol * this.tileSize, realRow * this.tileSize, elevation]); }
+        if (chance <= 0.7) { REALM_MAP.push([grassGround[0] , tileX, tileY, elevation]); }
+        else if (chance <= 0.8) { REALM_MAP.push([grassGround[1] , tileX, tileY, elevation]); }
+        else if (chance <= 0.9) { REALM_MAP.push([grassGround[2] , tileX, tileY, elevation]); }
+        else if (chance <= 1) { REALM_MAP.push([grassGround[3] , tileX, tileY, elevation]); };
       };
     };
 
@@ -77,14 +77,14 @@ function Game_map_loader() {
     for (var row = 0; row < this.MAX_SIZE; row++) {
       for (var col = 0; col < this.MAX_SIZE; col++) {
 
-        var chance = Math.random() * 10;
+        var chance = Math.random();
         var tileX = col * this.tileSize;
         var tileY = row * this.tileSize;
         
-        if (chance <= 7) { BOSS_ROOM_MAP.push([stoneGround[0] , tileX, tileY, elevation]); }
-        else if (chance <= 8) { BOSS_ROOM_MAP.push([stoneGround[1] , tileX, tileY, elevation]); }
-        else if (chance <= 9) { BOSS_ROOM_MAP.push([stoneGround[2] , tileX, tileY, elevation]); }
-        else if (chance <= 10){ BOSS_ROOM_MAP.push([stoneGround[3] , tileX, tileY, elevation]); };
+        if (chance <= 0.7) { BOSS_ROOM_MAP.push([stoneGround[0] , tileX, tileY, elevation]); }
+        else if (chance <= 0.8) { BOSS_ROOM_MAP.push([stoneGround[1] , tileX, tileY, elevation]); }
+        else if (chance <= 0.9) { BOSS_ROOM_MAP.push([stoneGround[2] , tileX, tileY, elevation]); }
+        else if (chance <= 1){ BOSS_ROOM_MAP.push([stoneGround[3] , tileX, tileY, elevation]); };
       };
     };
 
