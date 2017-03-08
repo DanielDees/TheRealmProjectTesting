@@ -289,7 +289,7 @@ function drawGameScreen () {
     replenishPlayerStats();
 
     //MAP
-    drawMap(MAP_TYPE);
+    drawMap();
 
     //Loot
     drawPortals();

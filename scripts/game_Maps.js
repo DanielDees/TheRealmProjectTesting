@@ -114,7 +114,11 @@ function placeWall (row, col) {
 
   MAP_TILES.push([classSelectionPics[0], col * tileSize, row * tileSize]);
 }
-function drawMap (MAP) {
+function getRenderedMapTiles() {
+  
+  //Holds all loaded tile data
+  var tileData = [];
+  var rowTileData = [];
 
   //Get location for map rendering
   var minX = Math.round(((playerList[0].X - renderRange) / tileSize));
@@ -122,13 +126,54 @@ function drawMap (MAP) {
   var minY = Math.round(((playerList[0].Y - renderRange) / tileSize));
   var maxY = Math.round(((playerList[0].Y + renderRange) / tileSize)); 
 
+  //Loop through highest to lowest tiles rendered
   for (var i = minY; i <= maxY; i++) { 
+    //Loop through left most to right most tiles rendered
     for (var j = minX; j <= maxX; j++) { 
       
       var k = (i * MAX_MAP_SIZE) + j;
+    
+      try { 
+        if (k >= 0 && k < MAP_TYPE.length) { 
 
-      try { if (k >= 0 && k < MAP_TYPE.length) { ctx.drawImage(MAP[k][0], MAP[k][1], MAP[k][2], 50, 50); } }
-      catch (err) { throw err + "\nUnable to find: MAP["+k+"]"; };
+          //Add all tiles in row to row data
+          rowTileData.push(MAP_TYPE[k][0]);
+        } 
+      }
+      catch (err) { throw err + "\nUnable to find: MAP_TYPE["+k+"]"; };
+    };
+
+    //Add row to the loaded tile list
+    tileData.push(rowTileData);
+    rowTileData = [];
+  };
+
+  //Return all loaded tiles
+  return tileData;
+}
+function drawMap () {
+
+  //Get location for map rendering
+  var minX = Math.round(((playerList[0].X - renderRange) / tileSize));
+  var maxX = Math.round(((playerList[0].X + renderRange) / tileSize));
+  var minY = Math.round(((playerList[0].Y - renderRange) / tileSize));
+  var maxY = Math.round(((playerList[0].Y + renderRange) / tileSize)); 
+
+  //Loop through highest to lowest tiles rendered
+  for (var i = minY; i <= maxY; i++) { 
+    //Loop through left most to right most tiles rendered
+    for (var j = minX; j <= maxX; j++) { 
+      
+      //i = the row (each row being MAX_MAP_SIZE in length)
+      //j = tiles over that you are.
+      var k = (i * MAX_MAP_SIZE) + j;
+
+      try { 
+        if (k >= 0 && k < MAP_TYPE.length) { 
+          ctx.drawImage(MAP_TYPE[k][0], MAP_TYPE[k][1], MAP_TYPE[k][2], 50, 50); 
+        } 
+      }
+      catch (err) { throw err + "\nUnable to find: MAP_TYPE["+k+"]"; };
     };
   };
 }
