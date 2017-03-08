@@ -3,14 +3,6 @@ var side_bar = new Game_side_bar();
 
 function Game_side_bar() {
 
-  //Location
-  this.X = function() { return playerList[0].X - 250; };
-  this.Y = function() { return playerList[0].Y - 300; };
-
-  this.miniMapTiles = [];
-  this.tileWidth = 9;
-  this.tileHeight = 9;
-
   this.progressBarData = {
 
     exp: {
@@ -78,7 +70,6 @@ function Game_side_bar() {
       max: function() { return playerList[0].MAX_MP.toFixed(0); },
     },
   };
-
   this.progressBars = {
 
     exp: new progressBar(this.progressBarData.exp),
@@ -95,29 +86,6 @@ function Game_side_bar() {
     //Box
     ctx.fillStyle = "#333";
     ctx.fillRect(canvas.width - 198  + this.X(), this.Y(), 198, canvas.height);
-  };
-  this.showMinimap = function() {
-
-    var miniMapX = this.X() + canvas.width - 195;
-    var miniMapY = this.Y() + 5;
-
-    //MINIMAP
-    ctx.fillStyle = "#000000";
-    ctx.fillRect(miniMapX, miniMapY, 190, 190);
-
-    //Returns all map tiles rendered if map is loaded
-    this.miniMapTiles = getRenderedMapTiles();
-
-    //Loop for the number of rows
-    for (var i = 0; i < this.miniMapTiles.length; i++) {
-      //Loop through each tile in row
-      for (var j = 0; j < this.miniMapTiles[i].length; j++) {
-        ctx.drawImage(this.miniMapTiles[i][j], miniMapX + (j * this.tileWidth), miniMapY + (i * this.tileHeight), this.tileWidth, this.tileHeight);
-      }
-    }
-
-    //Draw player on minimap
-    ctx.drawImage(playerList[0].Image, miniMapX + (10 * this.tileWidth), miniMapY + (10 * this.tileHeight), this.tileWidth, this.tileHeight);
   };
   this.showStats = function() {
 
@@ -155,7 +123,7 @@ function Game_side_bar() {
     this.drawBg();
 
     //Mini-Map
-    this.showMinimap();
+    Game_mini_map.draw();
 
     //Show player stats
     this.showStats();

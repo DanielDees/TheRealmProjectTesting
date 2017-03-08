@@ -114,6 +114,11 @@ function placeWall (row, col) {
 
   MAP_TILES.push([classSelectionPics[0], col * tileSize, row * tileSize]);
 }
+function getMapTileColor(tile) {
+
+  //X, Y, W, H
+  console.log("IMG Data: " + ctx.getImageData(tile[1], tile[2], 50, 50));
+}
 function getRenderedMapTiles() {
   
   //Holds all loaded tile data
