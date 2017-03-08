@@ -255,8 +255,8 @@ function drawGameScreen () {
   ctx.clearRect(playerList[0].X - 600, playerList[0].Y - 600, canvas.width + 1200, canvas.height + 1200);
 
   //Ensure game map is generated and being used.
-  if (screenType == "GAME_SCREEN" && MAP_TYPE != REALM_MAP) { generateGameMap(); }
-  if (screenType == "BOSS_SCREEN" && MAP_TYPE != BOSS_ROOM_MAP) { generateBossMap(); }
+  if (screenType == "GAME_SCREEN" && MAP_TYPE != REALM_MAP) { Game_map_generator.generateGameMap(); }
+  if (screenType == "BOSS_SCREEN" && MAP_TYPE != BOSS_ROOM_MAP) { Game_map_generator.generateBossMap(); }
 
   if ((screenType == "GAME_SCREEN" && MAP_TYPE == REALM_MAP) || (screenType == "BOSS_SCREEN" && MAP_TYPE == BOSS_ROOM_MAP)) {
 
@@ -289,7 +289,7 @@ function drawGameScreen () {
     replenishPlayerStats();
 
     //MAP
-    drawMap();
+    Game_map_generator.draw();
 
     //Loot
     drawPortals();

@@ -27,7 +27,7 @@ function Game_mini_map() {
 	    ctx.fillRect(this.X() - 1, this.Y() - 1, this.width + 1, this.height + 1);
 
 	    //Returns all map tiles rendered if map is loaded
-	    this.map = getRenderedMapTiles();
+	    this.map = Game_map_generator.getRenderedTiles();
 
 	    //Loop for the number of is
 	    for (var i = 0; i < this.map.length; i++) {
