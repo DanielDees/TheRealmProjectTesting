@@ -3,6 +3,10 @@ var side_bar = new Game_side_bar();
 
 function Game_side_bar() {
 
+  //Location
+  this.X = function() { return playerList[0].X - 250; };
+  this.Y = function() { return playerList[0].Y - 300; };
+
   this.progressBarData = {
 
     exp: {
@@ -87,7 +91,7 @@ function Game_side_bar() {
     ctx.fillStyle = "#333";
     ctx.fillRect(canvas.width - 198  + this.X(), this.Y(), 198, canvas.height);
   };
-  this.showStats = function() {
+  this.drawStats = function() {
 
     //Glory
     ctx.fillStyle = "Orange";
@@ -108,7 +112,7 @@ function Game_side_bar() {
     ctx.fillText("Dexterity: " + playerList[0].dexterity, canvas.width - 95  + this.X(), 340 + this.Y());
     ctx.fillText("Youth: " + playerList[0].youth, canvas.width - 185 + this.X(), 360 + this.Y());
   };
-  this.showStatBars = function() {
+  this.drawStatBars = function() {
 
     //EXP/HP/MP bars
     ctx.font = "18px Palatino";
@@ -123,13 +127,13 @@ function Game_side_bar() {
     this.drawBg();
 
     //Mini-Map
-    Game_mini_map.draw();
+    mini_map.draw();
 
     //Show player stats
-    this.showStats();
+    this.drawStats();
 
     //Show Exp/Hp/Mp bars
-    this.showStatBars();
+    this.drawStatBars();
 
     //Debug Info
     //drawDebugInfo();
