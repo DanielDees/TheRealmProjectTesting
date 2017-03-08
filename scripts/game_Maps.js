@@ -131,6 +131,8 @@ function getRenderedMapTiles() {
     //Loop through left most to right most tiles rendered
     for (var j = minX; j <= maxX; j++) { 
       
+      //i = the row (each row being MAX_MAP_SIZE in length)
+      //j = tiles over that you are.
       var k = (i * MAX_MAP_SIZE) + j;
     
       try { 
