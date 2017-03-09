@@ -12,8 +12,8 @@ function Game_mini_map() {
 
 	//Map tiles
 	this.map = "No map yet";
-	this.tWidth = 9;
-	this.tHeight = 9;
+	this.tWidth = function() { return 9; };
+	this.tHeight = function() { return 9; };
 
 	//Color code
 	this.playerColor = "blue";
@@ -34,12 +34,12 @@ function Game_mini_map() {
 	      //Loop through each tile in i
 	      for (var j = 0; j < this.map[i].length; j++) {
 	      	ctx.fillStyle = this.map[i][j];
-	      	ctx.fillRect(this.X() + (j * this.tWidth), this.Y() + (i * this.tHeight), this.tWidth, this.tHeight);
+	      	ctx.fillRect(this.X() + (j * this.tWidth()), this.Y() + (i * this.tHeight()), this.tWidth(), this.tHeight());
 	      }
 	  	}
 
 	    //Draw player on minimap
 	    ctx.fillStyle = this.playerColor;
-	    ctx.fillRect(this.X() + (10 * this.tWidth), this.Y() + (10 * this.tHeight), 8, 8);
+	    ctx.fillRect(this.X() + (10 * this.tWidth()), this.Y() + (10 * this.tHeight()), 8, 8);
 	};
 }
