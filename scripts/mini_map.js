@@ -32,9 +32,6 @@ function Game_mini_map() {
 	    //Returns all map tiles rendered if map is loaded
 	    this.map = Game_map_generator.getRenderedTiles();
 
-	    //DEBUG
-	    console.log("MM.length: " + this.map.length + " | MM[0].length: " + this.map[0].length);
-
 	    //Loop for the number of rows
 	    for (var i = 0; i < this.map.length; i++) {
 	      //Loop through each tile in row
