@@ -12,8 +12,11 @@ function Game_mini_map() {
 
 	//Map tiles
 	this.map = "No map yet";
-	this.tWidth = function() { return 9; };
-	this.tHeight = function() { return 9; };
+
+	//Recalculates for map zoom level 
+	//Subtract 1 for seamless mini-map, 0 for grid
+	this.tWidth = function() { return (this. width - 0) / this.map.length; };
+	this.tHeight = function() { return (this.width - 0) / this.map.length; };
 
 	//Color code
 	this.playerColor = "blue";
@@ -29,9 +32,9 @@ function Game_mini_map() {
 	    //Returns all map tiles rendered if map is loaded
 	    this.map = Game_map_generator.getRenderedTiles();
 
-	    //Loop for the number of is
+	    //Loop for the number of rows
 	    for (var i = 0; i < this.map.length; i++) {
-	      //Loop through each tile in i
+	      //Loop through each tile in row
 	      for (var j = 0; j < this.map[i].length; j++) {
 	      	ctx.fillStyle = this.map[i][j];
 	      	ctx.fillRect(this.X() + (j * this.tWidth()), this.Y() + (i * this.tHeight()), this.tWidth(), this.tHeight());
