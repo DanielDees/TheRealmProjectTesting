@@ -11,10 +11,20 @@ function Game_map_tile_color_loader() {
         //Empty old color values
         MAP_TILE_COLORS = [];
 
-        //Loop through all tiles on map
+        var rowData = [];
+
+        //Loop through all rows on map
         for (var i = 0; i < MAP_TYPE.length; i++) {
-            //Get color from each tile and add to list
-            MAP_TILE_COLORS.push(MAP_TYPE[i].mm_color);
+            //Loop through all tiles in row
+            for (var j = 0; j < MAP_TYPE[i].length; j++) {
+                //Get color from each tile and add to list
+                rowData.push(MAP_TYPE[i][j].mm_color);
+            }
+
+            //Add row of tile colors to list
+            MAP_TILE_COLORS.push(rowData);
+            //Reset row
+            rowData = [];
         }
 
         //Debug
