@@ -168,9 +168,13 @@ function checkDevCommands () {
 
       str = str.slice(11, str.length);
 
-      generateEnemies = setInterval(function() { if (screenType == "GAME_SCREEN" && (enemies_remaining_in_realm - enemyList.length) > 0) { spawnEnemy(); } } , parseInt(str));
+      generateEnemies = setInterval(function() { 
+        if (screenType == "GAME_SCREEN" && (enemies_remaining_in_realm - enemyList.length) > 0) { 
+          spawnEnemy(); 
+        }
+      } , parseInt(str));
 
-      console.log("Spawning enemies every: " + (parseInt(str) / 1000) + " seconds.");
+      //console.log("Spawning enemies every: " + (parseInt(str) / 1000) + " seconds.");
     }
     else if (str.search("/godMode") == 0) { playerList[0].MAX_HP = 9999999; playerList[0].HP = 9999999; }
     else if (str.search("/levelUp") == 0) { playerList[0].playerList[0].EXP = playerList[0].levelExpReq; }

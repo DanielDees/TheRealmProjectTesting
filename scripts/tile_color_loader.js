@@ -18,6 +18,6 @@ function Game_map_tile_color_loader() {
         }
 
         //Debug
-        console.log(MAP_TILE_COLORS.length + " map tile colors loaded...");
+        //console.log(MAP_TILE_COLORS.length + " map tile colors loaded...");
     };
 }

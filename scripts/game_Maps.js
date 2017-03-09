@@ -34,7 +34,6 @@ function Game_map_loader() {
     MAP_TYPE = [];
     REALM_MAP = [];
     BOSS_ROOM_MAP = [];
-    MAP_TILE_COLORS = [];
   };
   this.generateGameMap = function() {
 
