@@ -74,7 +74,7 @@ function Game_map_loader() {
         else if (chance <= 1.0) { colData.img = grassGround[3]; };
 
         //Mini-map color is the same for all grassGround tiles
-        colData.mm_color = 'rgb(' + 3 + ',' + 126 + ',' + 31 + ')';
+        colData.mm_color = 'rgb(3,126,31)';
 
         //Add tile to row
         rowData.push(colData); 
@@ -126,7 +126,7 @@ function Game_map_loader() {
         else if (chance <= 1.0) { colData.img = stoneGround[3]; };
 
         //Mini-map color is the same for all grassGround tiles
-        colData.mm_color = 'rgb(' + 167 + ',' + 185 + ',' + 185 + ')';
+        colData.mm_color = 'rgb(167,185,185)';
 
         //Add tile to row
         rowData.push(colData); 
