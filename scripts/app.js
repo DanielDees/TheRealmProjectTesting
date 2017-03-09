@@ -305,8 +305,8 @@ function drawGameScreen () {
     showDamageTaken();
 
     //CHAT
-    if (keys.ENTER) { activateChat(); }
-    displayChat();
+    if (keys.ENTER) { chat.activate(); }
+    chat.draw();
 
     //Side bar
     side_bar.draw();
@@ -369,16 +369,16 @@ var bossSpeak = setInterval(function() {
   };
   
   //Add message to global chat
-  chatLog.push(new textbox(messageData));
+  chat.log.push(new textbox(messageData));
 
   //The wrapText function sets the height of the textbox
-  if(!chatLog[chatLog.length - 1].height) { chatLog[chatLog.length - 1].wrapText(); }
+  if(!chat.log[chat.log.length - 1].height) { chat.log[chat.log.length - 1].wrapText(); }
 
   //Increase Ypos of text on left of screen.
-  for (var i = 0; i < chatLog.length; i++) { 
+  for (var i = 0; i < chat.log.length; i++) { 
 
     //Move chat on left of screen up the new message's height
-    chatLog[i].Y += (chatLog[chatLog.length - 1].height + 5);
+    chat.log[i].Y += (chat.log[chat.log.length - 1].height + 5);
   }
 
  } , 60000);
