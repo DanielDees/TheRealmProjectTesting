@@ -31,8 +31,10 @@ function Game_map_loader() {
     playerList[0].X = 4000;
     playerList[0].Y = 4000;
     playerList[0].isViewingLoot = [-1, -1];
+    MAP_TYPE = [];
     REALM_MAP = [];
     BOSS_ROOM_MAP = [];
+    MAP_TILE_COLORS = [];
   };
   this.generateGameMap = function() {
 
@@ -45,25 +47,48 @@ function Game_map_loader() {
       for (var col = 0; col < this.MAX_SIZE; col++) {
 
         var chance = Math.random();
-        var tileX = col * this.tileSize;
-        var tileY = row * this.tileSize;
-        
-        /* 
-          Mechanic should work with a modifier to water spawning based on distance from edges of map.
-          Maybe add in a lake spawn mechanic sometime later or rivers.
-        */
-        var elevation = Math.random() * 5;
+
+        var data = {
+
+          //Location
+          X: col * this.tileSize,
+          Y: row * this.tileSize,
+
+          //Info
+          img: waterGround[0],
+          mm_color: "white",
+          elevation: 10,
+        }
 
         //Low elevation creates water.
-        //if (elevation < 0.1) { REALM_MAP.push([waterGround[0] , realCol * this.tileSize, realRow * this.tileSize, elevation]); }
-        if (chance <= 0.7) { REALM_MAP.push([grassGround[0] , tileX, tileY, elevation]); }
-        else if (chance <= 0.8) { REALM_MAP.push([grassGround[1] , tileX, tileY, elevation]); }
-        else if (chance <= 0.9) { REALM_MAP.push([grassGround[2] , tileX, tileY, elevation]); }
-        else if (chance <= 1) { REALM_MAP.push([grassGround[3] , tileX, tileY, elevation]); };
+        //if (elevation < 1) { REALM_MAP.push([waterGround[0] , realCol * this.tileSize, realRow * this.tileSize, elevation]); }
+        if (chance <= 0.7) { 
+
+          data.img = grassGround[0];
+          data.mm_color = 'rgb(' + 3 + ',' + 126 + ',' + 31 + ')';
+          REALM_MAP.push(data); 
+        }
+        else if (chance <= 0.8) { 
+
+          data.img = grassGround[1];
+          data.mm_color = 'rgb(' + 3 + ',' + 126 + ',' + 31 + ')';
+          REALM_MAP.push(data); 
+        }
+        else if (chance <= 0.9) { 
+
+          data.img = grassGround[2];
+          data.mm_color = 'rgb(' + 3 + ',' + 126 + ',' + 31 + ')';
+          REALM_MAP.push(data); 
+        }
+        else if (chance <= 1) { 
+
+          data.img = grassGround[3];
+          data.mm_color = 'rgb(' + 3 + ',' + 126 + ',' + 31 + ')';
+          REALM_MAP.push(data); 
+        };
       };
     };
 
-    //console.log("Map Size: " + this.MAX_SIZE + " x " + this.MAX_SIZE);
     MAP_TYPE = REALM_MAP;
     map_tile_color_loader.load();
   };
@@ -71,26 +96,54 @@ function Game_map_loader() {
 
     //Reset everything. Place players in boss room.
     this.resetMap();
-    
-    var elevation = 10;
 
+    //Creates the map grid.
     for (var row = 0; row < this.MAX_SIZE; row++) {
       for (var col = 0; col < this.MAX_SIZE; col++) {
 
         var chance = Math.random();
-        var tileX = col * this.tileSize;
-        var tileY = row * this.tileSize;
+
+        var data = {
+
+          //Location
+          X: col * this.tileSize,
+          Y: row * this.tileSize,
+
+          //Info
+          img: waterGround[0],
+          mm_color: "white",
+          elevation: 10,
+        }
         
-        if (chance <= 0.7) { BOSS_ROOM_MAP.push([stoneGround[0] , tileX, tileY, elevation]); }
-        else if (chance <= 0.8) { BOSS_ROOM_MAP.push([stoneGround[1] , tileX, tileY, elevation]); }
-        else if (chance <= 0.9) { BOSS_ROOM_MAP.push([stoneGround[2] , tileX, tileY, elevation]); }
-        else if (chance <= 1){ BOSS_ROOM_MAP.push([stoneGround[3] , tileX, tileY, elevation]); };
+        if (chance <= 0.7) { 
+
+          data.img = stoneGround[0];
+          data.mm_color = 'rgb(' + 167 + ',' + 185 + ',' + 185 + ')';
+          BOSS_ROOM_MAP.push(data); 
+        }
+        else if (chance <= 0.8) { 
+
+          data.img = stoneGround[1];
+          data.mm_color = 'rgb(' + 167 + ',' + 185 + ',' + 185 + ')';
+          BOSS_ROOM_MAP.push(data); 
+        }
+        else if (chance <= 0.9) { 
+
+          data.img = stoneGround[2];
+          data.mm_color = 'rgb(' + 167 + ',' + 185 + ',' + 185 + ')';
+          BOSS_ROOM_MAP.push(data); 
+        }
+        else if (chance <= 1){ 
+
+          data.img = stoneGround[3];
+          data.mm_color = 'rgb(' + 167 + ',' + 185 + ',' + 185 + ')';
+          BOSS_ROOM_MAP.push(data); 
+        };
       };
     };
 
     spawn_Game_Boss();
 
-    //console.log("Map Size: " + this.MAX_SIZE + " x " + this.MAX_SIZE);
     MAP_TYPE = BOSS_ROOM_MAP;
     map_tile_color_loader.load();
   };
@@ -103,7 +156,6 @@ function Game_map_loader() {
     //Holds all loaded tile data
     var tileData = [];
     var rowTileData = [];
-    var tileColor = "white";
 
     //Get location for map rendering
     var minX = Math.round(((playerList[0].X - this.renderRange) / this.tileSize));
@@ -158,7 +210,7 @@ function Game_map_loader() {
 
         try { 
           if (k >= 0 && k < MAP_TYPE.length) { 
-            ctx.drawImage(MAP_TYPE[k][0], MAP_TYPE[k][1], MAP_TYPE[k][2], 50, 50); 
+            ctx.drawImage(MAP_TYPE[k].img, MAP_TYPE[k].X, MAP_TYPE[k].Y, 50, 50); 
           } 
         }
         catch (err) { throw err + "\nUnable to find: MAP_TYPE["+k+"]"; };
