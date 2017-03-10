@@ -23,28 +23,53 @@ function Game_mini_map() {
 	this.allyColor = "green";
 	this.enemyColor = "red";
 
+	//Load minimap tiles
+	this.loadTiles = function() {
+
+		//Returns all map tiles rendered if map is loaded
+		this.map = Game_map_generator.getRenderedTiles();
+	}
+	//Draw the background/outline.
+	this.drawBg = function() {
+
+		//Background/Outline for minimap
+		ctx.fillStyle = "#000";
+		ctx.fillRect(this.X() - 1, this.Y() - 1, this.width + 1, this.height + 1);
+	}
+	//Draw player
+	this.drawPlayer = function() {
+
+		//Draw player on minimap
+		ctx.fillStyle = this.playerColor;
+		ctx.fillRect(this.X() + (10 * this.tWidth()), this.Y() + (10 * this.tHeight()), 8, 8);
+	}
+	//Draw map tiles
+	this.drawTiles = function() {
+
+		//Loop for the number of rows
+		for (var i = 0; i < this.map.length; i++) {
+			//Loop through each tile in row
+			if (this.map[i]) { 
+				for (var j = 0; j < this.map[i].length; j++) {
+					ctx.fillStyle = this.map[i][j];
+					ctx.fillRect(this.X() + (j * this.tWidth()), this.Y() + (i * this.tHeight()), this.tWidth(), this.tHeight());
+				}
+			}
+		}
+	}
+	//Draw minimap
 	this.draw = function() {
 
-	    //Background/Outline for minimap
-	    ctx.fillStyle = "#000";
-	    ctx.fillRect(this.X() - 1, this.Y() - 1, this.width + 1, this.height + 1);
+		//Get Minimap tiles
+		this.loadTiles();
 
-	    //Returns all map tiles rendered if map is loaded
-	    this.map = Game_map_generator.getRenderedTiles();
+		//Draw background
+		this.drawBg();
 
-	    //Loop for the number of rows
-	    for (var i = 0; i < this.map.length; i++) {
-	      //Loop through each tile in row
-	      if (this.map[i]) { 
-	      	for (var j = 0; j < this.map[i].length; j++) {
-		      	ctx.fillStyle = this.map[i][j];
-		      	ctx.fillRect(this.X() + (j * this.tWidth()), this.Y() + (i * this.tHeight()), this.tWidth(), this.tHeight());
-	      	}
-	      }
-	  	}
+		//Draw tiles
+		this.drawTiles();
 
-	    //Draw player on minimap
-	    ctx.fillStyle = this.playerColor;
-	    ctx.fillRect(this.X() + (10 * this.tWidth()), this.Y() + (10 * this.tHeight()), 8, 8);
+		//Draw player
+		this.drawPlayer();
 	};
 }
