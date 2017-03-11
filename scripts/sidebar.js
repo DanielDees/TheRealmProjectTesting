@@ -11,10 +11,10 @@ function Game_side_bar() {
 
     exp: {
 
-      X: function() { return canvas.width + playerList[0].X - 440; },
+      X: function() { return side_bar.X() + 10; },
       Y: function() { return playerList[0].Y - 60; },
 
-      textX: function() { return canvas.width + playerList[0].X - 390; },
+      textX: function() { return side_bar.X() + 60; },
       textY: function() { return playerList[0].Y - 44; },
 
       barColor: function() {
@@ -28,31 +28,27 @@ function Game_side_bar() {
 
       min: function() { 
 
-        playerList[0].glory = playerList[0].EXP / 2000;
-
         //Exp Bar
         if (playerList[0].level < playerList[0].MAX_level) { return playerList[0].EXP; }
 
         //Glory Bar
-        else { return playerList[0].glory.toFixed(0); }
+        else { return playerList[0].glory(); }
       },
       max: function() { 
-
-        playerList[0].glory = playerList[0].EXP / 2000;
 
         //Exp Bar
         if (playerList[0].level < playerList[0].MAX_level) { return playerList[0].levelExpReq; }
 
         //Glory Bar
-        else { return playerList[0].glory.toFixed(0); }
+        else { return playerList[0].glory(); }
       },  
     },
     hp: {
 
-      X: function() { return canvas.width + playerList[0].X - 440; },
+      X: function() { return side_bar.X() + 10; },
       Y: function() { return playerList[0].Y - 40; },
 
-      textX: function() { return canvas.width + playerList[0].X - 390; },
+      textX: function() { return side_bar.X() + 60; },
       textY: function() { return playerList[0].Y - 24; },
 
       barColor: function() { return "#CD443B"; },
@@ -62,10 +58,10 @@ function Game_side_bar() {
     },
     mp: {
 
-      X: function() { return canvas.width + playerList[0].X - 440; },
+      X: function() { return side_bar.X() + 10; },
       Y: function() { return playerList[0].Y - 20; },
 
-      textX: function() { return canvas.width + playerList[0].X - 390; },
+      textX: function() { return side_bar.X() + 60; },
       textY: function() { return playerList[0].Y - 4; },
 
       barColor: function() { return "#1581C8"; },
@@ -96,7 +92,7 @@ function Game_side_bar() {
     //Glory
     ctx.fillStyle = "orange";
     ctx.shadowBlur = 3;
-    ctx.fillText("Glory: " + playerList[0].deathGlory.toFixed(0), this.X() - 75, this.Y() + 20);
+    ctx.fillText("Glory: " + playerList[0].deathGlory, this.X() - 75, this.Y() + 20);
     ctx.shadowBlur = 0;
 
     //Player Info

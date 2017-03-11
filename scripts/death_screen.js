@@ -45,7 +45,7 @@ function Game_death_menu() {
     //Death message
     ctx.font = "18px Palatino";
     if (playerList[0].level < playerList[0].MAX_level) { ctx.fillText("Died at level: " + playerList[0].level, 240, 250); }
-    else { ctx.fillText("Died with " + playerList[0].glory.toFixed(0) + " renowned Glory", 240, 250); }
+    else { ctx.fillText("Died with " + playerList[0].glory() + " renowned Glory", 240, 250); }
 
     //Death message
     ctx.fillText("Killed by: " + playerList[0].killedBy, 240, 270);

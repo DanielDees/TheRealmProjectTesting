@@ -16,6 +16,7 @@ function player () {
   this.dmgLog = [];
 
   //Death Stats
+  this.glory = function() { return parseInt((this.EXP / 2000).toFixed(0)); };
   this.deathGlory = 0;
   this.killCount = 0;
   this.killedBy = "Nothing???";
@@ -45,7 +46,6 @@ function player () {
   this.levelExpReq = 100;
   this.level = 1;
   this.MAX_level = 25;
-  this.glory = 0;
 
   //HP
   this.HP = 200;
@@ -359,7 +359,7 @@ function player () {
 
     //Show Death screen
     screenType = "DEATH_SCREEN";
-    this.deathGlory += this.glory;
+    this.deathGlory += this.glory();
     this.killedBy = enemyKilledBy;
   }
   //Movement
