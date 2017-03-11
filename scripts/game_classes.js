@@ -476,11 +476,17 @@ function playerBullet (data) {
   }
   this.draw = function() {
 
-    //Rotates Image based on angle fired at.
+    //Save original X/Y canvas rendering
     ctx.save();
-    ctx.translate(this.X - 5, this.Y - 5);
+
+    //Move projectile to X:0 Y:0
+    ctx.translate(this.X, this.Y);
     ctx.rotate(this.angle + (45 * (Math.PI / 180)));
+
+    //Draw Image centered on X:0 Y:0
     ctx.drawImage(this.Image, -(this.width / 2), -(this.height / 2), this.width, this.height);
+
+    //Restore original X/Y canvas rendering
     ctx.restore();
   }
 }
