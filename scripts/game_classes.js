@@ -100,7 +100,9 @@ function player () {
         //Stats
         spd: 10,
         damage: (this.damage / 10) * this.damageVariance(),
-        lifeTime: 0.5 * 62.5,
+        
+        //Lifetime in seconds
+        lifeTime: 0.5 * GAME_FPS,
 
         //Rendering info
         angle: null,

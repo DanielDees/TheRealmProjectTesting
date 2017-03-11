@@ -33,7 +33,7 @@ function Game_mini_map() {
 	this.drawBg = function() {
 
 		//Background/Outline for minimap
-		ctx.fillStyle = "#000";
+		ctx.fillStyle = "#222";
 		ctx.fillRect(this.X() - 1, this.Y() - 1, this.width + 1, this.height + 1);
 	}
 	//Draw player
