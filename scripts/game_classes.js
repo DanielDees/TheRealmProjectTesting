@@ -89,16 +89,20 @@ function player () {
       //Player data generating projectile
       var data = {
 
+        //Location
+        X: this.X + this.width / 2,
+        Y: this.Y + this.height / 2,
+
+        //Dimensions
+        width: 26,
+        height: 26,
+
+        //Stats
         spd: 10,
         damage: (this.damage / 10) * this.damageVariance(),
         lifeTime: 0.5 * 62.5,
 
-        width: 26,
-        height: 26,
-
-        X: this.X + this.width / 2,
-        Y: this.Y + this.height / 2,
-
+        //Rendering info
         angle: null,
         image: this.bulletImage,
       }
@@ -114,23 +118,30 @@ function player () {
 
     if (this.specialCooldown <= 0 && this.MP >= this.special_MP_cost) {
       
+      var bombProjectiles = 20;
+      var dgInc = (360 / bombProjectiles);
+
       //Spellbomb
-      for (var i = 1; i < 21; i++) { 
+      for (var i = 1; i <= bombProjectiles; i++) { 
 
         //Player data generating projectiles
         var data = {
 
+          //Location
+          X: mouse.X,
+          Y: mouse.Y,
+
+          //Dimensions
+          width: 26,
+          height: 26,
+
+          //Stats
           spd: 10,
           damage: (this.damage / 10) * this.damageVariance(),
           lifeTime: 0.5 * 62.5,
 
-          width: 26,
-          height: 26,
-
-          X: mouse.X,
-          Y: mouse.Y,
-
-          angle: i * 18 * (Math.PI / 180),
+          //Rendering info
+          angle: (i * dgInc) * (Math.PI / 180),
           image: this.bulletImage,
         }
 
