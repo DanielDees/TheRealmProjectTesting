@@ -23,7 +23,7 @@ function Game_side_bar() {
         if (playerList[0].level < playerList[0].MAX_level) { return "#0A0"; }
 
         //Glory Bar
-        else { return "orange"; }
+        else { return "#DA9009FF"; }
       },
 
       min: function() { 
@@ -55,7 +55,7 @@ function Game_side_bar() {
       textX: function() { return canvas.width + playerList[0].X - 390; },
       textY: function() { return playerList[0].Y - 24; },
 
-      barColor: function() { return "#CD3333"; },
+      barColor: function() { return "#CD443B"; },
 
       min: function() { return playerList[0].HP.toFixed(0); },
       max: function() { return playerList[0].MAX_HP.toFixed(0); },
@@ -68,7 +68,7 @@ function Game_side_bar() {
       textX: function() { return canvas.width + playerList[0].X - 390; },
       textY: function() { return playerList[0].Y - 4; },
 
-      barColor: function() { return "#05C"; },
+      barColor: function() { return "#1581C8"; },
 
       min: function() { return playerList[0].MP.toFixed(0); },
       max: function() { return playerList[0].MAX_MP.toFixed(0); },
