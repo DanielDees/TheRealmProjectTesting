@@ -175,6 +175,8 @@ function Game_map_loader() {
             if (MAP_TILE_COLORS[i] && MAP_TILE_COLORS[i][j]) {
               rowTileData.push(MAP_TILE_COLORS[i][j]);
             }
+            //Show black for empty space
+            else { rowTileData.push("black"); }
         }
         catch (err) { throw err + "\nUnable to find: MAP_TYPE["+i+"]["+j+"]"; };
       };
