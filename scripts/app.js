@@ -101,7 +101,7 @@ function showDamageTaken () {
   //Enemy Damage Numbers
   for (var i = 0; i < enemyList.length; i++) { enemyList[i].showDamageNumbers(); }
   //Player Damage Numbers
-  for (var i = 0; i < playerList.length; i++) { playerList[i].showDamageNumbers(); }
+  for (var i = 0; i < playerList.length; i++) { playerList[i].showDamage(); }
 }
 //END DRAWING STUFF ==============
 //MOVE STUFF =====================
@@ -172,8 +172,8 @@ function backgroundScrollingScene () {
 }
 function replenishPlayerStats () {
 
-  if (playerList[0].MP < playerList[0].MAX_MP) { playerList[0].MP += (0.001 * playerList[0].wizardry); }
-  if (playerList[0].HP < playerList[0].MAX_HP) { playerList[0].HP += (0.0015 * playerList[0].youth); }
+  if (playerList[0].MP < playerList[0].MAX_MP) { playerList[0].MP += (0.001 * playerList[0].wis); }
+  if (playerList[0].HP < playerList[0].MAX_HP) { playerList[0].HP += (0.0015 * playerList[0].vit); }
   if (playerList[0].weaponCooldown > 0) { playerList[0].weaponCooldown--; }
   if (playerList[0].specialCooldown > 0) { playerList[0].specialCooldown--; }
 

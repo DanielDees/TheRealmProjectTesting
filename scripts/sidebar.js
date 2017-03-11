@@ -4,8 +4,8 @@ var side_bar = new Game_side_bar();
 function Game_side_bar() {
 
   //Location
-  this.X = function() { return playerList[0].X - 250; };
-  this.Y = function() { return playerList[0].Y - 300; };
+  this.X = function() { return FRAME_OF_REFERENCE[0] + canvas.width - 200; };
+  this.Y = function() { return FRAME_OF_REFERENCE[1]; };
 
   this.progressBarData = {
 
@@ -60,7 +60,7 @@ function Game_side_bar() {
       min: function() { return playerList[0].HP.toFixed(0); },
       max: function() { return playerList[0].MAX_HP.toFixed(0); },
     },
-    mana: {
+    mp: {
 
       X: function() { return canvas.width + playerList[0].X - 440; },
       Y: function() { return playerList[0].Y - 20; },
@@ -78,39 +78,43 @@ function Game_side_bar() {
 
     exp: new progressBar(this.progressBarData.exp),
     hp: new progressBar(this.progressBarData.hp),
-    mana: new progressBar(this.progressBarData.mana),
+    mp: new progressBar(this.progressBarData.mp),
   };
 
   this.drawBg = function() {
 
     //Side line
     ctx.fillStyle = "#000";
-    ctx.fillRect(canvas.width - 200 + this.X(), this.Y(), 2, canvas.height);
+    ctx.fillRect(this.X(), this.Y(), 2, canvas.height);
 
     //Box
     ctx.fillStyle = "#333";
-    ctx.fillRect(canvas.width - 198  + this.X(), this.Y(), 198, canvas.height);
+    ctx.fillRect(this.X() + 2, this.Y(), 198, canvas.height);
   };
   this.drawStats = function() {
 
     //Glory
-    ctx.fillStyle = "Orange";
+    ctx.fillStyle = "orange";
     ctx.shadowBlur = 3;
-    ctx.fillText("Glory: " + playerList[0].deathGlory.toFixed(0), canvas.width - 275  + this.X(), 20 + this.Y());
+    ctx.fillText("Glory: " + playerList[0].deathGlory.toFixed(0), this.X() - 75, this.Y() + 20);
     ctx.shadowBlur = 0;
 
     //Player Info
-    ctx.fillStyle = "#BBB";
-    ctx.fillText("Name: " + playerList[0].name, canvas.width - 190  + this.X(), 212 + this.Y());
-    ctx.fillText("Level: " + playerList[0].level, canvas.width - 190  + this.X(), 230 + this.Y());
+    ctx.fillStyle = "#B8B8B8";
+    ctx.fillText("Name: "  + playerList[0].name,  this.X() + 20, this.Y() + 213);
+    ctx.fillText("Level: " + playerList[0].level, this.X() + 20, this.Y() + 233);
 
     //Player Stats
-    ctx.font = "14px black Palatino";
-    ctx.fillText("Attack: " + playerList[0].damage, canvas.width - 185  + this.X(), 320 + this.Y());
-    ctx.fillText("Speed: " + playerList[0].speed.toFixed(0), canvas.width - 95  + this.X(), 320 + this.Y());
-    ctx.fillText("Wizardry: " + playerList[0].wizardry, canvas.width - 185  + this.X(), 340 + this.Y());
-    ctx.fillText("Dexterity: " + playerList[0].dexterity, canvas.width - 95  + this.X(), 340 + this.Y());
-    ctx.fillText("Youth: " + playerList[0].youth, canvas.width - 185 + this.X(), 360 + this.Y());
+    ctx.font = "16px Courier";
+    ctx.fillText("EXP", this.progressBars.hp.X() + 3, this.progressBars.exp.Y() + 14);
+    ctx.fillText("HP", this.progressBars.hp.X() + 3, this.progressBars.hp.Y() + 14);
+    ctx.fillText("MP", this.progressBars.mp.X() + 3, this.progressBars.mp.Y() + 14);
+    ctx.font = "14px Courier";
+    ctx.fillText("ATT: " + playerList[0].dmg, this.X() + 20,  this.Y() + 320);
+    ctx.fillText("SPD: " + playerList[0].spd, this.X() + 110, this.Y() + 320);
+    ctx.fillText("WIS: " + playerList[0].wis, this.X() + 20,  this.Y() + 340);
+    ctx.fillText("DEX: " + playerList[0].dex, this.X() + 110, this.Y() + 340);
+    ctx.fillText("VIT: " + playerList[0].wis, this.X() + 20,  this.Y() + 360);
   };
   this.drawStatBars = function() {
 
@@ -118,7 +122,7 @@ function Game_side_bar() {
     ctx.font = "18px Palatino";
     this.progressBars.exp.draw();
     this.progressBars.hp.draw();
-    this.progressBars.mana.draw();
+    this.progressBars.mp.draw();
   };
 
   this.draw = function() {
@@ -129,11 +133,11 @@ function Game_side_bar() {
     //Mini-Map
     mini_map.draw();
 
-    //Show player stats
-    this.drawStats();
-
     //Show Exp/Hp/Mp bars
     this.drawStatBars();
+
+    //Show player stats
+    this.drawStats();
 
     //Debug Info
     //drawDebugInfo();
