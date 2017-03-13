@@ -14,11 +14,21 @@ function Game_map_tile_color_loader() {
 		var rowData = [];
 
 		//Loop through all rows on map
-		for (var i = 0; i < MAP_TYPE.length; i++) {
+		for (var row = 0; row < MAP_TYPE.length; row++) {
 			//Loop through all tiles in row
-			for (var j = 0; j < MAP_TYPE[i].length; j++) {
-				//Get color from each tile and add to list
-				rowData.push(MAP_TYPE[i][j].mm_color);
+			for (var col = 0; col < MAP_TYPE[row].length; col++) {
+				//Get info from each tile and add to list
+				var data = {
+
+					//Location
+					X: MAP_TYPE[row][col].X,
+					Y: MAP_TYPE[row][col].Y,
+
+					//Color
+					mm_color: MAP_TYPE[row][col].mm_color,
+				}
+
+				rowData.push(data);
 			}
 
 			//Add row of tile colors to list

@@ -165,20 +165,37 @@ function Game_map_loader() {
     var minY = Math.round(((playerList[0].Y - this.renderRange) / this.tileSize));
     var maxY = Math.round(((playerList[0].Y + this.renderRange) / this.tileSize)); 
 
+    var noTile = {
+
+      //Location
+      X: 0,
+      Y: 0,
+
+      //Mini-map color
+      mm_color: "white",
+    };
+
     //Loop through highest to lowest tiles rendered
-    for (var i = minY; i <= maxY; i++) { 
+    for (var row = minY; row <= maxY; row++) { 
       //Loop through left most to right most tiles rendered
-      for (var j = minX; j <= maxX; j++) { 
+      for (var col = minX; col <= maxX; col++) { 
 
         try {
             //Add tile color to row data for minimap if tile exists
-            if (MAP_TILE_COLORS[i] && MAP_TILE_COLORS[i][j]) {
-              rowTileData.push(MAP_TILE_COLORS[i][j]);
+            if (MAP_TILE_COLORS[row] && MAP_TILE_COLORS[row][col]) {
+              rowTileData.push(MAP_TILE_COLORS[row][col]);
             }
             //Show black for empty space
-            else { rowTileData.push("black"); }
+            else { 
+
+              noTile.X = (col * Game_map_generator.tileSize);
+              noTile.Y = (row * Game_map_generator.tileSize);
+              noTile.mm_color = "black";
+
+              rowTileData.push(noTile); 
+            }
         }
-        catch (err) { throw err + "\nUnable to find: MAP_TYPE["+i+"]["+j+"]"; };
+        catch (err) { throw err + "\nUnable to find: MAP_TYPE["+row+"]["+col+"]"; };
       };
 
       //Add row to the loaded tile list

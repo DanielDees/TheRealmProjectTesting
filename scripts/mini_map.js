@@ -15,8 +15,7 @@ function Game_mini_map() {
 
 	//Recalculates for map zoom level 
 	//Subtract 1 for seamless mini-map, 0 for grid
-	this.tWidth = function() { return (this. width - 0) / this.map.length; };
-	this.tHeight = function() { return (this.width - 0) / this.map.length; };
+	this.tSize = function() { return (this.width - 0) / this.map.length; };
 
 	//Color code
 	this.playerColor = "blue";
@@ -41,18 +40,42 @@ function Game_mini_map() {
 
 		//Draw player on minimap
 		ctx.fillStyle = this.playerColor;
-		ctx.fillRect(this.X() + (10 * this.tWidth()), this.Y() + (10 * this.tHeight()), 8, 8);
+		ctx.fillRect(this.X() + (10 * this.tSize()), this.Y() + (10 * this.tSize()), 8, 8);
 	}
 	//Draw map tiles
 	this.drawTiles = function() {
 
+		/*
+			minimap X/Y, width, height
+
+			playerX/Y = minimap center.
+			tiles x/y = actual tile positions
+			if tile x/y is within renderrange but < minimap X/Y but finishes rendering > minimap X/Y
+			then divide width by amount overflowing off minimap and render.
+
+			player rendered on top of that.
+			player should be triangle pointing up.
+
+		*/
+/*
+		var center = {
+
+			X: playerList[0].X,
+			Y: playerList[0].Y,
+		};
+
+		var tile = {
+
+			X: function(col) { return this.X() + ((col * Game_map_generator.tileSize) * this.tSize()); }
+		} */
+
 		//Loop for the number of rows
-		for (var i = 0; i < this.map.length; i++) {
+		for (var row = 0; row < this.map.length; row++) {
 			//Loop through each tile in row
-			if (this.map[i]) { 
-				for (var j = 0; j < this.map[i].length; j++) {
-					ctx.fillStyle = this.map[i][j];
-					ctx.fillRect(this.X() + (j * this.tWidth()), this.Y() + (i * this.tHeight()), this.tWidth(), this.tHeight());
+			if (this.map[row]) { 
+				for (var col = 0; col < this.map[row].length; col++) {
+					ctx.fillStyle = this.map[row][col].mm_color;
+					ctx.fillRect(this.X() + (col * this.tSize()), this.Y() + (row * this.tSize()), this.tSize(), this.tSize());
 				}
 			}
 		}
