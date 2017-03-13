@@ -4,6 +4,8 @@ thoughts to think through problems more easily.
 
 |+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|+|
 
+/*
+
 minimap render tiles should have x/y position so they can be rendered relative to the player instead of jumping tile to tile. Fix overflow issue by measuring total tile widths and dividing it's width by the x/y overflow value onto the map by distance from the player being > minimap max distance. 
 
 minimap X/Y, width, height
@@ -15,6 +17,8 @@ then divide width by amount overflowing off minimap and render.
 
 player rendered on top of that.
 player should be triangle pointing up.
+
+*/
 
 
 

@@ -9,7 +9,7 @@ function player () {
   this.width = 40;
 
   //Username
-  this.name = defaultNamesList[Math.floor((Math.random() * defaultNamesList.length) + 0).toFixed(0)];
+  this.name = defaultNamesList[Math.floor((Math.random() * defaultNamesList.length))];
   this.ImageArray = archer_Pics;
   this.Image = archer_Pics[3][0];
   this.timeToSpriteChange = 0;

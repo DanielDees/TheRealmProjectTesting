@@ -4,8 +4,8 @@ var mie = (navigator.appName == "Microsoft Internet Explorer")?true:false;
 //END CHECK BROWSER TYPE ========
 
 document.onmousemove = mousePos;
-document.onmousedown = function () { mouse.clicked = true; };
-document.onmouseup = function () { mouse.clicked = false; };
+document.onmousedown = function() { mouse.clicked = true; };
+document.onmouseup = function() { mouse.clicked = false; };
 document.onkeypress = keyClick;
 document.onkeydown = getKeyDown;
 document.onkeyup = keyClear;
@@ -17,20 +17,7 @@ var indexHistory = -1;
 
 var keyButton = "";
 
-//Keyboard keys used in game
-var keys = {
-
-    W: false,
-    A: false,
-    S: false,
-    D: false,
-    T: false,
-    B: false,
-    ENTER: false,
-    SHIFT: false
-};
-
-//MOUSE AND KEYBOARD =============
+//MOUSE 
 var mouse = {
 
   //Mouse Location
@@ -60,7 +47,6 @@ var mouse = {
     }
   }
 }
-
 function mousePos (e) {
 
   if (!mie) {
@@ -77,6 +63,32 @@ function mousePos (e) {
 
   if (e.shiftKey) { keys.SHIFT = true; } else { keys.SHIFT = false; };
 }
+
+//Keyboard keys used in game
+var keys = {
+
+    //Movement
+    W: false,
+    A: false,
+    S: false,
+    D: false,
+
+    //Screen rotation
+    Q: false,
+    E: false,
+
+    //Autofire
+    T: false,
+
+    //Special
+    B: false,
+
+    //Chat
+    ENTER: false,
+    SHIFT: false
+};
+
+//KEYBOARD
 function keyClear (e) {
 
   keyButton = getKeyPressed(e);

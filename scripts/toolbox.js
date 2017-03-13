@@ -87,7 +87,6 @@ function isEqualTo () {
 
   return false;
 }
-var lastKnownLocation = [playerList[0].X, playerList[0].isViewingLoot];
 function swapItems(a, b) {
 
   //Javascript only passes objects by reference.
@@ -101,11 +100,11 @@ function swapItems(a, b) {
 function getMouseAngle(type) {
 
   //Calculate center of player.
-  var deltaX = playerList[0].X + (playerList[0].width / 2) - mouse.X;
-  var deltaY = playerList[0].Y + (playerList[0].height / 2) - mouse.Y;
+  var dX = playerList[0].X + (playerList[0].width / 2) - mouse.X;
+  var dY = playerList[0].Y + (playerList[0].height / 2) - mouse.Y;
 
   //Find angle in Rad
-  var angle = Math.atan2(deltaY, deltaX);
+  var angle = Math.atan2(dY, dX);
 
   //Convert from Rad to Degrees
   angle *= (180 / Math.PI);
@@ -121,11 +120,11 @@ function getMouseAngle(type) {
 function getAngleTo(entityFrom, entityTo, type) {
 
   //Calculate center of player.
-  var deltaX = entityFrom.X + (entityFrom.width / 2) - entityTo.X;
-  var deltaY = entityFrom.Y + (entityFrom.height / 2) - entityTo.Y;
+  var dX = entityFrom.X + (entityFrom.width / 2) - entityTo.X;
+  var dY = entityFrom.Y + (entityFrom.height / 2) - entityTo.Y;
 
   //Find angle in Rad
-  var angle = Math.atan2(deltaY, deltaX);
+  var angle = Math.atan2(dY, dX);
 
   //Convert from Rad to Degrees
   angle *= (180 / Math.PI);
