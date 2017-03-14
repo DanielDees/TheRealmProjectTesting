@@ -10,12 +10,16 @@ function Game_mini_map() {
 	this.width = 190;
 	this.height = 190;
 
+	//Player location (center of mini-map)
+	this.playerX = function() { return this.X() + (this.width / 2) - (this.tSize() / 2); };
+	this.playerY = function() { return this.Y() + (this.height / 2) - (this.tSize() / 2); };
+
 	//Map tiles
 	this.map = "No map yet";
 
 	//Recalculates for map zoom level 
 	//Subtract 1 for seamless mini-map, 0 for grid
-	this.tSize = function() { return (this.width - 0) / this.map.length; };
+	this.tSize = function() { return (this.width / this.map.length) / 1; };
 
 	//Color code
 	this.playerColor = "blue";
@@ -40,42 +44,38 @@ function Game_mini_map() {
 
 		//Draw player on minimap
 		ctx.fillStyle = this.playerColor;
-		ctx.fillRect(this.X() + (10 * this.tSize()), this.Y() + (10 * this.tSize()), 8, 8);
+		ctx.fillRect(this.playerX(), this.playerY(), this.tSize(), this.tSize());
 	}
 	//Draw map tiles
 	this.drawTiles = function() {
 
 		/*
-			minimap X/Y, width, height
-
-			playerX/Y = minimap center.
-			tiles x/y = actual tile positions
 			if tile x/y is within renderrange but < minimap X/Y but finishes rendering > minimap X/Y
 			then divide width by amount overflowing off minimap and render.
-
-			player rendered on top of that.
-			player should be triangle pointing up.
-
 		*/
-/*
-		var center = {
 
-			X: playerList[0].X,
-			Y: playerList[0].Y,
-		};
-
-		var tile = {
-
-			X: function(col) { return this.X() + ((col * Game_map_generator.tileSize) * this.tSize()); }
-		} */
+		//For calculating tile locations
+		var XYmod = Game_map_generator.tileSize;
 
 		//Loop for the number of rows
 		for (var row = 0; row < this.map.length; row++) {
 			//Loop through each tile in row
 			if (this.map[row]) { 
 				for (var col = 0; col < this.map[row].length; col++) {
+
+					//Get x/y relative to player
+					var tileX = (this.map[row][col].X - playerList[0].X);
+					var tileY = (this.map[row][col].Y - playerList[0].Y);
+
+					//Convert x/y to distance from player on minimap
+					tileX /= (XYmod / this.tSize());
+					tileY /= (XYmod / this.tSize());
+
+					//Tile Color
 					ctx.fillStyle = this.map[row][col].mm_color;
-					ctx.fillRect(this.X() + (col * this.tSize()), this.Y() + (row * this.tSize()), this.tSize(), this.tSize());
+
+					//Draw
+					ctx.fillRect(this.playerX() + tileX, this.playerY() + tileY, this.tSize(), this.tSize());
 				}
 			}
 		}

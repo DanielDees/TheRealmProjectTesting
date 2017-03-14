@@ -165,15 +165,6 @@ function Game_map_loader() {
     var minY = Math.round(((playerList[0].Y - this.renderRange) / this.tileSize));
     var maxY = Math.round(((playerList[0].Y + this.renderRange) / this.tileSize)); 
 
-    var noTile = {
-
-      //Location
-      X: 0,
-      Y: 0,
-
-      //Mini-map color
-      mm_color: "white",
-    };
 
     //Loop through highest to lowest tiles rendered
     for (var row = minY; row <= maxY; row++) { 
@@ -188,10 +179,17 @@ function Game_map_loader() {
             //Show black for empty space
             else { 
 
-              noTile.X = (col * Game_map_generator.tileSize);
-              noTile.Y = (row * Game_map_generator.tileSize);
-              noTile.mm_color = "black";
+              var noTile = {
 
+                //Location
+                X: (col * Game_map_generator.tileSize),
+                Y: (row * Game_map_generator.tileSize),
+
+                //Mini-map color
+                mm_color: "black",
+              };
+
+              //Add empty tile to row
               rowTileData.push(noTile); 
             }
         }

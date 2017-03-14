@@ -25,7 +25,7 @@ function player () {
   this.bulletImage = player_Bullet_Pic;
 
   //Speed
-  this.spd = 100;
+  this.spd = 10;
   this.MAX_SPD = 100;
   this.speedFormula = function() { return 3 + (7 * (this.spd / 100)); };
 
@@ -143,7 +143,7 @@ function player () {
           //Stats
           spd: 10,
           damage: (this.dmg / 10) * this.damageVariance(),
-          lifeTime: 0.5 * 62.5,
+          lifeTime: 0.5 * GAME_FPS,
 
           //Rendering info
           angle: (i * dgInc) * (Math.PI / 180),
