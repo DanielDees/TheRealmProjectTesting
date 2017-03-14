@@ -25,7 +25,7 @@ function player () {
   this.bulletImage = player_Bullet_Pic;
 
   //Speed
-  this.spd = 10;
+  this.spd = 30;
   this.MAX_SPD = 100;
   this.speedFormula = function() { return 3 + (7 * (this.spd / 100)); };
 
