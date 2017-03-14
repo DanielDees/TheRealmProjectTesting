@@ -155,8 +155,11 @@ function Game_mini_map() {
 					//Tile Color
 					ctx.fillStyle = this.map[row][col].mm_color;
 
+					//0 for grid, 1 for no grid
+					var grid = 1;
+					
 					//Draw
-					ctx.fillRect(pos.X + mod.X, pos.Y + mod.Y, this.tSize() + mod.W, this.tSize() + mod.H);
+					ctx.fillRect(pos.X + mod.X, pos.Y + mod.Y, this.tSize() + mod.W + grid, this.tSize() + mod.H + grid);
 				}
 			}
 		}
