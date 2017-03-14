@@ -26,39 +26,41 @@ function Game_mini_map() {
 	//Recalculates for map zoom level 
 	//Subtract 1 for seamless mini-map, 0 for grid
 	this.tSize = function() { return (this.width / this.map.length) / 1; };
+
+	//Modify tile overflow on minimap
 	this.tSizeMod = function(X, Y) {
 
 		//Get mod for x/y and dimensions
 		var mod = { 
-			x: 0, 
-			y: 0,
-			w: 0, 
-			h: 0,
+			X: 0, 
+			Y: 0,
+			W: 0, 
+			H: 0,
 		};
 
 		//Catch left side overflow
 		if (X < this.X()) { 
 
-			mod.w = X - this.left();
-			mod.x = this.left() - X;
+			mod.W = X - this.left();
+			mod.X = this.left() - X;
 		}
 		//Catch right side overflow
 		if (X + this.tSize() > this.right()) { 
 
-			mod.w = -(X + this.tSize() - this.right()); 
-			mod.x = 0;
+			mod.W = -(X + this.tSize() - this.right()); 
+			mod.X = 0;
 		}
 		//Catch top side overflow
 		if (Y < this.top()) { 
 
-			mod.h = Y - this.top();
-			mod.y = this.top() - Y;
+			mod.H = Y - this.top();
+			mod.Y = this.top() - Y;
 		}
 		//Catch bottom side overflow
 		if (Y + this.tSize() > this.bottom()) { 
 
-			mod.h = -(Y + this.tSize() - this.bottom()); 
-			mod.y = 0;
+			mod.H = -(Y + this.tSize() - this.bottom()); 
+			mod.Y = 0;
 		}
 
 		return mod;
@@ -82,6 +84,29 @@ function Game_mini_map() {
 		ctx.fillStyle = "#222";
 		ctx.fillRect(this.X() - 1, this.Y() - 1, this.width + 1, this.height + 1);
 	}
+	this.getMiniMapPosition = function(X, Y) {
+
+		//For converting X/Y units
+		var mod = Game_map_generator.tileSize;
+
+		//Store x/y
+		var pos = { X: 0, Y: 0, };
+
+		//Get x/y relative to player
+		pos.X = (X - playerList[0].X);
+		pos.Y = (Y - playerList[0].Y);
+
+		//Convert x/y distance to minimap units
+		pos.X /= (mod / this.tSize());
+		pos.Y /= (mod / this.tSize());
+
+		//Center on player (in minimap)
+		pos.X += this.playerX();
+		pos.Y += this.playerY();
+
+		//Return mini-map X/Y
+		return pos;
+	}
 	//Draw player
 	this.drawPlayer = function() {
 
@@ -89,11 +114,32 @@ function Game_mini_map() {
 		ctx.fillStyle = this.playerColor;
 		ctx.fillRect(this.playerX(), this.playerY(), this.tSize(), this.tSize());
 	}
+	this.drawEnemies = function() {
+
+		//Draw enemies on minimap
+		ctx.fillStyle = this.enemyColor;
+
+		//Check all enemies
+		for (var i = 0; i < enemyList.length; i++) {
+
+			//Modify X/Y values
+			var pos = this.getMiniMapPosition(enemyList[i].X, enemyList[i].Y);
+
+			//Remove overflow
+			var mod = this.tSizeMod(pos.X, pos.Y);
+
+			//Don't load off-minimap enemies
+			if (pos.X + this.tSize() < this.left() || 
+				pos.X > this.right() || 
+				pos.Y + this.tSize() < this.top() || 
+				pos.Y > this.bottom()) { continue; };
+
+			//Draw
+			ctx.fillRect(pos.X + mod.X, pos.Y + mod.Y, this.tSize() + mod.W, this.tSize() + mod.H);
+		}
+	}
 	//Draw map tiles
 	this.drawTiles = function() {
-
-		//For calculating tile locations
-		var XYmod = Game_map_generator.tileSize;
 
 		//Loop for the number of rows
 		for (var row = 0; row < this.map.length; row++) {
@@ -101,26 +147,17 @@ function Game_mini_map() {
 			if (this.map[row]) { 
 				for (var col = 0; col < this.map[row].length; col++) {
 
-					//Get x/y relative to player
-					var tileX = (this.map[row][col].X - playerList[0].X);
-					var tileY = (this.map[row][col].Y - playerList[0].Y);
+					//Modify X/Y values
+					var pos = this.getMiniMapPosition(this.map[row][col].X, this.map[row][col].Y);
 
-					//Convert x/y distance to minimap units
-					tileX /= (XYmod / this.tSize());
-					tileY /= (XYmod / this.tSize());
-
-					//Center on player (in minimap)
-					tileX += this.playerX();
-					tileY += this.playerY();
+					//Remove overflow
+					var mod = this.tSizeMod(pos.X, pos.Y);
 
 					//Tile Color
 					ctx.fillStyle = this.map[row][col].mm_color;
 
-					//Remove overflow off minimap
-					var tileMod = this.tSizeMod(tileX, tileY);
-
 					//Draw
-					ctx.fillRect(tileX + tileMod.x, tileY + tileMod.y, this.tSize() + tileMod.w, this.tSize() + tileMod.h);
+					ctx.fillRect(pos.X + mod.X, pos.Y + mod.Y, this.tSize() + mod.W, this.tSize() + mod.H);
 				}
 			}
 		}
@@ -136,6 +173,8 @@ function Game_mini_map() {
 
 		//Draw tiles
 		this.drawTiles();
+
+		this.drawEnemies();
 
 		//Draw player
 		this.drawPlayer();
