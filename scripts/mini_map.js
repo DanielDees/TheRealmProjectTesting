@@ -10,6 +10,12 @@ function Game_mini_map() {
 	this.width = 190;
 	this.height = 190;
 
+	//Hitbox
+	this.top = function() { return this.Y(); }
+	this.bottom = function() { return this.Y() + this.height; }
+	this.left = function() { return this.X(); }
+	this.right = function() { return this.X() + this.width; }
+
 	//Player location (center of mini-map)
 	this.playerX = function() { return this.X() + (this.width / 2) - (this.tSize() / 2); };
 	this.playerY = function() { return this.Y() + (this.height / 2) - (this.tSize() / 2); };
@@ -20,6 +26,43 @@ function Game_mini_map() {
 	//Recalculates for map zoom level 
 	//Subtract 1 for seamless mini-map, 0 for grid
 	this.tSize = function() { return (this.width / this.map.length) / 1; };
+	this.tSizeMod = function(X, Y) {
+
+		//Get mod for x/y and dimensions
+		var mod = { 
+			x: 0, 
+			y: 0,
+			w: 0, 
+			h: 0,
+		};
+
+		//Catch left side overflow
+		if (X < this.X()) { 
+
+			mod.w = X - this.left();
+			mod.x = this.left() - X;
+		}
+		//Catch right side overflow
+		if (X + this.tSize() > this.right()) { 
+
+			mod.w = -(X + this.tSize() - this.right()); 
+			mod.x = 0;
+		}
+		//Catch top side overflow
+		if (Y < this.top()) { 
+
+			mod.h = Y - this.top();
+			mod.y = this.top() - Y;
+		}
+		//Catch bottom side overflow
+		if (Y + this.tSize() > this.bottom()) { 
+
+			mod.h = -(Y + this.tSize() - this.bottom()); 
+			mod.y = 0;
+		}
+
+		return mod;
+	};
 
 	//Color code
 	this.playerColor = "blue";
@@ -49,11 +92,6 @@ function Game_mini_map() {
 	//Draw map tiles
 	this.drawTiles = function() {
 
-		/*
-			if tile x/y is within renderrange but < minimap X/Y but finishes rendering > minimap X/Y
-			then divide width by amount overflowing off minimap and render.
-		*/
-
 		//For calculating tile locations
 		var XYmod = Game_map_generator.tileSize;
 
@@ -67,15 +105,22 @@ function Game_mini_map() {
 					var tileX = (this.map[row][col].X - playerList[0].X);
 					var tileY = (this.map[row][col].Y - playerList[0].Y);
 
-					//Convert x/y to distance from player on minimap
+					//Convert x/y distance to minimap units
 					tileX /= (XYmod / this.tSize());
 					tileY /= (XYmod / this.tSize());
+
+					//Center on player (in minimap)
+					tileX += this.playerX();
+					tileY += this.playerY();
 
 					//Tile Color
 					ctx.fillStyle = this.map[row][col].mm_color;
 
+					//Remove overflow off minimap
+					var tileMod = this.tSizeMod(tileX, tileY);
+
 					//Draw
-					ctx.fillRect(this.playerX() + tileX, this.playerY() + tileY, this.tSize(), this.tSize());
+					ctx.fillRect(tileX + tileMod.x, tileY + tileMod.y, this.tSize() + tileMod.w, this.tSize() + tileMod.h);
 				}
 			}
 		}
