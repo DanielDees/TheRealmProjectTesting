@@ -23,9 +23,8 @@ function Game_mini_map() {
 	//Map tiles
 	this.map = "No map yet";
 
-	//Recalculates for map zoom level 
-	//Subtract 1 for seamless mini-map, 0 for grid
-	this.tSize = function() { return (this.width / this.map.length) / 1; };
+	//Recalculates for map zoom level
+	this.tSize = function() { return (this.width / (this.map.length  - 1)) / 1; };
 
 	//Modify tile overflow on minimap
 	this.tSizeMod = function(X, Y) {
@@ -174,6 +173,7 @@ function Game_mini_map() {
 		//Draw tiles
 		this.drawTiles();
 
+		//Draw enemies
 		this.drawEnemies();
 
 		//Draw player
