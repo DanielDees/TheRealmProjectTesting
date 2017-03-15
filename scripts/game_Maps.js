@@ -73,6 +73,26 @@ function Game_map_loader() {
         else if (chance <= 0.9) { colData.img = grassGround[2]; }
         else if (chance <= 1.0) { colData.img = grassGround[3]; };
 
+        //RNG 0 - 1
+        chance = Math.random();
+
+        //Generate obstacles
+        if (chance <= 0.1) { 
+
+          var obstacleData = {
+
+            X: this.tileSize * col,
+            Y: this.tileSize * row,
+
+            width: 40,
+            height: 40,
+
+            img: obstaclePics[0],
+          };
+
+          obstacleList.push(new obstacle(obstacleData)); 
+        }
+
         //Mini-map color is the same for all grassGround tiles
         colData.mm_color = 'rgb(3,126,31)';
 

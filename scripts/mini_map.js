@@ -24,7 +24,8 @@ function Game_mini_map() {
 	this.map = "No map yet";
 
 	//Recalculates for map zoom level
-	this.tSize = function() { return (this.width / (this.map.length  - 1)) / 1; };
+	this.mapZoom = 1;
+	this.tSize = function() { return (this.width / (this.map.length  - 1)) / this.mapZoom; };
 
 	//Modify tile overflow on minimap
 	this.tSizeMod = function(X, Y) {
@@ -70,18 +71,18 @@ function Game_mini_map() {
 	this.allyColor = "green";
 	this.enemyColor = "red";
 
-	//Load minimap tiles
+	//Load mini-map tiles
 	this.loadTiles = function() {
 
 		//Returns all map tiles rendered if map is loaded
 		this.map = Game_map_generator.getRenderedTiles();
 	}
-	//Draw the background/outline.
+	//Draw background/outline.
 	this.drawBg = function() {
 
 		//Background/Outline for minimap
 		ctx.fillStyle = "#222";
-		ctx.fillRect(this.X() - 1, this.Y() - 1, this.width + 1, this.height + 1);
+		ctx.fillRect(this.X() - 1, this.Y() - 1, this.width + 3, this.height + 3);
 	}
 	this.getMiniMapPosition = function(X, Y) {
 
@@ -113,6 +114,7 @@ function Game_mini_map() {
 		ctx.fillStyle = this.playerColor;
 		ctx.fillRect(this.playerX(), this.playerY(), this.tSize(), this.tSize());
 	}
+	//Draw enemies
 	this.drawEnemies = function() {
 
 		//Draw enemies on minimap
@@ -137,7 +139,7 @@ function Game_mini_map() {
 			ctx.fillRect(pos.X + mod.X, pos.Y + mod.Y, this.tSize() + mod.W, this.tSize() + mod.H);
 		}
 	}
-	//Draw map tiles
+	//Draw mini-map tiles
 	this.drawTiles = function() {
 
 		//Loop for the number of rows
@@ -164,7 +166,7 @@ function Game_mini_map() {
 			}
 		}
 	}
-	//Draw minimap
+	//Draw mini-map
 	this.draw = function() {
 
 		//Get Minimap tiles

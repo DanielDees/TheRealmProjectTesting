@@ -31,10 +31,16 @@ var bulletList = [];
 var enemyBulletList = [];
 //Loot
 var lootBagList = [];
+//Obstacles
+var obstacleList = [];
 //Screen
 var screenType = "MAIN_MENU";
 
 //DRAW STUFF =====================
+function displayObstacles() {
+
+  for (var i = 0; i < obstacleList.length; i++) { obstacleList[i].draw(); }
+}
 function displayLootBags() {
 
   for (var i = 0; i < lootBagList.length; i++) {
@@ -229,6 +235,14 @@ function checkCollisions () {
       }
     }
   }
+  //Obstacles
+  for (var i = 0; i < obstacleList.length; i++) {
+    for (var j = 0; j < playerList.length; j++) {
+      if (hitboxIntersectCheck(obstacleList[i], playerList[j])) {
+        console.log("Player -> obstacle collision!");
+      }
+    }
+  }
 }
 //END COLLISIONS =================
 //GAME SCREEN WINDOW =============
@@ -292,6 +306,7 @@ function drawGameScreen () {
     Game_map_generator.draw();
 
     //Loot
+    displayObstacles();
     drawPortals();
     displayLootBags();
 

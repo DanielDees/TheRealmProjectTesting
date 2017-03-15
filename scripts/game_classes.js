@@ -561,7 +561,7 @@ function obstacle (data) {
   this.height = data.height;
 
   //Sprite
-  this.image = data.image;
+  this.image = data.img;
 
   //Hitbox
   this.top = function() { return this.Y; }
