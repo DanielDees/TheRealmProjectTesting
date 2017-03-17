@@ -187,7 +187,7 @@ function player () {
             if (mouseIsTouching(this.inventory[k]) && mouse.item) {
 
               //Move/Swap item to new inventory slot
-              if (hitboxIntersectCheck(this.inventory[j].item, this.inventory[k])) {
+              if (collisions.collision(this.inventory[j].item, this.inventory[k])) {
 
                 swapItems(this.inventory[k], this.inventory[j]);
                 break;

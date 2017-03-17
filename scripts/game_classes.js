@@ -231,7 +231,7 @@ function lootBag (defaultX, defaultY, imageGiven) {
             if (mouseIsTouching(this.inventory[k]) && mouse.item) {
 
               //Move/Swap item to new inventory slot
-              if (hitboxIntersectCheck(this.inventory[j].item, this.inventory[k])) {
+              if (collisions.collision(this.inventory[j].item, this.inventory[k])) {
 
                 swapItems(this.inventory[k], this.inventory[j]);
                 break;
@@ -245,7 +245,7 @@ function lootBag (defaultX, defaultY, imageGiven) {
             if (mouseIsTouching(playerList[0].inventory[k]) && mouse.item) {
 
               //Move/Swap item to new inventory slot
-              if (hitboxIntersectCheck(this.inventory[j].item, playerList[0].inventory[k])) {
+              if (collisions.collision(this.inventory[j].item, playerList[0].inventory[k])) {
 
                 swapItems(playerList[0].inventory[k], this.inventory[j]);
 
@@ -416,7 +416,7 @@ function portal (data) {
   this.drawButton = function () {
 
     //View Portal if touching it and not viewing another portal.
-    if (hitboxIntersectCheck(this, playerList[0]) && (playerList[0].isViewingLoot[1] == -1 || playerList[0].isViewingLoot[1] == this.ID)) {
+    if (collisions.collision(this, playerList[0]) && (playerList[0].isViewingLoot[1] == -1 || playerList[0].isViewingLoot[1] == this.ID)) {
         
         //Show portal button        
         this.button.draw();

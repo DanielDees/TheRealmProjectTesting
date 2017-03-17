@@ -1,14 +1,4 @@
 //RANDOM TOOLS
-function hitboxIntersectCheck (a, b) {
-
-  //If error, ensure items have this.height / this.width.
-  if (a.bottom() > b.top() && a.top() < b.bottom() && a.left() < b.right() && a.right() > b.left()) {
-
-    return true;
-  }
-
-  return false;
-}
 function mouseIsTouching (item) {
 
   //If error, ensure items have this.height / this.width.

@@ -3,6 +3,10 @@
 var mie = (navigator.appName == "Microsoft Internet Explorer")?true:false;
 //END CHECK BROWSER TYPE ========
 
+//var canvas_CSS = document.getElementById('myCanvas').currentStyle || window.getComputedStyle('myCanvas');
+//var canvas_style = canvas_CSS.margin;
+//console.log("Margin: " + canvas_style);
+
 document.onmousemove = mousePos;
 document.onmousedown = function() { mouse.clicked = true; };
 document.onmouseup = function() { mouse.clicked = false; };

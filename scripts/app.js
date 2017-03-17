@@ -59,12 +59,12 @@ function displayItemDrops () {
   for (var i = 0; i < lootBagList.length; i++) {
 
     //Only allows one loot bag to be seen at a time. No overlapping loot bags. If viewing loot, only view i.
-    if (hitboxIntersectCheck(playerList[0], lootBagList[i]) && (playerList[0].isViewingLoot[0] == -1 || playerList[0].isViewingLoot[0] == i)) {
+    if (collisions.collision(playerList[0], lootBagList[i]) && (playerList[0].isViewingLoot[0] == -1 || playerList[0].isViewingLoot[0] == i)) {
       
       playerList[0].isViewingLoot[0] = i;
       lootBagList[i].drawInventory();
     }
-    else if ((!hitboxIntersectCheck(playerList[0], lootBagList[i]) && playerList[0].isViewingLoot[0] == i) || playerList[0].isViewingLoot[0] >= lootBagList.length) {
+    else if ((!collisions.collision(playerList[0], lootBagList[i]) && playerList[0].isViewingLoot[0] == i) || playerList[0].isViewingLoot[0] >= lootBagList.length) {
 
       playerList[0].isViewingLoot[0] = -1;
     }
