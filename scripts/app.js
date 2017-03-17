@@ -192,59 +192,6 @@ function replenishPlayerStats () {
   }
 }
 //END MOVE STUFF =================
-//COLLISIONS =====================
-function checkCollisions () {
-
-  //Player bullets
-  for (var i = 0; i < bulletList.length; i++) {
-    //Enemies
-    for (var j = 0; j < enemyList.length; j++) {
-      //On Collision
-      if (i >= 0 && hitboxIntersectCheck(bulletList[i], enemyList[j])) {
-
-        enemyList[j].takeDamage(bulletList[i].damage);
-        bulletList.splice(i, 1);
-        i--;
-        
-        if (enemyList[j].HP < 1) { 
-
-          enemyList[j].dropLoot();
-          enemyList.splice(j, 1);
-          enemies_remaining_in_realm--;
-          j--;
-        }
-      }
-    }
-  }
-  //Enemy Bullets
-  for (var i= 0; i < enemyBulletList.length; i++) {
-    //Players
-    for (var j = 0; j < playerList.length; j++) {
-      //On Collision
-      if (i >= 0 && hitboxIntersectCheck(enemyBulletList[i], playerList[j])) {
-
-        //Damage player
-        playerList[j].takeDamage(enemyBulletList[i].damage);
-
-        //This little fracker has to exist before you die...
-        if (playerList[j].HP <= 0) { playerList[j].deathScene(enemyBulletList[i].owner); }
-
-        //Remove Projectile
-        enemyBulletList.splice(i, 1);
-        i--;
-      }
-    }
-  }
-  //Obstacles
-  for (var i = 0; i < obstacleList.length; i++) {
-    for (var j = 0; j < playerList.length; j++) {
-      if (hitboxIntersectCheck(obstacleList[i], playerList[j])) {
-        console.log("Player -> obstacle collision!");
-      }
-    }
-  }
-}
-//END COLLISIONS =================
 //GAME SCREEN WINDOW =============
 function checkFrameOfReference(Xgiven, Ygiven) {
 
@@ -298,7 +245,7 @@ function drawGameScreen () {
     if (keys.B) { playerList[0].use_ability(); }
 
     movePlayerBullet();
-    checkCollisions();
+    collisions.update();
     checkFrameOfReference(playerList[0].X - 250, playerList[0].Y - 300);
     replenishPlayerStats();
 

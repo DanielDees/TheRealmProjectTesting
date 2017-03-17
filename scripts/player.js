@@ -342,6 +342,7 @@ function player () {
   this.deathScene = function(enemyKilledBy) {
 
     //Reset Player
+    this.EXP = 0;
     this.HP = this.MAX_HP;
     this.MP = this.MAX_MP;
     this.isViewingLoot = [-1, -1];
