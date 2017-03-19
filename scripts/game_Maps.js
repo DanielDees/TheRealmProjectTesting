@@ -85,8 +85,8 @@ function Game_map_loader() {
 
           var obstacleData = {
 
-            X: (this.tileSize * col) - (this.width() / 2),
-            Y: (this.tileSize * row) - (this.height() / 2),
+            X: this.tileSize * col,
+            Y: this.tileSize * row,
 
             width: 40,
             height: 40,
