@@ -18,6 +18,10 @@ function Game_map_loader() {
   this.MAX_SIZE = 100;
   this.tileSize = 49;
 
+  //Map size in px
+  this.width = function() { return this.tileSize * this.MAX_SIZE; }
+  this.height = function() { return this.tileSize * this.MAX_SIZE; }
+
   //Load all tiles within this range  of player
   this.renderRange = 10 * this.tileSize;
 
@@ -81,8 +85,8 @@ function Game_map_loader() {
 
           var obstacleData = {
 
-            X: this.tileSize * col,
-            Y: this.tileSize * row,
+            X: (this.tileSize * col) - (this.width() / 2),
+            Y: (this.tileSize * row) - (this.height() / 2),
 
             width: 40,
             height: 40,
@@ -241,7 +245,8 @@ function Game_map_loader() {
 
         try {  
             //Draw tile images for map if tile exists
-            if (MAP_TYPE[i] && MAP_TYPE[i][j]) { 
+            if (MAP_TYPE[i] && MAP_TYPE[i][j]) {
+              //Draw at center of map to accomadate for screen rotations 
               ctx.drawImage(MAP_TYPE[i][j].img, MAP_TYPE[i][j].X, MAP_TYPE[i][j].Y, 50, 50); 
             }
         } 

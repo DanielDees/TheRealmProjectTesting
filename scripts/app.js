@@ -34,6 +34,11 @@ var lootBagList = [];
 //Obstacles
 var obstacleList = [];
 //Screen
+var screen = {
+
+  type: "MAIN_MENU",
+  rotation: 0,
+}
 var screenType = "MAIN_MENU";
 
 //DRAW STUFF =====================
@@ -249,17 +254,41 @@ function drawGameScreen () {
     checkFrameOfReference(playerList[0].X - 250, playerList[0].Y - 300);
     replenishPlayerStats();
 
+    //Screen rotation
+    if(keys.Q) { screen.rotation -= 0.5; }
+    if(keys.E) { screen.rotation += 0.5; }
+    
+    //Save original X/Y canvas rendering
+    ctx.save();
+
+    //Move to X:0 Y:0 (the point of rotation with ctx.rotate is X:0 Y:0)
+    ctx.translate(0, 0);
+
+    //Rotate screen
+    ctx.rotate(screen.rotation * (Math.PI / 180));
+
     //MAP
     Game_map_generator.draw();
+    displayObstacles();
+
+    //Undo Rotation
+    ctx.restore();
 
     //Loot
-    displayObstacles();
     drawPortals();
     displayLootBags();
+
+    //Save original X/Y canvas rendering
+    ctx.save();
+
+    //Move to X:0 Y:0 (the point of rotation with ctx.rotate is X:0 Y:0)
+    ctx.translate(0, 0);
 
     //Entities
     drawPlayer();
     drawEnemy();
+
+    ctx.restore();
 
     //Projectiles
     drawPlayerBullet();

@@ -97,6 +97,9 @@ function keyClear (e) {
 
   keyButton = getKeyPressed(e);
 
+  //Screen Rotation
+  if (isEqualTo(keyButton, "Q", "E")) { keys[keyButton] = false; }
+
   //Movement
   if (isEqualTo(keyButton, "W", "A", "S", "D")) { keys[keyButton] = false; };
 
@@ -107,6 +110,7 @@ function keyClear (e) {
     if (keyButton == "D") { playerList[0].Image = playerList[0].ImageArray[0][0]; };
   }
 
+  //Special ability
   if (keyButton == " ") { keys.B = false; };
   if (e.shiftKey) { keys.SHIFT = false; };
 }
@@ -127,12 +131,17 @@ function keyClick (e) {
 
   if (!keys.ENTER) {
 
+    //Screen Rotation
+    if (isEqualTo(keyButton, "Q", "E")) { keys[keyButton] = true; }
+
     //Movement
     if (isEqualTo(keyButton, "W", "A", "S", "D")) { keys[keyButton] = true; };
+
     //Fire Weapon
     if (keyButton == "T" && !keys.T) { keys.T = true; }
     else if (keyButton == "T" && keys.T) { keys.T = false; };
-    //Spellbomb
+
+    //Special Ability
     if (keyButton == " ") { keys.B = true; };
   };
 
