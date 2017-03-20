@@ -259,36 +259,36 @@ function drawGameScreen () {
     if(keys.E) { screen.rotation += 0.5; }
     
     //Save original X/Y canvas rendering
-    ctx.save();
+    //ctx.save();
 
     //Move to X:0 Y:0 (the point of rotation with ctx.rotate is X:0 Y:0)
-    ctx.translate(0, 0);
+    //ctx.translate(0, 0);
 
     //Rotate screen
-    ctx.rotate(screen.rotation * (Math.PI / 180));
+    //ctx.rotate(screen.rotation * (Math.PI / 180));
 
     //MAP
     Game_map_generator.draw();
     displayObstacles();
 
     //Undo Rotation
-    ctx.restore();
+    //ctx.restore();
 
     //Loot
     drawPortals();
     displayLootBags();
 
     //Save original X/Y canvas rendering
-    ctx.save();
+    //ctx.save();
 
     //Move to X:0 Y:0 (the point of rotation with ctx.rotate is X:0 Y:0)
-    ctx.translate(0, 0);
+    //ctx.translate(0, 0);
 
     //Entities
     drawPlayer();
     drawEnemy();
 
-    ctx.restore();
+    //ctx.restore();
 
     //Projectiles
     drawPlayerBullet();
