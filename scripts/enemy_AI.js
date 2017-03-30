@@ -1,3 +1,5 @@
+"use strict";
+
 //Enemy AI Scripts
 
 //MOVEMENT PATTERNS ==============

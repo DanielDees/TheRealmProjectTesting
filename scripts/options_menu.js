@@ -1,3 +1,5 @@
+"use strict";
+
 var options_menu = new Game_options_menu();
 
 function Game_options_menu() {

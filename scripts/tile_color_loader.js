@@ -1,7 +1,9 @@
+"use strict";
+
 //Stores the rgb values for all tiles in map
 var MAP_TILE_COLORS = [];
 
-map_tile_color_loader = new Game_map_tile_color_loader();
+var map_tile_color_loader = new Game_map_tile_color_loader();
 
 //Grabs the average color of a sprite and returns the RGB value for it.
 function Game_map_tile_color_loader() {

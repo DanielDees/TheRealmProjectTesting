@@ -1,3 +1,5 @@
+"use strict";
+
 var death_menu = new Game_death_menu();
 
 function Game_death_menu() {

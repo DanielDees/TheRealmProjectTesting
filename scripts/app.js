@@ -1,3 +1,5 @@
+"use strict";
+
 //VERSION INFO
 var versionInfo = "Version 1.2.F";
 

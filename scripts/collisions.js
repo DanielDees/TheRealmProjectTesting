@@ -1,3 +1,5 @@
+"use strict";
+
 //COLLISIONS =====================
 
 var collisions = new Game_collision_checker();

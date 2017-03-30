@@ -1,3 +1,5 @@
+"use strict";
+
 //SPAWNING SYSTEMS ===============
 
 function spawn_Enemy_Bug () {

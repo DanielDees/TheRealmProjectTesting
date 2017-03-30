@@ -1,3 +1,4 @@
+"use strict";
 
 //CHECK BROWSER TYPE ============
 var mie = (navigator.appName == "Microsoft Internet Explorer")?true:false;

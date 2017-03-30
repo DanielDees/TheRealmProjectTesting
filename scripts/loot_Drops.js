@@ -1,3 +1,5 @@
+"use strict";
+
 //
 // All of the game's loot dropping 
 // calculations are done with this class

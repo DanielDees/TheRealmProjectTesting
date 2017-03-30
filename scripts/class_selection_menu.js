@@ -1,3 +1,5 @@
+"use strict";
+
 var class_selection_menu = new Game_class_selection_menu();
 
 function Game_class_selection_menu() {

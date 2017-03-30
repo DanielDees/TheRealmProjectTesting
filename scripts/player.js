@@ -1,3 +1,5 @@
+"use strict";
+
 function player () {
   
   //Position
@@ -348,13 +350,12 @@ function player () {
     this.isViewingLoot = [-1, -1];
     this.X = 4000;
     this.Y = 4000;
+    this.dmgLog = [];
 
     //Remove all Entities
     enemyList = [];
     enemyBulletList = [];
     bulletList = [];
-    damageNumberList = [];
-    playerDamageNumberList = [];
     lootBagList = [];
     portalList = [];
 

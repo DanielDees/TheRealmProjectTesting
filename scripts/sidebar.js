@@ -1,3 +1,4 @@
+"use strict";
 
 var side_bar = new Game_side_bar();
 

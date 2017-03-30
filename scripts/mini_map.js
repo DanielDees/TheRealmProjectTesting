@@ -1,3 +1,5 @@
+"use strict";
+
 var mini_map = new Game_mini_map();
 
 function Game_mini_map() {
